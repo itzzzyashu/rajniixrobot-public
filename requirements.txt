@@ -126,7 +126,7 @@ Pyrogram==2.0.106
 PySocks==1.7.1
 python-arq==6.0.3
 python-dateutil==2.9.0.post0
-python-rapidjson==1.17
+python-rapidjson==1.25
 python-telegram-bot==21.3
 pytube==15.0.0
 pytz==2024.1
