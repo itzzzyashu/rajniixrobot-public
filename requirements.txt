@@ -171,7 +171,7 @@ uritemplate==3.0.1
 urllib3==1.26.18
 urllib3-secure-extra==0.1.0
 w3lib==2.2.1
-webencodings==0.5.1
+webencodings==0.6.1
 websockets==10.4
 Werkzeug==3.0.3
 wget==3.2
