@@ -1,0 +1,245 @@
+from datetime import datetime
+
+from pyrogram import filters, Client
+from pyrogram.types import (InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, Message)
+
+from RajniiRobot import pgram, OWNER_ID, OWNER_USERNAME, SUPPORT_CHAT, DRAGONS, DEV_USERS, SUPPORT_USERS, TIGER_USERS, WHITELIST_USERS
+from RajniiRobot.utils.errors import capture_err
+from RajniiRobot.utils.gban_validator import validate_gban_format
+
+@pgram.on_message(filters.command("greport", prefixes=["!","/"]) & filters.group)
+@capture_err
+async def greport(client: Client, msg: Message):
+    # Extract the reason from the command
+    command_text = msg.text.split(maxsplit=1)
+
+
+    # Get details of the group from where the global ban appeal was originated.
+    chat_id = msg.chat.id
+    if msg.chat.title:
+        chat_title = msg.chat.title
+    else:
+        chat_title = "N/A"
+        
+    if msg.chat.type:
+        chat_type = msg.chat.type
+    else:
+        chat_type = "N/A"
+        
+    chat = await client.get_chat(chat_id)
+
+
+    # The Demon user who appealed the global ban.
+    executor_id = msg.from_user.id
+    executor_first_name = msg.from_user.first_name or "N/A"
+    executor_username = msg.from_user.username or "N/A"
+
+    
+    # Make sure the command has atleast 3 arguments. (user_id, bancode, evidence_url)
+    if not len(command_text) < 3:
+        target_id = command_text[0]
+        reason = command_text[1]
+        
+        # Get the target details using provided user id.
+        if command_text[0].isdigit() and len(command_text[0]):
+            try:
+                target_exists = await client.get_users(command_text[0])
+                
+                if target_exists.username:
+                    target_username = target_exists.username
+                else:
+                    target_username = "N/A"
+
+                if target_exists.first_name:
+                    target_first_name = target_exists.first_name
+                else:
+                    target_first_name = "N/A"
+                    
+            except Exception as e:
+                await msg.reply_text("Either this user ID is incorrect or I\'ve never seen them anywhere.")
+                return False
+            
+        # Get the user details using provided username, validate if username starts with @ and has atleast 6 alphabets because telegram usernames include a @ and 5 alphabets atleast.
+        elif command_text[0].startswith("@") and len(command_text[0]) > 6:
+            try:
+                target_exists = await client.get_users(command_text[0])
+                
+                if target_exists.username:
+                    target_username = target_exists.username
+                else:
+                    target_username = "N/A"
+
+                if target_exists.first_name:
+                    target_first_name = target_exists.first_name
+                else:
+                    target_first_name = "N/A"
+                    
+            except Exception as e:
+                await msg.reply_text("Either this username is incorrect or I\'ve never seen them anywhere.")
+                return False
+
+    # Check if a user is replied as a target.
+    elif msg.reply_to_message:
+        target_id = msg.reply_to_message.from_user.id
+        target_first_name = msg.reply_to_message.from_user.first_name or "N/A"
+        target_username = msg.reply_to_message.from_user.username or "N/A"
+        reason = command_text[1]
+
+    # If bot gets no user handle for the gban appeal.
+    else:
+        await msg.reply_text("Whom do you want to report for gban appeal? Idiot...")
+        return False
+
+
+    # Do not allow the executor to send a global ban appeal setting authorised users as a target.
+    if (
+        target_id == OWNER_ID or
+        target_id in DEV_USERS or
+        target_id in DRAGONS or
+        target_id in DEMONS or
+        target_id in TIGERS or
+        target_id in WOLVES
+    ):
+        await msg.reply_text("Are you dumb or something?\nTrying to appeal a global ban against authorized users of mine?")
+        return False
+
+
+    # Check if the chat type is private or channel, if yes then throw error
+    if (chat_type in ["private","channel"]):
+        await msg.reply(
+            "```error\n" \
+            "This command can only be used in public or private group chats, not in inbox or channels.```"
+        )
+        return False
+
+
+    # Get the chat link from the group for introspection.
+    if chat.username:
+        chat_link = f"[Public chat]({chat.invite_link}) | [`{chat_id}`]"
+    else:
+        invite_link = await client.export_chat_invite_link(chat_id)
+        chat_link = f"[Private chat]({invite_link}) / [`{chat_id}`]"
+
+
+    # Gban Request Variables.
+    datetimes_fmt = "%d-%m-%Y"
+    datetimes = datetime.utcnow().strftime(datetimes_fmt)
+    target_mention = f"[{target_first_name}](tg://user?id={target_id})"
+    executor_mention = f"[{executor_first_name}](tg://user?id={executor_id})"
+    reason_lines = reason.split("\n")
+    bancodes = reason_lines[0]
+    evidence_urls = reason_lines[1:]
+
+    # Global Ban Request String.
+    global_ban_request = (
+        f"**#GBAN_REQUEST**\n" \
+        f"**Originated from:** [{chat_title}]({chat_link}) | [`{chat_id}`]\n" \
+        f"**Event Stamp:** `{datetimes}`\n" \
+        
+        f"""**Appealed by:** {executor_mention} | [`{executor_id}`] {"| @"+executor_username if executor_username!="N/A" else ""}\n""" \
+        f"""**Target:** {target_mention} | [`{target_id}`]  {"| @"+target_username if target_username!="N/A" else ""}\n""" \
+        f"```bancodes\n"
+        f"{bancodes}```\n"
+        "```evidence\n"
+        f"{evidence_urls}```"
+    )
+
+    # Owner, Devs and Dragons don't need to appeal a global ban, right?
+    if (
+        executor_id == OWNER_ID or
+        executor_id in DEV_USERS or
+        executor_id in DRAGONS
+    ) :
+        await msg.reply_text(
+            "```error\n" \
+            "Why would you appeal a gban request?\n" \
+            "You are an authorised user, right?```" \
+        )
+        return False
+
+    # The reason must match the format.
+    elif not validate_gban_format(reason):
+        await msg.reply_text(
+            "**Incorrect Global Ban Appeal Format**\n" \
+            "__Here is the reference for global ban appeal command.__",
+            disable_web_page_preview=False,
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [InlineKeyboardButton("Check Format", url="https://telegram.me/rajniixglobal/16")]
+                ]
+            )
+        )
+        return False
+
+    
+    await msg.reply_text(
+        "**Global Ban Request**\n" \
+        f"An appeal to ban this user in my database has been sent to the [support chat](https://telegram.me/{SUPPORT_CHAT}).\n" \
+        "```bancodes\n" \
+        f"{bancodes}```\n" \
+        "```evidence\n" \
+        f"{evidence_urls}```",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [InlineKeyboardButton("Close", callback_data="grequest_close")]
+            ]
+        )
+    )
+
+    await pgram.send_message(
+        SUPPORT_CHAT,
+        text=global_ban_request,
+        disable_web_page_preview=True,
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("View", url=f"{msg.link}")
+                ],
+                [
+                    InlineKeyboardButton("Approve", callback_data="approve_gban_request"),
+                    InlineKeyboardButton("Reject", callback_data="reject_gban_request")
+                ]
+            ]
+        )
+    )
+    return True
+
+@pgram.on_callback_query(filters.regex("grequest_close"))
+async def grequest_close(msg, CallbackQuery):
+    user_rights = await pgram.get_chat_member(CallbackQuery.message.chat.id, CallbackQuery.from_user.id)
+    if not user_rights.can_delete_messages:
+        return await CallbackQuery.answer("You do not seem to have permission to close this request.", show_alert=True)
+    return await CallbackQuery.message.delete()
+
+@pgram.on_callback_query(filters.regex("reject_gban_request"))
+async def reject_gban_request(_, CallbackQuery):
+    if (
+        CallbackQuery.from_user.id == OWNER_ID or
+        CallbackQuery.from_user.id in DEV_USERS or
+        CallbackQuery.from_user.id in DRAGONS
+    ):
+        is_Authorized = True
+    else:
+        is_Authorized = False
+    
+    if not is_Authorized:
+        return await CallbackQuery.answer("Only authorized users can reject a global ban request.", show_alert=True)
+    return await CallbackQuery.message.edit(f"[{CallbackQuery.from_user.first_name}](tg://user?id={CallbackQuery.from_user.id}) has rejected this global ban request.")
+
+@pgram.on_callback_query(filters.regex("approve_gban_request"))
+async def approve_gban_request(_, CallbackQuery):
+    if (
+        CallbackQuery.from_user.id == OWNER_ID or
+        CallbackQuery.from_user.id in DEV_USERS or
+        CallbackQuery.from_user.id in DRAGONS
+    ):
+        is_Authorized = True
+    else:
+        is_Authorized = False
+    
+    if not is_Authorized:
+        return await CallbackQuery.answer("Only authorized users can approve a global ban request.", show_alert=True)
+    return await CallbackQuery.message.edit(f"[{CallbackQuery.from_user.first_name}](tg://user?id={CallbackQuery.from_user.id}) has approved this global ban request.")
+
+
+__mod_name__ = "GbanRequest"

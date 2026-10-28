@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  rajniiweb:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Add any environment variables here if needed
+      # Example: ENV_VAR_NAME: "value"
+    # Command to run the application
+    command: ["python", "app.py"]
+
+  rajniirobot:
+    build: .
+    environment:
+      # Add any environment variables here if needed
+      # Example: ENV_VAR_NAME: "value"
+    # Command to run the application
+    command: ["python", "-m", "RajniiRobot"]

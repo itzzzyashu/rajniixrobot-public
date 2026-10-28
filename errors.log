@@ -1,0 +1,1853 @@
+Requirement already satisfied: setuptools in ./venv/lib/python3.10/site-packages (58.1.0)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting ez_setup
+  Downloading ez_setup-0.9.tar.gz (6.6 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Using legacy 'setup.py install' for ez_setup, since package 'wheel' is not installed.
+Installing collected packages: ez_setup
+  Running setup.py install for ez_setup: started
+  Running setup.py install for ez_setup: finished with status 'done'
+Successfully installed ez_setup-0.9
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting aiofiles==0.8.0
+  Using cached aiofiles-0.8.0-py3-none-any.whl (13 kB)
+Installing collected packages: aiofiles
+Successfully installed aiofiles-0.8.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting aiohttp==3.7.3
+  Using cached aiohttp-3.7.3-py3-none-any.whl
+Collecting typing_extensions>=3.6.5
+  Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Collecting multidict<7.0,>=4.5
+  Using cached multidict-6.7.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (243 kB)
+Collecting async_timeout<4.0,>=3.0
+  Using cached async_timeout-3.0.1-py3-none-any.whl (8.2 kB)
+Collecting yarl<2.0,>=1.0
+  Using cached yarl-1.24.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (106 kB)
+Collecting chardet<4.0,>=2.0
+  Using cached chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+Collecting attrs>=17.3.0
+  Using cached attrs-26.1.0-py3-none-any.whl (67 kB)
+Collecting propcache>=0.2.1
+  Downloading propcache-0.5.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.1/60.1 KB 1.1 MB/s eta 0:00:00
+Collecting idna>=2.0
+  Using cached idna-3.17-py3-none-any.whl (65 kB)
+Installing collected packages: chardet, typing_extensions, propcache, idna, attrs, async_timeout, multidict, yarl, aiohttp
+Successfully installed aiohttp-3.7.3 async_timeout-3.0.1 attrs-26.1.0 chardet-3.0.4 idna-3.17 multidict-6.7.1 propcache-0.5.2 typing_extensions-4.15.0 yarl-1.24.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting alphabet-detector==0.0.7
+  Using cached alphabet_detector-0.0.7-py3-none-any.whl
+Installing collected packages: alphabet-detector
+Successfully installed alphabet-detector-0.0.7
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting anyio==3.7.1
+  Using cached anyio-3.7.1-py3-none-any.whl (80 kB)
+Requirement already satisfied: idna>=2.8 in ./venv/lib/python3.10/site-packages (from anyio==3.7.1) (3.17)
+Collecting exceptiongroup
+  Using cached exceptiongroup-1.3.1-py3-none-any.whl (16 kB)
+Collecting sniffio>=1.1
+  Using cached sniffio-1.3.1-py3-none-any.whl (10 kB)
+Requirement already satisfied: typing-extensions>=4.6.0 in ./venv/lib/python3.10/site-packages (from exceptiongroup->anyio==3.7.1) (4.15.0)
+Installing collected packages: sniffio, exceptiongroup, anyio
+Successfully installed anyio-3.7.1 exceptiongroup-1.3.1 sniffio-1.3.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting appdirs==1.4.4
+  Downloading appdirs-1.4.4-py2.py3-none-any.whl (9.6 kB)
+Installing collected packages: appdirs
+Successfully installed appdirs-1.4.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting APScheduler==3.10.4
+  Downloading APScheduler-3.10.4-py3-none-any.whl (59 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.3/59.3 KB 881.0 kB/s eta 0:00:00
+Collecting tzlocal!=3.*,>=2.0
+  Using cached tzlocal-5.3.1-py3-none-any.whl (18 kB)
+Collecting pytz
+  Downloading pytz-2026.2-py2.py3-none-any.whl (510 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 510.1/510.1 KB 9.1 MB/s eta 0:00:00
+Collecting six>=1.4.0
+  Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: pytz, tzlocal, six, APScheduler
+Successfully installed APScheduler-3.10.4 pytz-2026.2 six-1.17.0 tzlocal-5.3.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: async-timeout==3.0.1 in ./venv/lib/python3.10/site-packages (3.0.1)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting asyncio==3.4.3
+  Using cached asyncio-3.4.3-py3-none-any.whl (101 kB)
+Installing collected packages: asyncio
+Successfully installed asyncio-3.4.3
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting attrs==23.2.0
+  Downloading attrs-23.2.0-py3-none-any.whl (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.8/60.8 KB 1.2 MB/s eta 0:00:00
+Installing collected packages: attrs
+  Attempting uninstall: attrs
+    Found existing installation: attrs 26.1.0
+    Uninstalling attrs-26.1.0:
+      Successfully uninstalled attrs-26.1.0
+Successfully installed attrs-23.2.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting base58
+  Downloading base58-2.1.1-py3-none-any.whl (5.6 kB)
+Installing collected packages: base58
+Successfully installed base58-2.1.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pycryptodome
+  Downloading pycryptodome-3.23.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 4.2 MB/s eta 0:00:00
+Installing collected packages: pycryptodome
+Successfully installed pycryptodome-3.23.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting dateparser==1.2.0
+  Downloading dateparser-1.2.0-py2.py3-none-any.whl (294 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 295.0/295.0 KB 3.9 MB/s eta 0:00:00
+Collecting regex!=2019.02.19,!=2021.8.27
+  Downloading regex-2026.5.9-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (794 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 794.1/794.1 KB 6.1 MB/s eta 0:00:00
+Requirement already satisfied: tzlocal in ./venv/lib/python3.10/site-packages (from dateparser==1.2.0) (5.3.1)
+Requirement already satisfied: pytz in ./venv/lib/python3.10/site-packages (from dateparser==1.2.0) (2026.2)
+Collecting python-dateutil
+  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Requirement already satisfied: six>=1.5 in ./venv/lib/python3.10/site-packages (from python-dateutil->dateparser==1.2.0) (1.17.0)
+Installing collected packages: regex, python-dateutil, dateparser
+Successfully installed dateparser-1.2.0 python-dateutil-2.9.0.post0 regex-2026.5.9
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting beautifulsoup4==4.12.3
+  Downloading beautifulsoup4-4.12.3-py3-none-any.whl (147 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 147.9/147.9 KB 1.6 MB/s eta 0:00:00
+Collecting soupsieve>1.2
+  Using cached soupsieve-2.8.4-py3-none-any.whl (37 kB)
+Installing collected packages: soupsieve, beautifulsoup4
+Successfully installed beautifulsoup4-4.12.3 soupsieve-2.8.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting bing-image-downloader==1.1.1
+  Using cached bing_image_downloader-1.1.1-py3-none-any.whl (5.7 kB)
+Installing collected packages: bing-image-downloader
+Successfully installed bing-image-downloader-1.1.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting bleach==6.1.0
+  Downloading bleach-6.1.0-py3-none-any.whl (162 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.8/162.8 KB 3.1 MB/s eta 0:00:00
+Requirement already satisfied: six>=1.9.0 in ./venv/lib/python3.10/site-packages (from bleach==6.1.0) (1.17.0)
+Collecting webencodings
+  Using cached webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+Installing collected packages: webencodings, bleach
+Successfully installed bleach-6.1.0 webencodings-0.5.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting blinker==1.8.2
+  Downloading blinker-1.8.2-py3-none-any.whl (9.5 kB)
+Installing collected packages: blinker
+Successfully installed blinker-1.8.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting bs4==0.0.2
+  Using cached bs4-0.0.2-py2.py3-none-any.whl (1.2 kB)
+Requirement already satisfied: beautifulsoup4 in ./venv/lib/python3.10/site-packages (from bs4==0.0.2) (4.12.3)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.10/site-packages (from beautifulsoup4->bs4==0.0.2) (2.8.4)
+Installing collected packages: bs4
+Successfully installed bs4-0.0.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting cachetools==5.0.0
+  Using cached cachetools-5.0.0-py3-none-any.whl (9.1 kB)
+Installing collected packages: cachetools
+Successfully installed cachetools-5.0.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting carbonnow==0.0.1
+  Using cached carbonnow-0.0.1-py3-none-any.whl (15 kB)
+Requirement already satisfied: asyncio==3.4.3 in ./venv/lib/python3.10/site-packages (from carbonnow==0.0.1) (3.4.3)
+Requirement already satisfied: aiohttp==3.7.3 in ./venv/lib/python3.10/site-packages (from carbonnow==0.0.1) (3.7.3)
+Requirement already satisfied: attrs>=17.3.0 in ./venv/lib/python3.10/site-packages (from aiohttp==3.7.3->carbonnow==0.0.1) (23.2.0)
+Requirement already satisfied: multidict<7.0,>=4.5 in ./venv/lib/python3.10/site-packages (from aiohttp==3.7.3->carbonnow==0.0.1) (6.7.1)
+Requirement already satisfied: async_timeout<4.0,>=3.0 in ./venv/lib/python3.10/site-packages (from aiohttp==3.7.3->carbonnow==0.0.1) (3.0.1)
+Requirement already satisfied: typing_extensions>=3.6.5 in ./venv/lib/python3.10/site-packages (from aiohttp==3.7.3->carbonnow==0.0.1) (4.15.0)
+Requirement already satisfied: chardet<4.0,>=2.0 in ./venv/lib/python3.10/site-packages (from aiohttp==3.7.3->carbonnow==0.0.1) (3.0.4)
+Requirement already satisfied: yarl<2.0,>=1.0 in ./venv/lib/python3.10/site-packages (from aiohttp==3.7.3->carbonnow==0.0.1) (1.24.2)
+Requirement already satisfied: idna>=2.0 in ./venv/lib/python3.10/site-packages (from yarl<2.0,>=1.0->aiohttp==3.7.3->carbonnow==0.0.1) (3.17)
+Requirement already satisfied: propcache>=0.2.1 in ./venv/lib/python3.10/site-packages (from yarl<2.0,>=1.0->aiohttp==3.7.3->carbonnow==0.0.1) (0.5.2)
+Installing collected packages: carbonnow
+Successfully installed carbonnow-0.0.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting certifi==2024.6.2
+  Downloading certifi-2024.6.2-py3-none-any.whl (164 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 164.4/164.4 KB 3.2 MB/s eta 0:00:00
+Installing collected packages: certifi
+Successfully installed certifi-2024.6.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting cffi==1.16.0
+  Downloading cffi-1.16.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (443 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 443.9/443.9 KB 6.8 MB/s eta 0:00:00
+Collecting pycparser
+  Using cached pycparser-3.0-py3-none-any.whl (48 kB)
+Installing collected packages: pycparser, cffi
+Successfully installed cffi-1.16.0 pycparser-3.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: chardet==3.0.4 in ./venv/lib/python3.10/site-packages (3.0.4)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting charset-normalizer==3.3.2
+  Downloading charset_normalizer-3.3.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (142 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 142.1/142.1 KB 3.1 MB/s eta 0:00:00
+Installing collected packages: charset-normalizer
+Successfully installed charset-normalizer-3.3.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting click==8.1.7
+  Downloading click-8.1.7-py3-none-any.whl (97 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 97.9/97.9 KB 2.1 MB/s eta 0:00:00
+Installing collected packages: click
+Successfully installed click-8.1.7
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting colorama==0.4.6
+  Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Installing collected packages: colorama
+Successfully installed colorama-0.4.6
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting configparser==5.2.0
+  Using cached configparser-5.2.0-py3-none-any.whl (19 kB)
+Installing collected packages: configparser
+Successfully installed configparser-5.2.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting countryinfo==0.1.2
+  Using cached countryinfo-0.1.2-py3-none-any.whl (602 kB)
+Installing collected packages: countryinfo
+Successfully installed countryinfo-0.1.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting cowpy==1.1.5
+  Using cached cowpy-1.1.5-py3-none-any.whl (13 kB)
+Installing collected packages: cowpy
+Successfully installed cowpy-1.1.5
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting cryptography==42.0.8
+  Downloading cryptography-42.0.8-cp39-abi3-manylinux_2_28_x86_64.whl (3.9 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.9/3.9 MB 4.0 MB/s eta 0:00:00
+Requirement already satisfied: cffi>=1.12 in ./venv/lib/python3.10/site-packages (from cryptography==42.0.8) (1.16.0)
+Requirement already satisfied: pycparser in ./venv/lib/python3.10/site-packages (from cffi>=1.12->cryptography==42.0.8) (3.0)
+Installing collected packages: cryptography
+Successfully installed cryptography-42.0.8
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting cssselect==1.2.0
+  Downloading cssselect-1.2.0-py2.py3-none-any.whl (18 kB)
+Installing collected packages: cssselect
+Successfully installed cssselect-1.2.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting CurrencyConverter==0.16.12
+  Using cached CurrencyConverter-0.16.12-py2.py3-none-any.whl (547 kB)
+Installing collected packages: CurrencyConverter
+Successfully installed CurrencyConverter-0.16.12
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting decorator==5.1.1
+  Downloading decorator-5.1.1-py3-none-any.whl (9.1 kB)
+Installing collected packages: decorator
+Successfully installed decorator-5.1.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting Deprecated==1.2.14
+  Downloading Deprecated-1.2.14-py2.py3-none-any.whl (9.6 kB)
+Collecting wrapt<2,>=1.10
+  Downloading wrapt-1.17.3-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (81 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.0/82.0 KB 2.0 MB/s eta 0:00:00
+Installing collected packages: wrapt, Deprecated
+Successfully installed Deprecated-1.2.14 wrapt-1.17.3
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting dnspython==2.6.1
+  Downloading dnspython-2.6.1-py3-none-any.whl (307 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 307.7/307.7 KB 5.2 MB/s eta 0:00:00
+Installing collected packages: dnspython
+Successfully installed dnspython-2.6.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting dotmap==1.3.30
+  Using cached dotmap-1.3.30-py3-none-any.whl (11 kB)
+Installing collected packages: dotmap
+Successfully installed dotmap-1.3.30
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting emoji==1.7.0
+  Using cached emoji-1.7.0-py3-none-any.whl
+Installing collected packages: emoji
+Successfully installed emoji-1.7.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting exceptiongroup==1.2.1
+  Downloading exceptiongroup-1.2.1-py3-none-any.whl (16 kB)
+Installing collected packages: exceptiongroup
+  Attempting uninstall: exceptiongroup
+    Found existing installation: exceptiongroup 1.3.1
+    Uninstalling exceptiongroup-1.3.1:
+      Successfully uninstalled exceptiongroup-1.3.1
+Successfully installed exceptiongroup-1.2.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting fake-useragent==0.1.14
+  Using cached fake_useragent-0.1.14-py3-none-any.whl (13 kB)
+Installing collected packages: fake-useragent
+Successfully installed fake-useragent-0.1.14
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting Faker==25.8.0
+  Downloading Faker-25.8.0-py3-none-any.whl (1.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 3.4 MB/s eta 0:00:00
+Requirement already satisfied: python-dateutil>=2.4 in ./venv/lib/python3.10/site-packages (from Faker==25.8.0) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in ./venv/lib/python3.10/site-packages (from python-dateutil>=2.4->Faker==25.8.0) (1.17.0)
+Installing collected packages: Faker
+Successfully installed Faker-25.8.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting feedparser==6.0.11
+  Using cached feedparser-6.0.11-py3-none-any.whl (81 kB)
+Collecting sgmllib3k
+  Using cached sgmllib3k-1.0.0-py3-none-any.whl
+Installing collected packages: sgmllib3k, feedparser
+Successfully installed feedparser-6.0.11 sgmllib3k-1.0.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting ffmpeg==1.4
+  Using cached ffmpeg-1.4-py3-none-any.whl
+Installing collected packages: ffmpeg
+Successfully installed ffmpeg-1.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting Flask==3.0.3
+  Downloading flask-3.0.3-py3-none-any.whl (101 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 101.7/101.7 KB 1.6 MB/s eta 0:00:00
+Collecting itsdangerous>=2.1.2
+  Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Requirement already satisfied: click>=8.1.3 in ./venv/lib/python3.10/site-packages (from Flask==3.0.3) (8.1.7)
+Collecting Jinja2>=3.1.2
+  Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 134.9/134.9 KB 3.6 MB/s eta 0:00:00
+Collecting Werkzeug>=3.0.0
+  Downloading werkzeug-3.1.8-py3-none-any.whl (226 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.5/226.5 KB 7.6 MB/s eta 0:00:00
+Requirement already satisfied: blinker>=1.6.2 in ./venv/lib/python3.10/site-packages (from Flask==3.0.3) (1.8.2)
+Collecting MarkupSafe>=2.0
+  Downloading markupsafe-3.0.3-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (20 kB)
+Installing collected packages: MarkupSafe, itsdangerous, Werkzeug, Jinja2, Flask
+Successfully installed Flask-3.0.3 Jinja2-3.1.6 MarkupSafe-3.0.3 Werkzeug-3.1.8 itsdangerous-2.2.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting future==0.18.2
+  Using cached future-0.18.2-py3-none-any.whl
+Installing collected packages: future
+Successfully installed future-0.18.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting futures==3.0.5
+  Using cached futures-3.0.5-py3-none-any.whl
+Installing collected packages: futures
+Successfully installed futures-3.0.5
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting geographiclib==1.52
+  Using cached geographiclib-1.52-py3-none-any.whl (38 kB)
+Installing collected packages: geographiclib
+Successfully installed geographiclib-1.52
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting geopy==2.2.0
+  Using cached geopy-2.2.0-py3-none-any.whl (118 kB)
+Requirement already satisfied: geographiclib<2,>=1.49 in ./venv/lib/python3.10/site-packages (from geopy==2.2.0) (1.52)
+Installing collected packages: geopy
+Successfully installed geopy-2.2.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b
+  Cloning https://github.com/Awesome-RJ/GoGoAnimeAPI.git (to revision 4ce02796cc97ff8e86da22452f87b6f916a0420b) to /tmp/pip-install-2b8miubf/gogoanime-api_d0c0d16a6e9e46519092d246b9e06873
+  Running command git clone --filter=blob:none --quiet https://github.com/Awesome-RJ/GoGoAnimeAPI.git /tmp/pip-install-2b8miubf/gogoanime-api_d0c0d16a6e9e46519092d246b9e06873
+  Running command git rev-parse -q --verify 'sha^4ce02796cc97ff8e86da22452f87b6f916a0420b'
+  Running command git fetch -q https://github.com/Awesome-RJ/GoGoAnimeAPI.git 4ce02796cc97ff8e86da22452f87b6f916a0420b
+  Resolved https://github.com/Awesome-RJ/GoGoAnimeAPI.git to commit 4ce02796cc97ff8e86da22452f87b6f916a0420b
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Requirement already satisfied: bs4 in ./venv/lib/python3.10/site-packages (from gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (0.0.2)
+Collecting requests
+  Using cached requests-2.34.2-py3-none-any.whl (73 kB)
+Collecting requests_html
+  Using cached requests_html-0.10.0-py3-none-any.whl (13 kB)
+Requirement already satisfied: beautifulsoup4 in ./venv/lib/python3.10/site-packages (from bs4->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (4.12.3)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (3.17)
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (2024.6.2)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (3.3.2)
+Collecting urllib3<3,>=1.26
+  Using cached urllib3-2.7.0-py3-none-any.whl (131 kB)
+Collecting w3lib
+  Downloading w3lib-2.4.1-py3-none-any.whl (21 kB)
+Collecting pyppeteer>=0.0.14
+  Downloading pyppeteer-2.0.0-py3-none-any.whl (82 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.9/82.9 KB 2.7 MB/s eta 0:00:00
+Collecting parse
+  Downloading parse-1.22.1-py2.py3-none-any.whl (20 kB)
+Requirement already satisfied: fake-useragent in ./venv/lib/python3.10/site-packages (from requests_html->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (0.1.14)
+Collecting pyquery
+  Downloading pyquery-2.0.1-py3-none-any.whl (22 kB)
+Collecting tqdm<5.0.0,>=4.42.1
+  Using cached tqdm-4.67.3-py3-none-any.whl (78 kB)
+Collecting importlib-metadata>=1.4
+  Using cached importlib_metadata-9.0.0-py3-none-any.whl (27 kB)
+Collecting websockets<11.0,>=10.0
+  Downloading websockets-10.4-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (106 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 106.8/106.8 KB 4.5 MB/s eta 0:00:00
+Collecting pyee<12.0.0,>=11.0.0
+  Downloading pyee-11.1.1-py3-none-any.whl (15 kB)
+Requirement already satisfied: appdirs<2.0.0,>=1.4.3 in ./venv/lib/python3.10/site-packages (from pyppeteer>=0.0.14->requests_html->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (1.4.4)
+Collecting urllib3<3,>=1.26
+  Using cached urllib3-1.26.20-py2.py3-none-any.whl (144 kB)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.10/site-packages (from beautifulsoup4->bs4->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (2.8.4)
+Collecting lxml>=2.1
+  Downloading lxml-6.1.1-cp310-cp310-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (5.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.3/5.3 MB 3.9 MB/s eta 0:00:00
+Requirement already satisfied: cssselect>=1.2.0 in ./venv/lib/python3.10/site-packages (from pyquery->requests_html->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (1.2.0)
+Collecting zipp>=3.20
+  Using cached zipp-4.1.0-py3-none-any.whl (10 kB)
+Requirement already satisfied: typing-extensions in ./venv/lib/python3.10/site-packages (from pyee<12.0.0,>=11.0.0->pyppeteer>=0.0.14->requests_html->gogoanime-api@ git+https://github.com/Awesome-RJ/GoGoAnimeAPI.git@4ce02796cc97ff8e86da22452f87b6f916a0420b) (4.15.0)
+Using legacy 'setup.py install' for gogoanime-api, since package 'wheel' is not installed.
+Installing collected packages: parse, zipp, websockets, w3lib, urllib3, tqdm, pyee, lxml, requests, pyquery, importlib-metadata, pyppeteer, requests_html, gogoanime-api
+  Running setup.py install for gogoanime-api: started
+  Running setup.py install for gogoanime-api: finished with status 'done'
+Successfully installed gogoanime-api-1.2.458 importlib-metadata-9.0.0 lxml-6.1.1 parse-1.22.1 pyee-11.1.1 pyppeteer-2.0.0 pyquery-2.0.1 requests-2.34.2 requests_html-0.10.0 tqdm-4.67.3 urllib3-1.26.20 w3lib-2.4.1 websockets-10.4 zipp-4.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting google==3.0.0
+  Using cached google-3.0.0-py2.py3-none-any.whl (45 kB)
+Requirement already satisfied: beautifulsoup4 in ./venv/lib/python3.10/site-packages (from google==3.0.0) (4.12.3)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.10/site-packages (from beautifulsoup4->google==3.0.0) (2.8.4)
+Installing collected packages: google
+Successfully installed google-3.0.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting google-api-core==1.34.1
+  Using cached google_api_core-1.34.1-py3-none-any.whl (120 kB)
+Requirement already satisfied: requests<3.0.0dev,>=2.18.0 in ./venv/lib/python3.10/site-packages (from google-api-core==1.34.1) (2.34.2)
+Collecting protobuf!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<4.0.0dev,>=3.19.5
+  Using cached protobuf-3.20.3-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (1.1 MB)
+Collecting googleapis-common-protos<2.0dev,>=1.56.2
+  Using cached googleapis_common_protos-1.75.0-py3-none-any.whl (300 kB)
+Collecting google-auth<3.0dev,>=1.25.0
+  Using cached google_auth-2.53.0-py3-none-any.whl (246 kB)
+Collecting pyasn1-modules>=0.2.1
+  Using cached pyasn1_modules-0.4.2-py3-none-any.whl (181 kB)
+Requirement already satisfied: cryptography>=38.0.3 in ./venv/lib/python3.10/site-packages (from google-auth<3.0dev,>=1.25.0->google-api-core==1.34.1) (42.0.8)
+Collecting googleapis-common-protos<2.0dev,>=1.56.2
+  Downloading googleapis_common_protos-1.74.0-py3-none-any.whl (300 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 300.7/300.7 KB 5.0 MB/s eta 0:00:00
+  Downloading googleapis_common_protos-1.73.1-py3-none-any.whl (297 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 297.6/297.6 KB 7.4 MB/s eta 0:00:00
+  Downloading googleapis_common_protos-1.73.0-py3-none-any.whl (297 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 297.6/297.6 KB 10.8 MB/s eta 0:00:00
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests<3.0.0dev,>=2.18.0->google-api-core==1.34.1) (2024.6.2)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests<3.0.0dev,>=2.18.0->google-api-core==1.34.1) (3.3.2)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.10/site-packages (from requests<3.0.0dev,>=2.18.0->google-api-core==1.34.1) (1.26.20)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests<3.0.0dev,>=2.18.0->google-api-core==1.34.1) (3.17)
+Requirement already satisfied: cffi>=1.12 in ./venv/lib/python3.10/site-packages (from cryptography>=38.0.3->google-auth<3.0dev,>=1.25.0->google-api-core==1.34.1) (1.16.0)
+Collecting pyasn1<0.7.0,>=0.6.1
+  Downloading pyasn1-0.6.3-py3-none-any.whl (83 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 84.0/84.0 KB 2.4 MB/s eta 0:00:00
+Requirement already satisfied: pycparser in ./venv/lib/python3.10/site-packages (from cffi>=1.12->cryptography>=38.0.3->google-auth<3.0dev,>=1.25.0->google-api-core==1.34.1) (3.0)
+Installing collected packages: pyasn1, protobuf, pyasn1-modules, googleapis-common-protos, google-auth, google-api-core
+Successfully installed google-api-core-1.34.1 google-auth-2.53.0 googleapis-common-protos-1.73.0 protobuf-3.20.3 pyasn1-0.6.3 pyasn1-modules-0.4.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting google-api-python-client==1.8.0
+  Using cached google_api_python_client-1.8.0-py3-none-any.whl (57 kB)
+Requirement already satisfied: six<2dev,>=1.6.1 in ./venv/lib/python3.10/site-packages (from google-api-python-client==1.8.0) (1.17.0)
+Collecting uritemplate<4dev,>=3.0.0
+  Using cached uritemplate-3.0.1-py2.py3-none-any.whl (15 kB)
+Collecting httplib2<1dev,>=0.9.2
+  Using cached httplib2-0.31.2-py3-none-any.whl (91 kB)
+Requirement already satisfied: google-api-core<2dev,>=1.13.0 in ./venv/lib/python3.10/site-packages (from google-api-python-client==1.8.0) (1.34.1)
+Collecting google-auth-httplib2>=0.0.3
+  Using cached google_auth_httplib2-0.4.0-py3-none-any.whl (9.5 kB)
+Requirement already satisfied: google-auth>=1.4.1 in ./venv/lib/python3.10/site-packages (from google-api-python-client==1.8.0) (2.53.0)
+Requirement already satisfied: protobuf!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<4.0.0dev,>=3.19.5 in ./venv/lib/python3.10/site-packages (from google-api-core<2dev,>=1.13.0->google-api-python-client==1.8.0) (3.20.3)
+Requirement already satisfied: googleapis-common-protos<2.0dev,>=1.56.2 in ./venv/lib/python3.10/site-packages (from google-api-core<2dev,>=1.13.0->google-api-python-client==1.8.0) (1.73.0)
+Requirement already satisfied: requests<3.0.0dev,>=2.18.0 in ./venv/lib/python3.10/site-packages (from google-api-core<2dev,>=1.13.0->google-api-python-client==1.8.0) (2.34.2)
+Requirement already satisfied: pyasn1-modules>=0.2.1 in ./venv/lib/python3.10/site-packages (from google-auth>=1.4.1->google-api-python-client==1.8.0) (0.4.2)
+Requirement already satisfied: cryptography>=38.0.3 in ./venv/lib/python3.10/site-packages (from google-auth>=1.4.1->google-api-python-client==1.8.0) (42.0.8)
+Collecting pyparsing<4,>=3.1
+  Using cached pyparsing-3.3.2-py3-none-any.whl (122 kB)
+Requirement already satisfied: cffi>=1.12 in ./venv/lib/python3.10/site-packages (from cryptography>=38.0.3->google-auth>=1.4.1->google-api-python-client==1.8.0) (1.16.0)
+Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in ./venv/lib/python3.10/site-packages (from pyasn1-modules>=0.2.1->google-auth>=1.4.1->google-api-python-client==1.8.0) (0.6.3)
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests<3.0.0dev,>=2.18.0->google-api-core<2dev,>=1.13.0->google-api-python-client==1.8.0) (2024.6.2)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests<3.0.0dev,>=2.18.0->google-api-core<2dev,>=1.13.0->google-api-python-client==1.8.0) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests<3.0.0dev,>=2.18.0->google-api-core<2dev,>=1.13.0->google-api-python-client==1.8.0) (3.17)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.10/site-packages (from requests<3.0.0dev,>=2.18.0->google-api-core<2dev,>=1.13.0->google-api-python-client==1.8.0) (1.26.20)
+Requirement already satisfied: pycparser in ./venv/lib/python3.10/site-packages (from cffi>=1.12->cryptography>=38.0.3->google-auth>=1.4.1->google-api-python-client==1.8.0) (3.0)
+Installing collected packages: uritemplate, pyparsing, httplib2, google-auth-httplib2, google-api-python-client
+Successfully installed google-api-python-client-1.8.0 google-auth-httplib2-0.4.0 httplib2-0.31.2 pyparsing-3.3.2 uritemplate-3.0.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting google-auth==2.30.0
+  Downloading google_auth-2.30.0-py2.py3-none-any.whl (193 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 193.7/193.7 KB 3.6 MB/s eta 0:00:00
+Collecting rsa<5,>=3.1.4
+  Using cached rsa-4.9.1-py3-none-any.whl (34 kB)
+Requirement already satisfied: pyasn1-modules>=0.2.1 in ./venv/lib/python3.10/site-packages (from google-auth==2.30.0) (0.4.2)
+Requirement already satisfied: cachetools<6.0,>=2.0.0 in ./venv/lib/python3.10/site-packages (from google-auth==2.30.0) (5.0.0)
+Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in ./venv/lib/python3.10/site-packages (from pyasn1-modules>=0.2.1->google-auth==2.30.0) (0.6.3)
+Installing collected packages: rsa, google-auth
+  Attempting uninstall: google-auth
+    Found existing installation: google-auth 2.53.0
+    Uninstalling google-auth-2.53.0:
+      Successfully uninstalled google-auth-2.53.0
+Successfully installed google-auth-2.30.0 rsa-4.9.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting google-auth-httplib2==0.2.0
+  Downloading google_auth_httplib2-0.2.0-py2.py3-none-any.whl (9.3 kB)
+Requirement already satisfied: google-auth in ./venv/lib/python3.10/site-packages (from google-auth-httplib2==0.2.0) (2.30.0)
+Requirement already satisfied: httplib2>=0.19.0 in ./venv/lib/python3.10/site-packages (from google-auth-httplib2==0.2.0) (0.31.2)
+Requirement already satisfied: pyparsing<4,>=3.1 in ./venv/lib/python3.10/site-packages (from httplib2>=0.19.0->google-auth-httplib2==0.2.0) (3.3.2)
+Requirement already satisfied: pyasn1-modules>=0.2.1 in ./venv/lib/python3.10/site-packages (from google-auth->google-auth-httplib2==0.2.0) (0.4.2)
+Requirement already satisfied: cachetools<6.0,>=2.0.0 in ./venv/lib/python3.10/site-packages (from google-auth->google-auth-httplib2==0.2.0) (5.0.0)
+Requirement already satisfied: rsa<5,>=3.1.4 in ./venv/lib/python3.10/site-packages (from google-auth->google-auth-httplib2==0.2.0) (4.9.1)
+Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in ./venv/lib/python3.10/site-packages (from pyasn1-modules>=0.2.1->google-auth->google-auth-httplib2==0.2.0) (0.6.3)
+Installing collected packages: google-auth-httplib2
+  Attempting uninstall: google-auth-httplib2
+    Found existing installation: google-auth-httplib2 0.4.0
+    Uninstalling google-auth-httplib2-0.4.0:
+      Successfully uninstalled google-auth-httplib2-0.4.0
+Successfully installed google-auth-httplib2-0.2.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting google-auth-oauthlib==1.2.0
+  Downloading google_auth_oauthlib-1.2.0-py2.py3-none-any.whl (24 kB)
+Collecting requests-oauthlib>=0.7.0
+  Using cached requests_oauthlib-2.0.0-py2.py3-none-any.whl (24 kB)
+Requirement already satisfied: google-auth>=2.15.0 in ./venv/lib/python3.10/site-packages (from google-auth-oauthlib==1.2.0) (2.30.0)
+Requirement already satisfied: cachetools<6.0,>=2.0.0 in ./venv/lib/python3.10/site-packages (from google-auth>=2.15.0->google-auth-oauthlib==1.2.0) (5.0.0)
+Requirement already satisfied: pyasn1-modules>=0.2.1 in ./venv/lib/python3.10/site-packages (from google-auth>=2.15.0->google-auth-oauthlib==1.2.0) (0.4.2)
+Requirement already satisfied: rsa<5,>=3.1.4 in ./venv/lib/python3.10/site-packages (from google-auth>=2.15.0->google-auth-oauthlib==1.2.0) (4.9.1)
+Requirement already satisfied: requests>=2.0.0 in ./venv/lib/python3.10/site-packages (from requests-oauthlib>=0.7.0->google-auth-oauthlib==1.2.0) (2.34.2)
+Collecting oauthlib>=3.0.0
+  Using cached oauthlib-3.3.1-py3-none-any.whl (160 kB)
+Requirement already satisfied: pyasn1<0.7.0,>=0.6.1 in ./venv/lib/python3.10/site-packages (from pyasn1-modules>=0.2.1->google-auth>=2.15.0->google-auth-oauthlib==1.2.0) (0.6.3)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.10/site-packages (from requests>=2.0.0->requests-oauthlib>=0.7.0->google-auth-oauthlib==1.2.0) (1.26.20)
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests>=2.0.0->requests-oauthlib>=0.7.0->google-auth-oauthlib==1.2.0) (2024.6.2)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests>=2.0.0->requests-oauthlib>=0.7.0->google-auth-oauthlib==1.2.0) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests>=2.0.0->requests-oauthlib>=0.7.0->google-auth-oauthlib==1.2.0) (3.17)
+Installing collected packages: oauthlib, requests-oauthlib, google-auth-oauthlib
+Successfully installed google-auth-oauthlib-1.2.0 oauthlib-3.3.1 requests-oauthlib-2.0.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting google-trans-new==1.1.9
+  Using cached google_trans_new-1.1.9-py3-none-any.whl (9.2 kB)
+Installing collected packages: google-trans-new
+Successfully installed google-trans-new-1.1.9
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting google_images_download==2.8.0
+  Downloading google_images_download-2.8.0.tar.gz (14 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting selenium
+  Downloading selenium-4.44.0-py3-none-any.whl (9.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.7/9.7 MB 3.8 MB/s eta 0:00:00
+Collecting certifi>=2026.2.25
+  Using cached certifi-2026.5.20-py3-none-any.whl (134 kB)
+Collecting trio-websocket<1.0,>=0.12.2
+  Using cached trio_websocket-0.12.2-py3-none-any.whl (21 kB)
+Collecting urllib3[socks]<3.0,>=2.6.3
+  Using cached urllib3-2.7.0-py3-none-any.whl (131 kB)
+Requirement already satisfied: typing_extensions<5.0,>=4.15.0 in ./venv/lib/python3.10/site-packages (from selenium->google_images_download==2.8.0) (4.15.0)
+Collecting trio<1.0,>=0.31.0
+  Using cached trio-0.33.0-py3-none-any.whl (510 kB)
+Collecting websocket-client<2.0,>=1.8.0
+  Downloading websocket_client-1.9.0-py3-none-any.whl (82 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 82.6/82.6 KB 1.0 MB/s eta 0:00:00
+Collecting outcome
+  Using cached outcome-1.3.0.post0-py2.py3-none-any.whl (10 kB)
+Collecting sortedcontainers
+  Using cached sortedcontainers-2.4.0-py2.py3-none-any.whl (29 kB)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from trio<1.0,>=0.31.0->selenium->google_images_download==2.8.0) (1.2.1)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from trio<1.0,>=0.31.0->selenium->google_images_download==2.8.0) (3.17)
+Requirement already satisfied: attrs>=23.2.0 in ./venv/lib/python3.10/site-packages (from trio<1.0,>=0.31.0->selenium->google_images_download==2.8.0) (23.2.0)
+Requirement already satisfied: sniffio>=1.3.0 in ./venv/lib/python3.10/site-packages (from trio<1.0,>=0.31.0->selenium->google_images_download==2.8.0) (1.3.1)
+Collecting wsproto>=0.14
+  Using cached wsproto-1.3.2-py3-none-any.whl (24 kB)
+Collecting pysocks!=1.5.7,<2.0,>=1.5.6
+  Using cached PySocks-1.7.1-py3-none-any.whl (16 kB)
+Collecting h11<1,>=0.16.0
+  Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Using legacy 'setup.py install' for google_images_download, since package 'wheel' is not installed.
+Installing collected packages: sortedcontainers, websocket-client, urllib3, pysocks, outcome, h11, certifi, wsproto, trio, trio-websocket, selenium, google_images_download
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 1.26.20
+    Uninstalling urllib3-1.26.20:
+      Successfully uninstalled urllib3-1.26.20
+  Attempting uninstall: certifi
+    Found existing installation: certifi 2024.6.2
+    Uninstalling certifi-2024.6.2:
+      Successfully uninstalled certifi-2024.6.2
+  Running setup.py install for google_images_download: started
+  Running setup.py install for google_images_download: finished with status 'done'
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+pyppeteer 2.0.0 requires urllib3<2.0.0,>=1.25.8, but you have urllib3 2.7.0 which is incompatible.
+Successfully installed certifi-2026.5.20 google_images_download-2.8.0 h11-0.16.0 outcome-1.3.0.post0 pysocks-1.7.1 selenium-4.44.0 sortedcontainers-2.4.0 trio-0.33.0 trio-websocket-0.12.2 urllib3-2.7.0 websocket-client-1.9.0 wsproto-1.3.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting googleapis-common-protos==1.63.1
+  Downloading googleapis_common_protos-1.63.1-py2.py3-none-any.whl (229 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 229.2/229.2 KB 4.2 MB/s eta 0:00:00
+Requirement already satisfied: protobuf!=3.20.0,!=3.20.1,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<6.0.0.dev0,>=3.19.5 in ./venv/lib/python3.10/site-packages (from googleapis-common-protos==1.63.1) (3.20.3)
+Installing collected packages: googleapis-common-protos
+  Attempting uninstall: googleapis-common-protos
+    Found existing installation: googleapis-common-protos 1.73.0
+    Uninstalling googleapis-common-protos-1.73.0:
+      Successfully uninstalled googleapis-common-protos-1.73.0
+Successfully installed googleapis-common-protos-1.63.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting googletrans==2.4.0
+  Using cached googletrans-2.4.0.tar.gz (17 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Requirement already satisfied: requests in ./venv/lib/python3.10/site-packages (from googletrans==2.4.0) (2.34.2)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests->googletrans==2.4.0) (3.17)
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests->googletrans==2.4.0) (2026.5.20)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.10/site-packages (from requests->googletrans==2.4.0) (2.7.0)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests->googletrans==2.4.0) (3.3.2)
+Using legacy 'setup.py install' for googletrans, since package 'wheel' is not installed.
+Installing collected packages: googletrans
+  Running setup.py install for googletrans: started
+  Running setup.py install for googletrans: finished with status 'done'
+Successfully installed googletrans-2.4.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting goslate==1.5.4
+  Using cached goslate-1.5.4-py3-none-any.whl
+Requirement already satisfied: futures in ./venv/lib/python3.10/site-packages (from goslate==1.5.4) (3.0.5)
+Installing collected packages: goslate
+Successfully installed goslate-1.5.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting gpytranslate==0.2.2
+  Using cached gpytranslate-0.2.2-py3-none-any.whl (16 kB)
+Collecting httpx
+  Using cached httpx-0.28.1-py3-none-any.whl (73 kB)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from httpx->gpytranslate==0.2.2) (3.17)
+Requirement already satisfied: certifi in ./venv/lib/python3.10/site-packages (from httpx->gpytranslate==0.2.2) (2026.5.20)
+Collecting httpcore==1.*
+  Using cached httpcore-1.0.9-py3-none-any.whl (78 kB)
+Requirement already satisfied: anyio in ./venv/lib/python3.10/site-packages (from httpx->gpytranslate==0.2.2) (3.7.1)
+Requirement already satisfied: h11>=0.16 in ./venv/lib/python3.10/site-packages (from httpcore==1.*->httpx->gpytranslate==0.2.2) (0.16.0)
+Requirement already satisfied: sniffio>=1.1 in ./venv/lib/python3.10/site-packages (from anyio->httpx->gpytranslate==0.2.2) (1.3.1)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from anyio->httpx->gpytranslate==0.2.2) (1.2.1)
+Installing collected packages: httpcore, httpx, gpytranslate
+Successfully installed gpytranslate-0.2.2 httpcore-1.0.9 httpx-0.28.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting gsearch==1.6.0
+  Using cached gsearch-1.6.0-py2.py3-none-any.whl (13 kB)
+Installing collected packages: gsearch
+Successfully installed gsearch-1.6.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting gTTS==2.5.1
+  Downloading gTTS-2.5.1-py3-none-any.whl (29 kB)
+Requirement already satisfied: click<8.2,>=7.1 in ./venv/lib/python3.10/site-packages (from gTTS==2.5.1) (8.1.7)
+Requirement already satisfied: requests<3,>=2.27 in ./venv/lib/python3.10/site-packages (from gTTS==2.5.1) (2.34.2)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.10/site-packages (from requests<3,>=2.27->gTTS==2.5.1) (2.7.0)
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests<3,>=2.27->gTTS==2.5.1) (2026.5.20)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests<3,>=2.27->gTTS==2.5.1) (3.17)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests<3,>=2.27->gTTS==2.5.1) (3.3.2)
+Installing collected packages: gTTS
+Successfully installed gTTS-2.5.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting gunicorn==20.1.0
+  Using cached gunicorn-20.1.0-py3-none-any.whl (79 kB)
+Requirement already satisfied: setuptools>=3.0 in ./venv/lib/python3.10/site-packages (from gunicorn==20.1.0) (58.1.0)
+Installing collected packages: gunicorn
+Successfully installed gunicorn-20.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting h11==0.14.0
+  Downloading h11-0.14.0-py3-none-any.whl (58 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.3/58.3 KB 1.1 MB/s eta 0:00:00
+Installing collected packages: h11
+  Attempting uninstall: h11
+    Found existing installation: h11 0.16.0
+    Uninstalling h11-0.16.0:
+      Successfully uninstalled h11-0.16.0
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+wsproto 1.3.2 requires h11<1,>=0.16.0, but you have h11 0.14.0 which is incompatible.
+httpcore 1.0.9 requires h11>=0.16, but you have h11 0.14.0 which is incompatible.
+Successfully installed h11-0.14.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting h2==4.1.0
+  Downloading h2-4.1.0-py3-none-any.whl (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.5/57.5 KB 1.1 MB/s eta 0:00:00
+Collecting hpack<5,>=4.0
+  Using cached hpack-4.1.0-py3-none-any.whl (34 kB)
+Collecting hyperframe<7,>=6.0
+  Using cached hyperframe-6.1.0-py3-none-any.whl (13 kB)
+Installing collected packages: hyperframe, hpack, h2
+Successfully installed h2-4.1.0 hpack-4.1.0 hyperframe-6.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting heroku3==5.2.1
+  Using cached heroku3-5.2.1-py2.py3-none-any.whl (161 kB)
+Requirement already satisfied: requests>=1.2.3 in ./venv/lib/python3.10/site-packages (from heroku3==5.2.1) (2.34.2)
+Requirement already satisfied: python-dateutil>=2.6.0 in ./venv/lib/python3.10/site-packages (from heroku3==5.2.1) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in ./venv/lib/python3.10/site-packages (from python-dateutil>=2.6.0->heroku3==5.2.1) (1.17.0)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.10/site-packages (from requests>=1.2.3->heroku3==5.2.1) (2.7.0)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests>=1.2.3->heroku3==5.2.1) (3.17)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests>=1.2.3->heroku3==5.2.1) (3.3.2)
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests>=1.2.3->heroku3==5.2.1) (2026.5.20)
+Installing collected packages: heroku3
+Successfully installed heroku3-5.2.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting hpack==4.0.0
+  Downloading hpack-4.0.0-py3-none-any.whl (32 kB)
+Installing collected packages: hpack
+  Attempting uninstall: hpack
+    Found existing installation: hpack 4.1.0
+    Uninstalling hpack-4.1.0:
+      Successfully uninstalled hpack-4.1.0
+Successfully installed hpack-4.0.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting html2text==2024.2.26
+  Using cached html2text-2024.2.26.tar.gz (56 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Using legacy 'setup.py install' for html2text, since package 'wheel' is not installed.
+Installing collected packages: html2text
+  Running setup.py install for html2text: started
+  Running setup.py install for html2text: finished with status 'done'
+Successfully installed html2text-2024.2.26
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting httpcore==1.0.5
+  Downloading httpcore-1.0.5-py3-none-any.whl (77 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 77.9/77.9 KB 1.7 MB/s eta 0:00:00
+Requirement already satisfied: certifi in ./venv/lib/python3.10/site-packages (from httpcore==1.0.5) (2026.5.20)
+Requirement already satisfied: h11<0.15,>=0.13 in ./venv/lib/python3.10/site-packages (from httpcore==1.0.5) (0.14.0)
+Installing collected packages: httpcore
+  Attempting uninstall: httpcore
+    Found existing installation: httpcore 1.0.9
+    Uninstalling httpcore-1.0.9:
+      Successfully uninstalled httpcore-1.0.9
+Successfully installed httpcore-1.0.5
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting httplib2==0.22.0
+  Downloading httplib2-0.22.0-py3-none-any.whl (96 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.9/96.9 KB 2.1 MB/s eta 0:00:00
+Requirement already satisfied: pyparsing!=3.0.0,!=3.0.1,!=3.0.2,!=3.0.3,<4,>=2.4.2 in ./venv/lib/python3.10/site-packages (from httplib2==0.22.0) (3.3.2)
+Installing collected packages: httplib2
+  Attempting uninstall: httplib2
+    Found existing installation: httplib2 0.31.2
+    Uninstalling httplib2-0.31.2:
+      Successfully uninstalled httplib2-0.31.2
+Successfully installed httplib2-0.22.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting httpx==0.27.0
+  Using cached httpx-0.27.0-py3-none-any.whl (75 kB)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from httpx==0.27.0) (3.17)
+Requirement already satisfied: certifi in ./venv/lib/python3.10/site-packages (from httpx==0.27.0) (2026.5.20)
+Requirement already satisfied: httpcore==1.* in ./venv/lib/python3.10/site-packages (from httpx==0.27.0) (1.0.5)
+Requirement already satisfied: sniffio in ./venv/lib/python3.10/site-packages (from httpx==0.27.0) (1.3.1)
+Requirement already satisfied: anyio in ./venv/lib/python3.10/site-packages (from httpx==0.27.0) (3.7.1)
+Requirement already satisfied: h11<0.15,>=0.13 in ./venv/lib/python3.10/site-packages (from httpcore==1.*->httpx==0.27.0) (0.14.0)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from anyio->httpx==0.27.0) (1.2.1)
+Installing collected packages: httpx
+  Attempting uninstall: httpx
+    Found existing installation: httpx 0.28.1
+    Uninstalling httpx-0.28.1:
+      Successfully uninstalled httpx-0.28.1
+Successfully installed httpx-0.27.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting hyperframe==6.0.1
+  Downloading hyperframe-6.0.1-py3-none-any.whl (12 kB)
+Installing collected packages: hyperframe
+  Attempting uninstall: hyperframe
+    Found existing installation: hyperframe 6.1.0
+    Uninstalling hyperframe-6.1.0:
+      Successfully uninstalled hyperframe-6.1.0
+Successfully installed hyperframe-6.0.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting idna==3.7
+  Downloading idna-3.7-py3-none-any.whl (66 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.8/66.8 KB 1.6 MB/s eta 0:00:00
+Installing collected packages: idna
+  Attempting uninstall: idna
+    Found existing installation: idna 3.17
+    Uninstalling idna-3.17:
+      Successfully uninstalled idna-3.17
+Successfully installed idna-3.7
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting importlib_metadata==7.1.0
+  Downloading importlib_metadata-7.1.0-py3-none-any.whl (24 kB)
+Requirement already satisfied: zipp>=0.5 in ./venv/lib/python3.10/site-packages (from importlib_metadata==7.1.0) (4.1.0)
+Installing collected packages: importlib_metadata
+  Attempting uninstall: importlib_metadata
+    Found existing installation: importlib_metadata 9.0.0
+    Uninstalling importlib_metadata-9.0.0:
+      Successfully uninstalled importlib_metadata-9.0.0
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+pyppeteer 2.0.0 requires urllib3<2.0.0,>=1.25.8, but you have urllib3 2.7.0 which is incompatible.
+Successfully installed importlib_metadata-7.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: itsdangerous==2.2.0 in ./venv/lib/python3.10/site-packages (2.2.0)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting jikanpy==4.3.2
+  Using cached jikanpy-4.3.2-py3-none-any.whl (16 kB)
+Requirement already satisfied: aiohttp in ./venv/lib/python3.10/site-packages (from jikanpy==4.3.2) (3.7.3)
+Requirement already satisfied: requests in ./venv/lib/python3.10/site-packages (from jikanpy==4.3.2) (2.34.2)
+Collecting simplejson
+  Using cached simplejson-4.1.1-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (168 kB)
+Requirement already satisfied: typing_extensions>=3.6.5 in ./venv/lib/python3.10/site-packages (from aiohttp->jikanpy==4.3.2) (4.15.0)
+Requirement already satisfied: multidict<7.0,>=4.5 in ./venv/lib/python3.10/site-packages (from aiohttp->jikanpy==4.3.2) (6.7.1)
+Requirement already satisfied: yarl<2.0,>=1.0 in ./venv/lib/python3.10/site-packages (from aiohttp->jikanpy==4.3.2) (1.24.2)
+Requirement already satisfied: attrs>=17.3.0 in ./venv/lib/python3.10/site-packages (from aiohttp->jikanpy==4.3.2) (23.2.0)
+Requirement already satisfied: chardet<4.0,>=2.0 in ./venv/lib/python3.10/site-packages (from aiohttp->jikanpy==4.3.2) (3.0.4)
+Requirement already satisfied: async_timeout<4.0,>=3.0 in ./venv/lib/python3.10/site-packages (from aiohttp->jikanpy==4.3.2) (3.0.1)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests->jikanpy==4.3.2) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests->jikanpy==4.3.2) (3.7)
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests->jikanpy==4.3.2) (2026.5.20)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.10/site-packages (from requests->jikanpy==4.3.2) (2.7.0)
+Requirement already satisfied: propcache>=0.2.1 in ./venv/lib/python3.10/site-packages (from yarl<2.0,>=1.0->aiohttp->jikanpy==4.3.2) (0.5.2)
+Installing collected packages: simplejson, jikanpy
+Successfully installed jikanpy-4.3.2 simplejson-4.1.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting Jinja2==3.1.4
+  Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 133.3/133.3 KB 2.9 MB/s eta 0:00:00
+Requirement already satisfied: MarkupSafe>=2.0 in ./venv/lib/python3.10/site-packages (from Jinja2==3.1.4) (3.0.3)
+Installing collected packages: Jinja2
+  Attempting uninstall: Jinja2
+    Found existing installation: Jinja2 3.1.6
+    Uninstalling Jinja2-3.1.6:
+      Successfully uninstalled Jinja2-3.1.6
+Successfully installed Jinja2-3.1.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting joblib==1.4.2
+  Downloading joblib-1.4.2-py3-none-any.whl (301 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 301.8/301.8 KB 5.1 MB/s eta 0:00:00
+Installing collected packages: joblib
+Successfully installed joblib-1.4.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting lxml==4.9.4
+  Using cached lxml-4.9.4-cp310-cp310-manylinux_2_28_x86_64.whl (7.9 MB)
+Installing collected packages: lxml
+  Attempting uninstall: lxml
+    Found existing installation: lxml 6.1.1
+    Uninstalling lxml-6.1.1:
+      Successfully uninstalled lxml-6.1.1
+Successfully installed lxml-4.9.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting markdown2==2.4.13
+  Downloading markdown2-2.4.13-py2.py3-none-any.whl (41 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.3/41.3 KB 203.7 kB/s eta 0:00:00
+Installing collected packages: markdown2
+Successfully installed markdown2-2.4.13
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting MarkupSafe==2.1.5
+  Downloading MarkupSafe-2.1.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (25 kB)
+Installing collected packages: MarkupSafe
+  Attempting uninstall: MarkupSafe
+    Found existing installation: MarkupSafe 3.0.3
+    Uninstalling MarkupSafe-3.0.3:
+      Successfully uninstalled MarkupSafe-3.0.3
+Successfully installed MarkupSafe-2.1.5
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting motor==2.5.1
+  Using cached motor-2.5.1-py3-none-any.whl (55 kB)
+Collecting pymongo<4,>=3.12
+  Downloading pymongo-3.13.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (516 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 516.2/516.2 KB 8.0 MB/s eta 0:00:00
+Installing collected packages: pymongo, motor
+Successfully installed motor-2.5.1 pymongo-3.13.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting multidict==6.0.5
+  Downloading multidict-6.0.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (124 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 124.3/124.3 KB 2.7 MB/s eta 0:00:00
+Installing collected packages: multidict
+  Attempting uninstall: multidict
+    Found existing installation: multidict 6.7.1
+    Uninstalling multidict-6.7.1:
+      Successfully uninstalled multidict-6.7.1
+Successfully installed multidict-6.0.5
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting nltk==3.7
+  Using cached nltk-3.7-py3-none-any.whl (1.5 MB)
+Requirement already satisfied: joblib in ./venv/lib/python3.10/site-packages (from nltk==3.7) (1.4.2)
+Requirement already satisfied: regex>=2021.8.3 in ./venv/lib/python3.10/site-packages (from nltk==3.7) (2026.5.9)
+Requirement already satisfied: tqdm in ./venv/lib/python3.10/site-packages (from nltk==3.7) (4.67.3)
+Requirement already satisfied: click in ./venv/lib/python3.10/site-packages (from nltk==3.7) (8.1.7)
+Installing collected packages: nltk
+Successfully installed nltk-3.7
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting numpy==2.0.0
+  Downloading numpy-2.0.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (19.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 19.3/19.3 MB 1.4 MB/s eta 0:00:00
+Installing collected packages: numpy
+Successfully installed numpy-2.0.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting oauthlib==3.2.2
+  Downloading oauthlib-3.2.2-py3-none-any.whl (151 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 151.7/151.7 KB 1.9 MB/s eta 0:00:00
+Installing collected packages: oauthlib
+  Attempting uninstall: oauthlib
+    Found existing installation: oauthlib 3.3.1
+    Uninstalling oauthlib-3.3.1:
+      Successfully uninstalled oauthlib-3.3.1
+Successfully installed oauthlib-3.2.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting odmantic==0.4.0
+  Using cached ODMantic-0.4.0-py3-none-any.whl (32 kB)
+Requirement already satisfied: motor<2.6.0,>=2.1.0 in ./venv/lib/python3.10/site-packages (from odmantic==0.4.0) (2.5.1)
+Collecting pydantic!=1.7,!=1.7.1,!=1.7.2,!=1.7.3,!=1.8,!=1.8.1,<1.9.0,>=1.6.2
+  Using cached pydantic-1.8.2-py3-none-any.whl (126 kB)
+Requirement already satisfied: pymongo<4,>=3.12 in ./venv/lib/python3.10/site-packages (from motor<2.6.0,>=2.1.0->odmantic==0.4.0) (3.13.0)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in ./venv/lib/python3.10/site-packages (from pydantic!=1.7,!=1.7.1,!=1.7.2,!=1.7.3,!=1.8,!=1.8.1,<1.9.0,>=1.6.2->odmantic==0.4.0) (4.15.0)
+Installing collected packages: pydantic, odmantic
+Successfully installed odmantic-0.4.0 pydantic-1.8.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting opencv-python==4.10.0.82
+  Downloading opencv_python-4.10.0.82-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (62.5 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.5/62.5 MB 1.4 MB/s eta 0:00:00
+Requirement already satisfied: numpy>=1.17.0 in ./venv/lib/python3.10/site-packages (from opencv-python==4.10.0.82) (2.0.0)
+Installing collected packages: opencv-python
+Successfully installed opencv-python-4.10.0.82
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: outcome==1.3.0.post0 in ./venv/lib/python3.10/site-packages (1.3.0.post0)
+Requirement already satisfied: attrs>=19.2.0 in ./venv/lib/python3.10/site-packages (from outcome==1.3.0.post0) (23.2.0)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting packaging==24.1
+  Downloading packaging-24.1-py3-none-any.whl (53 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.0/54.0 KB 1.0 MB/s eta 0:00:00
+Installing collected packages: packaging
+Successfully installed packaging-24.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting parse==1.20.2
+  Downloading parse-1.20.2-py2.py3-none-any.whl (20 kB)
+Installing collected packages: parse
+  Attempting uninstall: parse
+    Found existing installation: parse 1.22.1
+    Uninstalling parse-1.22.1:
+      Successfully uninstalled parse-1.22.1
+Successfully installed parse-1.20.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pendulum==3.0.0
+  Downloading pendulum-3.0.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (384 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 384.9/384.9 KB 6.2 MB/s eta 0:00:00
+Requirement already satisfied: python-dateutil>=2.6 in ./venv/lib/python3.10/site-packages (from pendulum==3.0.0) (2.9.0.post0)
+Collecting tzdata>=2020.1
+  Using cached tzdata-2026.2-py2.py3-none-any.whl (349 kB)
+Collecting time-machine>=2.6.0
+  Downloading time_machine-3.2.0-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (34 kB)
+Requirement already satisfied: six>=1.5 in ./venv/lib/python3.10/site-packages (from python-dateutil>=2.6->pendulum==3.0.0) (1.17.0)
+Installing collected packages: tzdata, time-machine, pendulum
+Successfully installed pendulum-3.0.0 time-machine-3.2.0 tzdata-2026.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting Pillow==9.1.0
+  Using cached Pillow-9.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.3 MB)
+Installing collected packages: Pillow
+Successfully installed Pillow-9.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pretty-errors==1.2.25
+  Using cached pretty_errors-1.2.25-py3-none-any.whl (17 kB)
+Requirement already satisfied: colorama in ./venv/lib/python3.10/site-packages (from pretty-errors==1.2.25) (0.4.6)
+Installing collected packages: pretty-errors
+Successfully installed pretty-errors-1.2.25
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: protobuf==3.20.3 in ./venv/lib/python3.10/site-packages (3.20.3)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting psutil==5.9.0
+  Downloading psutil-5.9.0-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (281 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 281.4/281.4 KB 5.0 MB/s eta 0:00:00
+Installing collected packages: psutil
+Successfully installed psutil-5.9.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting psycopg2-binary==2.9.9
+  Downloading psycopg2_binary-2.9.9-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.0/3.0 MB 4.0 MB/s eta 0:00:00
+Installing collected packages: psycopg2-binary
+Successfully installed psycopg2-binary-2.9.9
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81
+  Cloning https://github.com/python-telegram-bot/ptbcontrib.git (to revision c58c52ecee33b0ab50dc9337d8553259e7a38e81) to /tmp/pip-install-pcplurjm/ptbcontrib_b81100709f1c44dca0b2441b939db6f2
+  Running command git clone --filter=blob:none --quiet https://github.com/python-telegram-bot/ptbcontrib.git /tmp/pip-install-pcplurjm/ptbcontrib_b81100709f1c44dca0b2441b939db6f2
+  Running command git rev-parse -q --verify 'sha^c58c52ecee33b0ab50dc9337d8553259e7a38e81'
+  Running command git fetch -q https://github.com/python-telegram-bot/ptbcontrib.git c58c52ecee33b0ab50dc9337d8553259e7a38e81
+  Running command git checkout -q c58c52ecee33b0ab50dc9337d8553259e7a38e81
+  Resolved https://github.com/python-telegram-bot/ptbcontrib.git to commit c58c52ecee33b0ab50dc9337d8553259e7a38e81
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Collecting python-telegram-bot
+  Downloading python_telegram_bot-22.7-py3-none-any.whl (745 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 745.4/745.4 KB 6.0 MB/s eta 0:00:00
+Requirement already satisfied: httpx<0.29,>=0.27 in ./venv/lib/python3.10/site-packages (from python-telegram-bot->ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81) (0.27.0)
+Requirement already satisfied: httpcore==1.* in ./venv/lib/python3.10/site-packages (from httpx<0.29,>=0.27->python-telegram-bot->ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81) (1.0.5)
+Requirement already satisfied: certifi in ./venv/lib/python3.10/site-packages (from httpx<0.29,>=0.27->python-telegram-bot->ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81) (2026.5.20)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from httpx<0.29,>=0.27->python-telegram-bot->ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81) (3.7)
+Requirement already satisfied: anyio in ./venv/lib/python3.10/site-packages (from httpx<0.29,>=0.27->python-telegram-bot->ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81) (3.7.1)
+Requirement already satisfied: sniffio in ./venv/lib/python3.10/site-packages (from httpx<0.29,>=0.27->python-telegram-bot->ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81) (1.3.1)
+Requirement already satisfied: h11<0.15,>=0.13 in ./venv/lib/python3.10/site-packages (from httpcore==1.*->httpx<0.29,>=0.27->python-telegram-bot->ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81) (0.14.0)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from anyio->httpx<0.29,>=0.27->python-telegram-bot->ptbcontrib@ git+https://github.com/python-telegram-bot/ptbcontrib.git@c58c52ecee33b0ab50dc9337d8553259e7a38e81) (1.2.1)
+Building wheels for collected packages: ptbcontrib
+  Building wheel for ptbcontrib (pyproject.toml): started
+  Building wheel for ptbcontrib (pyproject.toml): finished with status 'done'
+  Created wheel for ptbcontrib: filename=ptbcontrib-0.0.0-py3-none-any.whl size=47759 sha256=71363b55690676aa9f0d9c08777cf72043fb1772f72607a05ea466a75b6df16c
+  Stored in directory: /home/izzu/.cache/pip/wheels/dd/be/ef/18eb666420ed111c3e72ea97f208e04af99d7039b123b850b4
+Successfully built ptbcontrib
+Installing collected packages: python-telegram-bot, ptbcontrib
+Successfully installed ptbcontrib-0.0.0 python-telegram-bot-22.7
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyaes==1.6.1
+  Using cached pyaes-1.6.1-py3-none-any.whl
+Installing collected packages: pyaes
+Successfully installed pyaes-1.6.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyasn1==0.6.0
+  Downloading pyasn1-0.6.0-py2.py3-none-any.whl (85 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 85.3/85.3 KB 1.9 MB/s eta 0:00:00
+Installing collected packages: pyasn1
+  Attempting uninstall: pyasn1
+    Found existing installation: pyasn1 0.6.3
+    Uninstalling pyasn1-0.6.3:
+      Successfully uninstalled pyasn1-0.6.3
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+pyasn1-modules 0.4.2 requires pyasn1<0.7.0,>=0.6.1, but you have pyasn1 0.6.0 which is incompatible.
+Successfully installed pyasn1-0.6.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyasn1_modules==0.4.0
+  Downloading pyasn1_modules-0.4.0-py3-none-any.whl (181 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 181.2/181.2 KB 169.3 kB/s eta 0:00:00
+Requirement already satisfied: pyasn1<0.7.0,>=0.4.6 in ./venv/lib/python3.10/site-packages (from pyasn1_modules==0.4.0) (0.6.0)
+Installing collected packages: pyasn1_modules
+  Attempting uninstall: pyasn1_modules
+    Found existing installation: pyasn1_modules 0.4.2
+    Uninstalling pyasn1_modules-0.4.2:
+      Successfully uninstalled pyasn1_modules-0.4.2
+Successfully installed pyasn1_modules-0.4.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pycparser==2.22
+  Downloading pycparser-2.22-py3-none-any.whl (117 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 117.6/117.6 KB 2.6 MB/s eta 0:00:00
+Installing collected packages: pycparser
+  Attempting uninstall: pycparser
+    Found existing installation: pycparser 3.0
+    Uninstalling pycparser-3.0:
+      Successfully uninstalled pycparser-3.0
+Successfully installed pycparser-2.22
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: pydantic==1.8.2 in ./venv/lib/python3.10/site-packages (1.8.2)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in ./venv/lib/python3.10/site-packages (from pydantic==1.8.2) (4.15.0)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting PyDictionary==2.0.1
+  Using cached PyDictionary-2.0.1-py3-none-any.whl (6.1 kB)
+Requirement already satisfied: requests in ./venv/lib/python3.10/site-packages (from PyDictionary==2.0.1) (2.34.2)
+Requirement already satisfied: click in ./venv/lib/python3.10/site-packages (from PyDictionary==2.0.1) (8.1.7)
+Requirement already satisfied: goslate in ./venv/lib/python3.10/site-packages (from PyDictionary==2.0.1) (1.5.4)
+Requirement already satisfied: bs4 in ./venv/lib/python3.10/site-packages (from PyDictionary==2.0.1) (0.0.2)
+Requirement already satisfied: beautifulsoup4 in ./venv/lib/python3.10/site-packages (from bs4->PyDictionary==2.0.1) (4.12.3)
+Requirement already satisfied: futures in ./venv/lib/python3.10/site-packages (from goslate->PyDictionary==2.0.1) (3.0.5)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests->PyDictionary==2.0.1) (3.7)
+Requirement already satisfied: certifi>=2023.5.7 in ./venv/lib/python3.10/site-packages (from requests->PyDictionary==2.0.1) (2026.5.20)
+Requirement already satisfied: urllib3<3,>=1.26 in ./venv/lib/python3.10/site-packages (from requests->PyDictionary==2.0.1) (2.7.0)
+Requirement already satisfied: charset_normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests->PyDictionary==2.0.1) (3.3.2)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.10/site-packages (from beautifulsoup4->bs4->PyDictionary==2.0.1) (2.8.4)
+Installing collected packages: PyDictionary
+Successfully installed PyDictionary-2.0.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pydub==0.25.1
+  Using cached pydub-0.25.1-py2.py3-none-any.whl (32 kB)
+Installing collected packages: pydub
+Successfully installed pydub-0.25.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyee==11.1.0
+  Downloading pyee-11.1.0-py3-none-any.whl (15 kB)
+Requirement already satisfied: typing-extensions in ./venv/lib/python3.10/site-packages (from pyee==11.1.0) (4.15.0)
+Installing collected packages: pyee
+  Attempting uninstall: pyee
+    Found existing installation: pyee 11.1.1
+    Uninstalling pyee-11.1.1:
+      Successfully uninstalled pyee-11.1.1
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+pyppeteer 2.0.0 requires urllib3<2.0.0,>=1.25.8, but you have urllib3 2.7.0 which is incompatible.
+Successfully installed pyee-11.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pykeyboard==0.1.5
+  Using cached pykeyboard-0.1.5-py3-none-any.whl
+Collecting pyrogram
+  Downloading Pyrogram-2.0.106-py3-none-any.whl (3.6 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 3.4 MB/s eta 0:00:00
+Collecting tgcrypto
+  Using cached TgCrypto-1.2.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (59 kB)
+Requirement already satisfied: pyaes==1.6.1 in ./venv/lib/python3.10/site-packages (from pyrogram->pykeyboard==0.1.5) (1.6.1)
+Requirement already satisfied: pysocks==1.7.1 in ./venv/lib/python3.10/site-packages (from pyrogram->pykeyboard==0.1.5) (1.7.1)
+Installing collected packages: tgcrypto, pyrogram, pykeyboard
+Successfully installed pykeyboard-0.1.5 pyrogram-2.0.106 tgcrypto-1.2.5
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pymongo==3.12.3
+  Using cached pymongo-3.12.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (517 kB)
+Installing collected packages: pymongo
+  Attempting uninstall: pymongo
+    Found existing installation: pymongo 3.13.0
+    Uninstalling pymongo-3.13.0:
+      Successfully uninstalled pymongo-3.13.0
+Successfully installed pymongo-3.12.3
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pynewtonmath==1.0.1
+  Using cached pynewtonmath-1.0.1-py3-none-any.whl
+Installing collected packages: pynewtonmath
+Successfully installed pynewtonmath-1.0.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyOpenSSL==24.1.0
+  Downloading pyOpenSSL-24.1.0-py3-none-any.whl (56 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 56.9/56.9 KB 734.8 kB/s eta 0:00:00
+Requirement already satisfied: cryptography<43,>=41.0.5 in ./venv/lib/python3.10/site-packages (from pyOpenSSL==24.1.0) (42.0.8)
+Requirement already satisfied: cffi>=1.12 in ./venv/lib/python3.10/site-packages (from cryptography<43,>=41.0.5->pyOpenSSL==24.1.0) (1.16.0)
+Requirement already satisfied: pycparser in ./venv/lib/python3.10/site-packages (from cffi>=1.12->cryptography<43,>=41.0.5->pyOpenSSL==24.1.0) (2.22)
+Installing collected packages: pyOpenSSL
+Successfully installed pyOpenSSL-24.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyparsing==3.1.2
+  Downloading pyparsing-3.1.2-py3-none-any.whl (103 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 103.2/103.2 KB 2.2 MB/s eta 0:00:00
+Installing collected packages: pyparsing
+  Attempting uninstall: pyparsing
+    Found existing installation: pyparsing 3.3.2
+    Uninstalling pyparsing-3.3.2:
+      Successfully uninstalled pyparsing-3.3.2
+Successfully installed pyparsing-3.1.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyperclip==1.8.2
+  Downloading pyperclip-1.8.2.tar.gz (20 kB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Using legacy 'setup.py install' for pyperclip, since package 'wheel' is not installed.
+Installing collected packages: pyperclip
+  Running setup.py install for pyperclip: started
+  Running setup.py install for pyperclip: finished with status 'done'
+Successfully installed pyperclip-1.8.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: pyppeteer==2.0.0 in ./venv/lib/python3.10/site-packages (2.0.0)
+Requirement already satisfied: importlib-metadata>=1.4 in ./venv/lib/python3.10/site-packages (from pyppeteer==2.0.0) (7.1.0)
+Collecting urllib3<2.0.0,>=1.25.8
+  Using cached urllib3-1.26.20-py2.py3-none-any.whl (144 kB)
+Requirement already satisfied: certifi>=2023 in ./venv/lib/python3.10/site-packages (from pyppeteer==2.0.0) (2026.5.20)
+Requirement already satisfied: tqdm<5.0.0,>=4.42.1 in ./venv/lib/python3.10/site-packages (from pyppeteer==2.0.0) (4.67.3)
+Requirement already satisfied: websockets<11.0,>=10.0 in ./venv/lib/python3.10/site-packages (from pyppeteer==2.0.0) (10.4)
+Requirement already satisfied: pyee<12.0.0,>=11.0.0 in ./venv/lib/python3.10/site-packages (from pyppeteer==2.0.0) (11.1.0)
+Requirement already satisfied: appdirs<2.0.0,>=1.4.3 in ./venv/lib/python3.10/site-packages (from pyppeteer==2.0.0) (1.4.4)
+Requirement already satisfied: zipp>=0.5 in ./venv/lib/python3.10/site-packages (from importlib-metadata>=1.4->pyppeteer==2.0.0) (4.1.0)
+Requirement already satisfied: typing-extensions in ./venv/lib/python3.10/site-packages (from pyee<12.0.0,>=11.0.0->pyppeteer==2.0.0) (4.15.0)
+Installing collected packages: urllib3
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 2.7.0
+    Uninstalling urllib3-2.7.0:
+      Successfully uninstalled urllib3-2.7.0
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+selenium 4.44.0 requires urllib3[socks]<3.0,>=2.6.3, but you have urllib3 1.26.20 which is incompatible.
+Successfully installed urllib3-1.26.20
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyquery==2.0.0
+  Downloading pyquery-2.0.0-py3-none-any.whl (22 kB)
+Requirement already satisfied: lxml>=2.1 in ./venv/lib/python3.10/site-packages (from pyquery==2.0.0) (4.9.4)
+Requirement already satisfied: cssselect>=1.2.0 in ./venv/lib/python3.10/site-packages (from pyquery==2.0.0) (1.2.0)
+Installing collected packages: pyquery
+  Attempting uninstall: pyquery
+    Found existing installation: pyquery 2.0.1
+    Uninstalling pyquery-2.0.1:
+      Successfully uninstalled pyquery-2.0.1
+Successfully installed pyquery-2.0.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pyrate-limiter==2.8.1
+  Using cached pyrate_limiter-2.8.1-py3-none-any.whl
+Installing collected packages: pyrate-limiter
+Successfully installed pyrate-limiter-2.8.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: Pyrogram==2.0.106 in ./venv/lib/python3.10/site-packages (2.0.106)
+Requirement already satisfied: pysocks==1.7.1 in ./venv/lib/python3.10/site-packages (from Pyrogram==2.0.106) (1.7.1)
+Requirement already satisfied: pyaes==1.6.1 in ./venv/lib/python3.10/site-packages (from Pyrogram==2.0.106) (1.6.1)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: PySocks==1.7.1 in ./venv/lib/python3.10/site-packages (1.7.1)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting python-arq==6.0.3
+  Using cached python_arq-6.0.3-py3-none-any.whl (7.2 kB)
+Requirement already satisfied: dotmap in ./venv/lib/python3.10/site-packages (from python-arq==6.0.3) (1.3.30)
+Requirement already satisfied: aiohttp in ./venv/lib/python3.10/site-packages (from python-arq==6.0.3) (3.7.3)
+Requirement already satisfied: aiofiles in ./venv/lib/python3.10/site-packages (from python-arq==6.0.3) (0.8.0)
+Requirement already satisfied: pyrogram in ./venv/lib/python3.10/site-packages (from python-arq==6.0.3) (2.0.106)
+Requirement already satisfied: chardet<4.0,>=2.0 in ./venv/lib/python3.10/site-packages (from aiohttp->python-arq==6.0.3) (3.0.4)
+Requirement already satisfied: typing_extensions>=3.6.5 in ./venv/lib/python3.10/site-packages (from aiohttp->python-arq==6.0.3) (4.15.0)
+Requirement already satisfied: attrs>=17.3.0 in ./venv/lib/python3.10/site-packages (from aiohttp->python-arq==6.0.3) (23.2.0)
+Requirement already satisfied: yarl<2.0,>=1.0 in ./venv/lib/python3.10/site-packages (from aiohttp->python-arq==6.0.3) (1.24.2)
+Requirement already satisfied: async_timeout<4.0,>=3.0 in ./venv/lib/python3.10/site-packages (from aiohttp->python-arq==6.0.3) (3.0.1)
+Requirement already satisfied: multidict<7.0,>=4.5 in ./venv/lib/python3.10/site-packages (from aiohttp->python-arq==6.0.3) (6.0.5)
+Requirement already satisfied: pyaes==1.6.1 in ./venv/lib/python3.10/site-packages (from pyrogram->python-arq==6.0.3) (1.6.1)
+Requirement already satisfied: pysocks==1.7.1 in ./venv/lib/python3.10/site-packages (from pyrogram->python-arq==6.0.3) (1.7.1)
+Requirement already satisfied: propcache>=0.2.1 in ./venv/lib/python3.10/site-packages (from yarl<2.0,>=1.0->aiohttp->python-arq==6.0.3) (0.5.2)
+Requirement already satisfied: idna>=2.0 in ./venv/lib/python3.10/site-packages (from yarl<2.0,>=1.0->aiohttp->python-arq==6.0.3) (3.7)
+Installing collected packages: python-arq
+Successfully installed python-arq-6.0.3
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: python-dateutil==2.9.0.post0 in ./venv/lib/python3.10/site-packages (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in ./venv/lib/python3.10/site-packages (from python-dateutil==2.9.0.post0) (1.17.0)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting python-rapidjson==1.17
+  Downloading python_rapidjson-1.17-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.7 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 3.6 MB/s eta 0:00:00
+Installing collected packages: python-rapidjson
+Successfully installed python-rapidjson-1.17
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting python-telegram-bot==21.3
+  Downloading python_telegram_bot-21.3-py3-none-any.whl (631 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 631.6/631.6 KB 6.7 MB/s eta 0:00:00
+Requirement already satisfied: httpx~=0.27 in ./venv/lib/python3.10/site-packages (from python-telegram-bot==21.3) (0.27.0)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from httpx~=0.27->python-telegram-bot==21.3) (3.7)
+Requirement already satisfied: certifi in ./venv/lib/python3.10/site-packages (from httpx~=0.27->python-telegram-bot==21.3) (2026.5.20)
+Requirement already satisfied: sniffio in ./venv/lib/python3.10/site-packages (from httpx~=0.27->python-telegram-bot==21.3) (1.3.1)
+Requirement already satisfied: anyio in ./venv/lib/python3.10/site-packages (from httpx~=0.27->python-telegram-bot==21.3) (3.7.1)
+Requirement already satisfied: httpcore==1.* in ./venv/lib/python3.10/site-packages (from httpx~=0.27->python-telegram-bot==21.3) (1.0.5)
+Requirement already satisfied: h11<0.15,>=0.13 in ./venv/lib/python3.10/site-packages (from httpcore==1.*->httpx~=0.27->python-telegram-bot==21.3) (0.14.0)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from anyio->httpx~=0.27->python-telegram-bot==21.3) (1.2.1)
+Installing collected packages: python-telegram-bot
+  Attempting uninstall: python-telegram-bot
+    Found existing installation: python-telegram-bot 22.7
+    Uninstalling python-telegram-bot-22.7:
+      Successfully uninstalled python-telegram-bot-22.7
+Successfully installed python-telegram-bot-21.3
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pytube==15.0.0
+  Using cached pytube-15.0.0-py3-none-any.whl (57 kB)
+Installing collected packages: pytube
+Successfully installed pytube-15.0.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting pytz==2024.1
+  Downloading pytz-2024.1-py2.py3-none-any.whl (505 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 505.5/505.5 KB 6.9 MB/s eta 0:00:00
+Installing collected packages: pytz
+  Attempting uninstall: pytz
+    Found existing installation: pytz 2026.2
+    Uninstalling pytz-2026.2:
+      Successfully uninstalled pytz-2026.2
+Successfully installed pytz-2024.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting redis==4.1.4
+  Downloading redis-4.1.4-py3-none-any.whl (175 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 175.8/175.8 KB 3.2 MB/s eta 0:00:00
+Requirement already satisfied: deprecated>=1.2.3 in ./venv/lib/python3.10/site-packages (from redis==4.1.4) (1.2.14)
+Requirement already satisfied: packaging>=20.4 in ./venv/lib/python3.10/site-packages (from redis==4.1.4) (24.1)
+Requirement already satisfied: wrapt<2,>=1.10 in ./venv/lib/python3.10/site-packages (from deprecated>=1.2.3->redis==4.1.4) (1.17.3)
+Installing collected packages: redis
+Successfully installed redis-4.1.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting regex==2022.4.24
+  Using cached regex-2022.4.24-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (763 kB)
+Installing collected packages: regex
+  Attempting uninstall: regex
+    Found existing installation: regex 2026.5.9
+    Uninstalling regex-2026.5.9:
+      Successfully uninstalled regex-2026.5.9
+Successfully installed regex-2022.4.24
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting requests==2.32.3
+  Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 64.9/64.9 KB 1.6 MB/s eta 0:00:00
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests==2.32.3) (3.7)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.10/site-packages (from requests==2.32.3) (1.26.20)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests==2.32.3) (3.3.2)
+Requirement already satisfied: certifi>=2017.4.17 in ./venv/lib/python3.10/site-packages (from requests==2.32.3) (2026.5.20)
+Installing collected packages: requests
+  Attempting uninstall: requests
+    Found existing installation: requests 2.34.2
+    Uninstalling requests-2.34.2:
+      Successfully uninstalled requests-2.34.2
+Successfully installed requests-2.32.3
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: requests-html==0.10.0 in ./venv/lib/python3.10/site-packages (0.10.0)
+Requirement already satisfied: pyquery in ./venv/lib/python3.10/site-packages (from requests-html==0.10.0) (2.0.0)
+Requirement already satisfied: requests in ./venv/lib/python3.10/site-packages (from requests-html==0.10.0) (2.32.3)
+Requirement already satisfied: fake-useragent in ./venv/lib/python3.10/site-packages (from requests-html==0.10.0) (0.1.14)
+Requirement already satisfied: w3lib in ./venv/lib/python3.10/site-packages (from requests-html==0.10.0) (2.4.1)
+Requirement already satisfied: parse in ./venv/lib/python3.10/site-packages (from requests-html==0.10.0) (1.20.2)
+Requirement already satisfied: pyppeteer>=0.0.14 in ./venv/lib/python3.10/site-packages (from requests-html==0.10.0) (2.0.0)
+Requirement already satisfied: bs4 in ./venv/lib/python3.10/site-packages (from requests-html==0.10.0) (0.0.2)
+Requirement already satisfied: appdirs<2.0.0,>=1.4.3 in ./venv/lib/python3.10/site-packages (from pyppeteer>=0.0.14->requests-html==0.10.0) (1.4.4)
+Requirement already satisfied: urllib3<2.0.0,>=1.25.8 in ./venv/lib/python3.10/site-packages (from pyppeteer>=0.0.14->requests-html==0.10.0) (1.26.20)
+Requirement already satisfied: tqdm<5.0.0,>=4.42.1 in ./venv/lib/python3.10/site-packages (from pyppeteer>=0.0.14->requests-html==0.10.0) (4.67.3)
+Requirement already satisfied: pyee<12.0.0,>=11.0.0 in ./venv/lib/python3.10/site-packages (from pyppeteer>=0.0.14->requests-html==0.10.0) (11.1.0)
+Requirement already satisfied: importlib-metadata>=1.4 in ./venv/lib/python3.10/site-packages (from pyppeteer>=0.0.14->requests-html==0.10.0) (7.1.0)
+Requirement already satisfied: certifi>=2023 in ./venv/lib/python3.10/site-packages (from pyppeteer>=0.0.14->requests-html==0.10.0) (2026.5.20)
+Requirement already satisfied: websockets<11.0,>=10.0 in ./venv/lib/python3.10/site-packages (from pyppeteer>=0.0.14->requests-html==0.10.0) (10.4)
+Requirement already satisfied: beautifulsoup4 in ./venv/lib/python3.10/site-packages (from bs4->requests-html==0.10.0) (4.12.3)
+Requirement already satisfied: lxml>=2.1 in ./venv/lib/python3.10/site-packages (from pyquery->requests-html==0.10.0) (4.9.4)
+Requirement already satisfied: cssselect>=1.2.0 in ./venv/lib/python3.10/site-packages (from pyquery->requests-html==0.10.0) (1.2.0)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests->requests-html==0.10.0) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests->requests-html==0.10.0) (3.7)
+Requirement already satisfied: zipp>=0.5 in ./venv/lib/python3.10/site-packages (from importlib-metadata>=1.4->pyppeteer>=0.0.14->requests-html==0.10.0) (4.1.0)
+Requirement already satisfied: typing-extensions in ./venv/lib/python3.10/site-packages (from pyee<12.0.0,>=11.0.0->pyppeteer>=0.0.14->requests-html==0.10.0) (4.15.0)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.10/site-packages (from beautifulsoup4->bs4->requests-html==0.10.0) (2.8.4)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: requests-oauthlib==2.0.0 in ./venv/lib/python3.10/site-packages (2.0.0)
+Requirement already satisfied: oauthlib>=3.0.0 in ./venv/lib/python3.10/site-packages (from requests-oauthlib==2.0.0) (3.2.2)
+Requirement already satisfied: requests>=2.0.0 in ./venv/lib/python3.10/site-packages (from requests-oauthlib==2.0.0) (2.32.3)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests>=2.0.0->requests-oauthlib==2.0.0) (3.7)
+Requirement already satisfied: certifi>=2017.4.17 in ./venv/lib/python3.10/site-packages (from requests>=2.0.0->requests-oauthlib==2.0.0) (2026.5.20)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.10/site-packages (from requests>=2.0.0->requests-oauthlib==2.0.0) (1.26.20)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests>=2.0.0->requests-oauthlib==2.0.0) (3.3.2)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting rfc3986==1.5.0
+  Using cached rfc3986-1.5.0-py2.py3-none-any.whl (31 kB)
+Installing collected packages: rfc3986
+Successfully installed rfc3986-1.5.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting rsa==4.9
+  Downloading rsa-4.9-py3-none-any.whl (34 kB)
+Requirement already satisfied: pyasn1>=0.1.3 in ./venv/lib/python3.10/site-packages (from rsa==4.9) (0.6.0)
+Installing collected packages: rsa
+  Attempting uninstall: rsa
+    Found existing installation: rsa 4.9.1
+    Uninstalling rsa-4.9.1:
+      Successfully uninstalled rsa-4.9.1
+Successfully installed rsa-4.9
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting search-engine-parser==0.6.8
+  Using cached search_engine_parser-0.6.8-py3-none-any.whl (37 kB)
+Requirement already satisfied: aiohttp<4,>=3.6.2 in ./venv/lib/python3.10/site-packages (from search-engine-parser==0.6.8) (3.7.3)
+Requirement already satisfied: fake-useragent<0.2,>=0.1.11 in ./venv/lib/python3.10/site-packages (from search-engine-parser==0.6.8) (0.1.14)
+Requirement already satisfied: beautifulsoup4<5,>=4.9.1 in ./venv/lib/python3.10/site-packages (from search-engine-parser==0.6.8) (4.12.3)
+Requirement already satisfied: lxml<5,>=4.6.5 in ./venv/lib/python3.10/site-packages (from search-engine-parser==0.6.8) (4.9.4)
+Requirement already satisfied: chardet<4.0,>=2.0 in ./venv/lib/python3.10/site-packages (from aiohttp<4,>=3.6.2->search-engine-parser==0.6.8) (3.0.4)
+Requirement already satisfied: typing_extensions>=3.6.5 in ./venv/lib/python3.10/site-packages (from aiohttp<4,>=3.6.2->search-engine-parser==0.6.8) (4.15.0)
+Requirement already satisfied: attrs>=17.3.0 in ./venv/lib/python3.10/site-packages (from aiohttp<4,>=3.6.2->search-engine-parser==0.6.8) (23.2.0)
+Requirement already satisfied: multidict<7.0,>=4.5 in ./venv/lib/python3.10/site-packages (from aiohttp<4,>=3.6.2->search-engine-parser==0.6.8) (6.0.5)
+Requirement already satisfied: yarl<2.0,>=1.0 in ./venv/lib/python3.10/site-packages (from aiohttp<4,>=3.6.2->search-engine-parser==0.6.8) (1.24.2)
+Requirement already satisfied: async_timeout<4.0,>=3.0 in ./venv/lib/python3.10/site-packages (from aiohttp<4,>=3.6.2->search-engine-parser==0.6.8) (3.0.1)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.10/site-packages (from beautifulsoup4<5,>=4.9.1->search-engine-parser==0.6.8) (2.8.4)
+Requirement already satisfied: idna>=2.0 in ./venv/lib/python3.10/site-packages (from yarl<2.0,>=1.0->aiohttp<4,>=3.6.2->search-engine-parser==0.6.8) (3.7)
+Requirement already satisfied: propcache>=0.2.1 in ./venv/lib/python3.10/site-packages (from yarl<2.0,>=1.0->aiohttp<4,>=3.6.2->search-engine-parser==0.6.8) (0.5.2)
+Installing collected packages: search-engine-parser
+Successfully installed search-engine-parser-0.6.8
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting secureme==0.0.4
+  Using cached secureme-0.0.4-py3-none-any.whl (4.3 kB)
+Installing collected packages: secureme
+Successfully installed secureme-0.0.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting selenium==4.0.0
+  Using cached selenium-4.0.0-py3-none-any.whl (954 kB)
+Requirement already satisfied: urllib3[secure]~=1.26 in ./venv/lib/python3.10/site-packages (from selenium==4.0.0) (1.26.20)
+Requirement already satisfied: trio-websocket~=0.9 in ./venv/lib/python3.10/site-packages (from selenium==4.0.0) (0.12.2)
+Requirement already satisfied: trio~=0.17 in ./venv/lib/python3.10/site-packages (from selenium==4.0.0) (0.33.0)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from trio~=0.17->selenium==4.0.0) (3.7)
+Requirement already satisfied: sortedcontainers in ./venv/lib/python3.10/site-packages (from trio~=0.17->selenium==4.0.0) (2.4.0)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from trio~=0.17->selenium==4.0.0) (1.2.1)
+Requirement already satisfied: sniffio>=1.3.0 in ./venv/lib/python3.10/site-packages (from trio~=0.17->selenium==4.0.0) (1.3.1)
+Requirement already satisfied: outcome in ./venv/lib/python3.10/site-packages (from trio~=0.17->selenium==4.0.0) (1.3.0.post0)
+Requirement already satisfied: attrs>=23.2.0 in ./venv/lib/python3.10/site-packages (from trio~=0.17->selenium==4.0.0) (23.2.0)
+Requirement already satisfied: wsproto>=0.14 in ./venv/lib/python3.10/site-packages (from trio-websocket~=0.9->selenium==4.0.0) (1.3.2)
+Collecting urllib3-secure-extra
+  Using cached urllib3_secure_extra-0.1.0-py2.py3-none-any.whl (1.4 kB)
+Requirement already satisfied: certifi in ./venv/lib/python3.10/site-packages (from urllib3[secure]~=1.26->selenium==4.0.0) (2026.5.20)
+Requirement already satisfied: cryptography>=1.3.4 in ./venv/lib/python3.10/site-packages (from urllib3[secure]~=1.26->selenium==4.0.0) (42.0.8)
+Requirement already satisfied: pyOpenSSL>=0.14 in ./venv/lib/python3.10/site-packages (from urllib3[secure]~=1.26->selenium==4.0.0) (24.1.0)
+Requirement already satisfied: cffi>=1.12 in ./venv/lib/python3.10/site-packages (from cryptography>=1.3.4->urllib3[secure]~=1.26->selenium==4.0.0) (1.16.0)
+Collecting h11<1,>=0.16.0
+  Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Requirement already satisfied: pycparser in ./venv/lib/python3.10/site-packages (from cffi>=1.12->cryptography>=1.3.4->urllib3[secure]~=1.26->selenium==4.0.0) (2.22)
+Installing collected packages: urllib3-secure-extra, h11, selenium
+  Attempting uninstall: h11
+    Found existing installation: h11 0.14.0
+    Uninstalling h11-0.14.0:
+      Successfully uninstalled h11-0.14.0
+  Attempting uninstall: selenium
+    Found existing installation: selenium 4.44.0
+    Uninstalling selenium-4.44.0:
+      Successfully uninstalled selenium-4.44.0
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+httpcore 1.0.5 requires h11<0.15,>=0.13, but you have h11 0.16.0 which is incompatible.
+Successfully installed h11-0.16.0 selenium-4.0.0 urllib3-secure-extra-0.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: sgmllib3k==1.0.0 in ./venv/lib/python3.10/site-packages (1.0.0)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting sibylsystem==0.0.24
+  Downloading sibylsystem-0.0.24-py3-none-any.whl (24 kB)
+Requirement already satisfied: httpx>=0.20.0 in ./venv/lib/python3.10/site-packages (from sibylsystem==0.0.24) (0.27.0)
+Requirement already satisfied: pydantic>=1.8.2 in ./venv/lib/python3.10/site-packages (from sibylsystem==0.0.24) (1.8.2)
+Requirement already satisfied: anyio in ./venv/lib/python3.10/site-packages (from httpx>=0.20.0->sibylsystem==0.0.24) (3.7.1)
+Requirement already satisfied: certifi in ./venv/lib/python3.10/site-packages (from httpx>=0.20.0->sibylsystem==0.0.24) (2026.5.20)
+Requirement already satisfied: sniffio in ./venv/lib/python3.10/site-packages (from httpx>=0.20.0->sibylsystem==0.0.24) (1.3.1)
+Requirement already satisfied: httpcore==1.* in ./venv/lib/python3.10/site-packages (from httpx>=0.20.0->sibylsystem==0.0.24) (1.0.5)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from httpx>=0.20.0->sibylsystem==0.0.24) (3.7)
+Collecting h11<0.15,>=0.13
+  Using cached h11-0.14.0-py3-none-any.whl (58 kB)
+Requirement already satisfied: typing-extensions>=3.7.4.3 in ./venv/lib/python3.10/site-packages (from pydantic>=1.8.2->sibylsystem==0.0.24) (4.15.0)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from anyio->httpx>=0.20.0->sibylsystem==0.0.24) (1.2.1)
+Installing collected packages: h11, sibylsystem
+  Attempting uninstall: h11
+    Found existing installation: h11 0.16.0
+    Uninstalling h11-0.16.0:
+      Successfully uninstalled h11-0.16.0
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+wsproto 1.3.2 requires h11<1,>=0.16.0, but you have h11 0.14.0 which is incompatible.
+Successfully installed h11-0.14.0 sibylsystem-0.0.24
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting simplejson==3.19.2
+  Downloading simplejson-3.19.2-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (137 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 137.9/137.9 KB 2.9 MB/s eta 0:00:00
+Installing collected packages: simplejson
+  Attempting uninstall: simplejson
+    Found existing installation: simplejson 4.1.1
+    Uninstalling simplejson-4.1.1:
+      Successfully uninstalled simplejson-4.1.1
+Successfully installed simplejson-3.19.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting six==1.16.0
+  Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
+Installing collected packages: six
+  Attempting uninstall: six
+    Found existing installation: six 1.17.0
+    Uninstalling six-1.17.0:
+      Successfully uninstalled six-1.17.0
+Successfully installed six-1.16.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: sniffio==1.3.1 in ./venv/lib/python3.10/site-packages (1.3.1)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: sortedcontainers==2.4.0 in ./venv/lib/python3.10/site-packages (2.4.0)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting soupsieve==2.5
+  Downloading soupsieve-2.5-py3-none-any.whl (36 kB)
+Installing collected packages: soupsieve
+  Attempting uninstall: soupsieve
+    Found existing installation: soupsieve 2.8.4
+    Uninstalling soupsieve-2.8.4:
+      Successfully uninstalled soupsieve-2.8.4
+Successfully installed soupsieve-2.5
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting spamwatch==0.3.0
+  Using cached spamwatch-0.3.0-py3-none-any.whl (7.5 kB)
+Requirement already satisfied: requests>=2.20 in ./venv/lib/python3.10/site-packages (from spamwatch==0.3.0) (2.32.3)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests>=2.20->spamwatch==0.3.0) (3.3.2)
+Requirement already satisfied: certifi>=2017.4.17 in ./venv/lib/python3.10/site-packages (from requests>=2.20->spamwatch==0.3.0) (2026.5.20)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests>=2.20->spamwatch==0.3.0) (3.7)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.10/site-packages (from requests>=2.20->spamwatch==0.3.0) (1.26.20)
+Installing collected packages: spamwatch
+Successfully installed spamwatch-0.3.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting spongemock==0.3.4
+  Using cached spongemock-0.3.4-py2.py3-none-any.whl (9.2 kB)
+Requirement already satisfied: pyperclip>=1.5.27 in ./venv/lib/python3.10/site-packages (from spongemock==0.3.4) (1.8.2)
+Installing collected packages: spongemock
+Successfully installed spongemock-0.3.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting SQLAlchemy==1.3.20
+  Using cached SQLAlchemy-1.3.20.tar.gz (6.3 MB)
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Using legacy 'setup.py install' for SQLAlchemy, since package 'wheel' is not installed.
+Installing collected packages: SQLAlchemy
+  Running setup.py install for SQLAlchemy: started
+  Running setup.py install for SQLAlchemy: finished with status 'done'
+Successfully installed SQLAlchemy-1.3.20
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting sylviorus==2.1
+  Using cached sylviorus-2.1-py3-none-any.whl (15 kB)
+Requirement already satisfied: requests>=2.20 in ./venv/lib/python3.10/site-packages (from sylviorus==2.1) (2.32.3)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests>=2.20->sylviorus==2.1) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests>=2.20->sylviorus==2.1) (3.7)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.10/site-packages (from requests>=2.20->sylviorus==2.1) (1.26.20)
+Requirement already satisfied: certifi>=2017.4.17 in ./venv/lib/python3.10/site-packages (from requests>=2.20->sylviorus==2.1) (2026.5.20)
+Installing collected packages: sylviorus
+Successfully installed sylviorus-2.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting telegraph==2.1.0
+  Using cached telegraph-2.1.0-py3-none-any.whl (10 kB)
+Requirement already satisfied: requests in ./venv/lib/python3.10/site-packages (from telegraph==2.1.0) (2.32.3)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.10/site-packages (from requests->telegraph==2.1.0) (1.26.20)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests->telegraph==2.1.0) (3.7)
+Requirement already satisfied: certifi>=2017.4.17 in ./venv/lib/python3.10/site-packages (from requests->telegraph==2.1.0) (2026.5.20)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests->telegraph==2.1.0) (3.3.2)
+Installing collected packages: telegraph
+Successfully installed telegraph-2.1.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting Telethon==1.24.0
+  Using cached Telethon-1.24.0-py3-none-any.whl (528 kB)
+Requirement already satisfied: pyaes in ./venv/lib/python3.10/site-packages (from Telethon==1.24.0) (1.6.1)
+Requirement already satisfied: rsa in ./venv/lib/python3.10/site-packages (from Telethon==1.24.0) (4.9)
+Requirement already satisfied: pyasn1>=0.1.3 in ./venv/lib/python3.10/site-packages (from rsa->Telethon==1.24.0) (0.6.0)
+Installing collected packages: Telethon
+Successfully installed Telethon-1.24.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: TgCrypto==1.2.5 in ./venv/lib/python3.10/site-packages (1.2.5)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting time-machine==2.14.1
+  Downloading time_machine-2.14.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (34 kB)
+Requirement already satisfied: python-dateutil in ./venv/lib/python3.10/site-packages (from time-machine==2.14.1) (2.9.0.post0)
+Requirement already satisfied: six>=1.5 in ./venv/lib/python3.10/site-packages (from python-dateutil->time-machine==2.14.1) (1.16.0)
+Installing collected packages: time-machine
+  Attempting uninstall: time-machine
+    Found existing installation: time-machine 3.2.0
+    Uninstalling time-machine-3.2.0:
+      Successfully uninstalled time-machine-3.2.0
+Successfully installed time-machine-2.14.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting tornado==6.4.1
+  Downloading tornado-6.4.1-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (436 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 436.8/436.8 KB 6.4 MB/s eta 0:00:00
+Installing collected packages: tornado
+Successfully installed tornado-6.4.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting tqdm==4.66.4
+  Downloading tqdm-4.66.4-py3-none-any.whl (78 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 78.3/78.3 KB 1.7 MB/s eta 0:00:00
+Installing collected packages: tqdm
+  Attempting uninstall: tqdm
+    Found existing installation: tqdm 4.67.3
+    Uninstalling tqdm-4.67.3:
+      Successfully uninstalled tqdm-4.67.3
+Successfully installed tqdm-4.66.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting trio==0.25.1
+  Downloading trio-0.25.1-py3-none-any.whl (467 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 467.7/467.7 KB 7.3 MB/s eta 0:00:00
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from trio==0.25.1) (1.2.1)
+Requirement already satisfied: sortedcontainers in ./venv/lib/python3.10/site-packages (from trio==0.25.1) (2.4.0)
+Requirement already satisfied: sniffio>=1.3.0 in ./venv/lib/python3.10/site-packages (from trio==0.25.1) (1.3.1)
+Requirement already satisfied: attrs>=23.2.0 in ./venv/lib/python3.10/site-packages (from trio==0.25.1) (23.2.0)
+Requirement already satisfied: outcome in ./venv/lib/python3.10/site-packages (from trio==0.25.1) (1.3.0.post0)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from trio==0.25.1) (3.7)
+Installing collected packages: trio
+  Attempting uninstall: trio
+    Found existing installation: trio 0.33.0
+    Uninstalling trio-0.33.0:
+      Successfully uninstalled trio-0.33.0
+Successfully installed trio-0.25.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting trio-websocket==0.11.1
+  Downloading trio_websocket-0.11.1-py3-none-any.whl (17 kB)
+Requirement already satisfied: wsproto>=0.14 in ./venv/lib/python3.10/site-packages (from trio-websocket==0.11.1) (1.3.2)
+Requirement already satisfied: trio>=0.11 in ./venv/lib/python3.10/site-packages (from trio-websocket==0.11.1) (0.25.1)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from trio-websocket==0.11.1) (1.2.1)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from trio>=0.11->trio-websocket==0.11.1) (3.7)
+Requirement already satisfied: sniffio>=1.3.0 in ./venv/lib/python3.10/site-packages (from trio>=0.11->trio-websocket==0.11.1) (1.3.1)
+Requirement already satisfied: sortedcontainers in ./venv/lib/python3.10/site-packages (from trio>=0.11->trio-websocket==0.11.1) (2.4.0)
+Requirement already satisfied: attrs>=23.2.0 in ./venv/lib/python3.10/site-packages (from trio>=0.11->trio-websocket==0.11.1) (23.2.0)
+Requirement already satisfied: outcome in ./venv/lib/python3.10/site-packages (from trio>=0.11->trio-websocket==0.11.1) (1.3.0.post0)
+Collecting h11<1,>=0.16.0
+  Using cached h11-0.16.0-py3-none-any.whl (37 kB)
+Installing collected packages: h11, trio-websocket
+  Attempting uninstall: h11
+    Found existing installation: h11 0.14.0
+    Uninstalling h11-0.14.0:
+      Successfully uninstalled h11-0.14.0
+  Attempting uninstall: trio-websocket
+    Found existing installation: trio-websocket 0.12.2
+    Uninstalling trio-websocket-0.12.2:
+      Successfully uninstalled trio-websocket-0.12.2
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+httpcore 1.0.5 requires h11<0.15,>=0.13, but you have h11 0.16.0 which is incompatible.
+Successfully installed h11-0.16.0 trio-websocket-0.11.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting tswift==0.7.0
+  Using cached tswift-0.7.0-py2.py3-none-any.whl (6.1 kB)
+Requirement already satisfied: google>=2.0 in ./venv/lib/python3.10/site-packages (from tswift==0.7.0) (3.0.0)
+Requirement already satisfied: lxml in ./venv/lib/python3.10/site-packages (from tswift==0.7.0) (4.9.4)
+Requirement already satisfied: requests in ./venv/lib/python3.10/site-packages (from tswift==0.7.0) (2.32.3)
+Requirement already satisfied: beautifulsoup4 in ./venv/lib/python3.10/site-packages (from google>=2.0->tswift==0.7.0) (4.12.3)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.10/site-packages (from requests->tswift==0.7.0) (1.26.20)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests->tswift==0.7.0) (3.3.2)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests->tswift==0.7.0) (3.7)
+Requirement already satisfied: certifi>=2017.4.17 in ./venv/lib/python3.10/site-packages (from requests->tswift==0.7.0) (2026.5.20)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.10/site-packages (from beautifulsoup4->google>=2.0->tswift==0.7.0) (2.5)
+Installing collected packages: tswift
+Successfully installed tswift-0.7.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting typing_extensions==4.12.2
+  Downloading typing_extensions-4.12.2-py3-none-any.whl (37 kB)
+Installing collected packages: typing_extensions
+  Attempting uninstall: typing_extensions
+    Found existing installation: typing_extensions 4.15.0
+    Uninstalling typing_extensions-4.15.0:
+      Successfully uninstalled typing_extensions-4.15.0
+Successfully installed typing_extensions-4.12.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting tzdata==2024.1
+  Downloading tzdata-2024.1-py2.py3-none-any.whl (345 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 345.4/345.4 KB 5.7 MB/s eta 0:00:00
+Installing collected packages: tzdata
+  Attempting uninstall: tzdata
+    Found existing installation: tzdata 2026.2
+    Uninstalling tzdata-2026.2:
+      Successfully uninstalled tzdata-2026.2
+Successfully installed tzdata-2024.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting tzlocal==5.2
+  Downloading tzlocal-5.2-py3-none-any.whl (17 kB)
+Installing collected packages: tzlocal
+  Attempting uninstall: tzlocal
+    Found existing installation: tzlocal 5.3.1
+    Uninstalling tzlocal-5.3.1:
+      Successfully uninstalled tzlocal-5.3.1
+Successfully installed tzlocal-5.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting ujson==5.2.0
+  Using cached ujson-5.2.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (45 kB)
+Installing collected packages: ujson
+Successfully installed ujson-5.2.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: uritemplate==3.0.1 in ./venv/lib/python3.10/site-packages (3.0.1)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting urllib3==1.26.18
+  Downloading urllib3-1.26.18-py2.py3-none-any.whl (143 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 143.8/143.8 KB 2.8 MB/s eta 0:00:00
+Installing collected packages: urllib3
+  Attempting uninstall: urllib3
+    Found existing installation: urllib3 1.26.20
+    Uninstalling urllib3-1.26.20:
+      Successfully uninstalled urllib3-1.26.20
+Successfully installed urllib3-1.26.18
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: urllib3-secure-extra==0.1.0 in ./venv/lib/python3.10/site-packages (0.1.0)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting w3lib==2.2.1
+  Downloading w3lib-2.2.1-py3-none-any.whl (21 kB)
+Installing collected packages: w3lib
+  Attempting uninstall: w3lib
+    Found existing installation: w3lib 2.4.1
+    Uninstalling w3lib-2.4.1:
+      Successfully uninstalled w3lib-2.4.1
+Successfully installed w3lib-2.2.1
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: webencodings==0.5.1 in ./venv/lib/python3.10/site-packages (0.5.1)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Requirement already satisfied: websockets==10.4 in ./venv/lib/python3.10/site-packages (10.4)
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting Werkzeug==3.0.3
+  Downloading werkzeug-3.0.3-py3-none-any.whl (227 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 227.3/227.3 KB 4.0 MB/s eta 0:00:00
+Requirement already satisfied: MarkupSafe>=2.1.1 in ./venv/lib/python3.10/site-packages (from Werkzeug==3.0.3) (2.1.5)
+Installing collected packages: Werkzeug
+  Attempting uninstall: Werkzeug
+    Found existing installation: Werkzeug 3.1.8
+    Uninstalling Werkzeug-3.1.8:
+      Successfully uninstalled Werkzeug-3.1.8
+Successfully installed Werkzeug-3.0.3
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting wget==3.2
+  Using cached wget-3.2-py3-none-any.whl
+Installing collected packages: wget
+Successfully installed wget-3.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting wikipedia==1.4.0
+  Using cached wikipedia-1.4.0-py3-none-any.whl
+Requirement already satisfied: requests<3.0.0,>=2.0.0 in ./venv/lib/python3.10/site-packages (from wikipedia==1.4.0) (2.32.3)
+Requirement already satisfied: beautifulsoup4 in ./venv/lib/python3.10/site-packages (from wikipedia==1.4.0) (4.12.3)
+Requirement already satisfied: certifi>=2017.4.17 in ./venv/lib/python3.10/site-packages (from requests<3.0.0,>=2.0.0->wikipedia==1.4.0) (2026.5.20)
+Requirement already satisfied: idna<4,>=2.5 in ./venv/lib/python3.10/site-packages (from requests<3.0.0,>=2.0.0->wikipedia==1.4.0) (3.7)
+Requirement already satisfied: urllib3<3,>=1.21.1 in ./venv/lib/python3.10/site-packages (from requests<3.0.0,>=2.0.0->wikipedia==1.4.0) (1.26.18)
+Requirement already satisfied: charset-normalizer<4,>=2 in ./venv/lib/python3.10/site-packages (from requests<3.0.0,>=2.0.0->wikipedia==1.4.0) (3.3.2)
+Requirement already satisfied: soupsieve>1.2 in ./venv/lib/python3.10/site-packages (from beautifulsoup4->wikipedia==1.4.0) (2.5)
+Installing collected packages: wikipedia
+Successfully installed wikipedia-1.4.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting wrapt==1.16.0
+  Downloading wrapt-1.16.0-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (80 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.3/80.3 KB 1.7 MB/s eta 0:00:00
+Installing collected packages: wrapt
+  Attempting uninstall: wrapt
+    Found existing installation: wrapt 1.17.3
+    Uninstalling wrapt-1.17.3:
+      Successfully uninstalled wrapt-1.17.3
+Successfully installed wrapt-1.16.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting wsproto==1.2.0
+  Downloading wsproto-1.2.0-py3-none-any.whl (24 kB)
+Requirement already satisfied: h11<1,>=0.9.0 in ./venv/lib/python3.10/site-packages (from wsproto==1.2.0) (0.16.0)
+Installing collected packages: wsproto
+  Attempting uninstall: wsproto
+    Found existing installation: wsproto 1.3.2
+    Uninstalling wsproto-1.3.2:
+      Successfully uninstalled wsproto-1.3.2
+Successfully installed wsproto-1.2.0
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting yarl==1.9.4
+  Downloading yarl-1.9.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (301 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 301.6/301.6 KB 4.6 MB/s eta 0:00:00
+Requirement already satisfied: multidict>=4.0 in ./venv/lib/python3.10/site-packages (from yarl==1.9.4) (6.0.5)
+Requirement already satisfied: idna>=2.0 in ./venv/lib/python3.10/site-packages (from yarl==1.9.4) (3.7)
+Installing collected packages: yarl
+  Attempting uninstall: yarl
+    Found existing installation: yarl 1.24.2
+    Uninstalling yarl-1.24.2:
+      Successfully uninstalled yarl-1.24.2
+Successfully installed yarl-1.9.4
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting youtube-search-python==1.6.6
+  Using cached youtube_search_python-1.6.6-py3-none-any.whl (89 kB)
+Requirement already satisfied: httpx>=0.14.2 in ./venv/lib/python3.10/site-packages (from youtube-search-python==1.6.6) (0.27.0)
+Requirement already satisfied: certifi in ./venv/lib/python3.10/site-packages (from httpx>=0.14.2->youtube-search-python==1.6.6) (2026.5.20)
+Requirement already satisfied: idna in ./venv/lib/python3.10/site-packages (from httpx>=0.14.2->youtube-search-python==1.6.6) (3.7)
+Requirement already satisfied: httpcore==1.* in ./venv/lib/python3.10/site-packages (from httpx>=0.14.2->youtube-search-python==1.6.6) (1.0.5)
+Requirement already satisfied: sniffio in ./venv/lib/python3.10/site-packages (from httpx>=0.14.2->youtube-search-python==1.6.6) (1.3.1)
+Requirement already satisfied: anyio in ./venv/lib/python3.10/site-packages (from httpx>=0.14.2->youtube-search-python==1.6.6) (3.7.1)
+Collecting h11<0.15,>=0.13
+  Using cached h11-0.14.0-py3-none-any.whl (58 kB)
+Requirement already satisfied: exceptiongroup in ./venv/lib/python3.10/site-packages (from anyio->httpx>=0.14.2->youtube-search-python==1.6.6) (1.2.1)
+Installing collected packages: h11, youtube-search-python
+  Attempting uninstall: h11
+    Found existing installation: h11 0.16.0
+    Uninstalling h11-0.16.0:
+      Successfully uninstalled h11-0.16.0
+Successfully installed h11-0.14.0 youtube-search-python-1.6.6
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting zalgo_text==0.6
+  Using cached zalgo_text-0.6-py3-none-any.whl
+Installing collected packages: zalgo_text
+Successfully installed zalgo_text-0.6
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.
+Collecting zipp==3.19.2
+  Downloading zipp-3.19.2-py3-none-any.whl (9.0 kB)
+Installing collected packages: zipp
+  Attempting uninstall: zipp
+    Found existing installation: zipp 4.1.0
+    Uninstalling zipp-4.1.0:
+      Successfully uninstalled zipp-4.1.0
+Successfully installed zipp-3.19.2
+WARNING: You are using pip version 22.0.4; however, version 26.1.2 is available.
+You should consider upgrading via the '/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m pip install --upgrade pip' command.

@@ -1,0 +1,213 @@
+import re
+import html
+import requests
+from typing import Optional
+
+from time import sleep
+from telegram.constants import ParseMode
+from telegram import (CallbackQuery, Chat, InlineKeyboardButton, InlineKeyboardMarkup, Update, User)
+from telegram.ext import (CallbackContext, CallbackQueryHandler, CommandHandler, filters, MessageHandler)
+from telegram.error import BadRequest, RetryAfter, TelegramError
+from telegram.helpers import mention_html
+
+import RajniiRobot.modules.sql.aichatbot_sql as sql
+from RajniiRobot import AI_API_KEY, AI_API_URL
+from RajniiRobot.modules.helper_funcs.filters import CustomFilters
+from RajniiRobot.modules.helper_funcs.chat_status import user_admin, user_admin_no_reply
+from RajniiRobot import SUPPORT_CHAT, BOT_ID, RAJNI_PTB, AI_API_KEY, UPDATES_LOGS, BOT_NAME
+from RajniiRobot.modules.log_channel import gloggable
+
+
+@user_admin_no_reply
+@gloggable
+async def rm_ai(update: Update, context: CallbackContext) -> str:
+    query: Optional[CallbackQuery] = update.callback_query
+    user: Optional[User] = update.effective_user
+    match = re.match(r"rm_chat\((.+?)\)", query.data)
+    if match:
+        user_id = match.group(1)
+        chat: Optional[Chat] = update.effective_chat
+        is_aichatbot_enabled = sql.rem_aichatbot(chat.id)
+        if is_aichatbot_enabled:
+            is_aichatbot_enabled = sql.rem_aichatbot(user_id)
+            return (
+                f"<b>{html.escape(chat.title)}:</b>\n"
+                f"​🇦​​🇮​ ​🇨​​🇭​​🇦​​🇹​​🇧​​🇴​​🇹​ ​🇩​​🇪​​🇦​​🇨​​🇹​​🇮​​🇻​​🇦​​🇹​​🇪​​🇩​\n"
+                f"<b>​🇦​​🇩​​🇲​​🇮​​🇳​:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+            )
+        else:
+            update.effective_message.edit_text(
+                f"{BOT_NAME}'s ᴀɪ ᴄʜᴀᴛ ᴅᴇᴀᴄᴛɪᴠᴀᴛᴇᴅ ʙʏ {mention_html(user.id, user.first_name)}.",
+                reply_markup=InlineKeyboardMarkup([
+                    [
+                        InlineKeyboardButton(text="► ꜱᴜᴘᴘᴏʀᴛ ◄", url=f"https://telegram.me/{SUPPORT_CHAT}"),
+                        InlineKeyboardButton(text="► ᴜᴘᴅᴀᴛᴇꜱ ◄", url=f"https://telegram.me/{UPDATES_LOGS}")
+                    ],
+                    [
+                        InlineKeyboardButton(text="► ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴇᴠꜱʟᴀʙ ◄", url="https://telegram.me/DevsLab")
+                    ]
+                ]),
+                parse_mode=ParseMode.HTML
+            )
+    return ""
+
+
+@user_admin_no_reply
+@gloggable
+async def add_ai(update: Update, context: CallbackContext) -> str:
+    query: Optional[CallbackQuery] = update.callback_query
+    user: Optional[User] = update.effective_user
+    match = re.match(r"add_chat\((.+?)\)", query.data)
+    if match:
+        user_id = match.group(1)
+        chat: Optional[Chat] = update.effective_chat
+        is_aichatbot_enabled = sql.add_aichatbot(chat.id)
+        if is_aichatbot_enabled:
+            is_aichatbot_enabled = sql.add_aichatbot(user_id)
+            return (
+                f"<b>{html.escape(chat.title)}</b>\n"
+                f"ᴀɪ ᴄʜᴀᴛ ᴀᴄᴛɪᴠᴀᴛᴇᴅ\n"
+                f"<b>​🇦​​🇩​​🇲​​🇮​​🇳​:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+            )
+        else:
+            update.effective_message.edit_text(
+                f"{BOT_NAME}'s ᴀɪ ᴄʜᴀᴛ ᴀᴄᴛɪᴠᴀᴛᴇᴅ ʙʏ {mention_html(user.id, user.first_name)}.",
+                reply_markup=InlineKeyboardMarkup([
+                    [
+                        InlineKeyboardButton(text="► ꜱᴜᴘᴘᴏʀᴛ ◄", url=f"https://telegram.me/{SUPPORT_CHAT}"),
+                        InlineKeyboardButton(text="► ᴜᴘᴅᴀᴛᴇꜱ ◄", url=f"https://telegram.me/{UPDATES_LOGS}")
+                    ],
+                    [
+                        InlineKeyboardButton(text="► ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴇᴠꜱʟᴀʙ ◄", url="https://telegram.me/DevsLab")
+                    ]
+                ]),
+                parse_mode=ParseMode.HTML
+            )
+    return ""
+
+
+@user_admin
+@gloggable
+async def aichat_toggle(update: Update, context: CallbackContext):
+    # user = update.effective_user
+    message = update.effective_message
+    msg = f"ᴄʜᴏᴏꜱᴇ ᴀɴ ᴏᴘᴛɪᴏɴ ʙᴇʟᴏᴡ ᴛᴏ ᴛᴏɢɢʟᴇ ᴀɪ ᴄʜᴀᴛ"
+    keyboard = InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(text="➢ ᴀᴄᴛɪᴠᴀᴛᴇ", callback_data="add_chat({})"),
+            InlineKeyboardButton(text="➢ ᴅᴇᴀᴄᴛɪᴠᴀᴛᴇ", callback_data="rm_chat({})")
+        ],
+        [
+            InlineKeyboardButton(text="► ꜱᴜᴘᴘᴏʀᴛ ◄", url=f"https://telegram.me/{SUPPORT_CHAT}"),
+            InlineKeyboardButton(text="► ᴜᴘᴅᴀᴛᴇꜱ ◄", url=f"https://telegram.me/{UPDATES_LOGS}")
+        ],
+        [
+            InlineKeyboardButton(text="► ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴇᴠꜱʟᴀʙ ◄", url="https://telegram.me/DevsLab")
+        ]
+    ])
+    message.reply_text(
+        msg,
+        reply_markup=keyboard,
+        parse_mode=ParseMode.HTML,
+    )
+
+
+async def get_message(context: CallbackContext, message):
+    reply_message = message.reply_to_message
+    if message.text.lower() in ["rajni", "rajnii", "rajnibot", "rajniixbot", "rajniixrobot", "rajnixbot", "rajnibahu", ""]:
+        return True
+    if reply_message:
+        if reply_message.from_user.id == context.bot.get_me().id:
+            return True
+    else:
+        return False
+
+
+async def ai_reply(update: Update, context: CallbackContext):
+    message = update.effective_message
+    chat_id = update.effective_chat.id
+    bot = context.bot
+    is_aichatbot_enabled = sql.is_aichatbot_enabled(chat_id)
+    if not is_aichatbot_enabled:
+        return
+
+    if message.text and not message.document:
+        if not get_message(context, message):
+            return
+        Message = message.text
+        bot.send_chat_action(chat_id, action="typing")
+        response = await requests.get(
+            AI_API_URL,
+            params={ "user_id": chat_id, "query": Message, "BOT_ID": BOT_ID },
+            headers={ "api_key": AI_API_KEY })
+        data = await response.json()
+        if data['status'] == 200:
+            reply = data['result']['text']
+            message.reply_text(reply, timeout=60)
+        else:
+            await RAJNI_PTB.send_message(
+                SUPPORT_CHAT,
+                text=f"*➢ ᴄʜᴀᴛʙᴏᴛ ᴇʀʀᴏʀ:*\n`{data['msg']}`\n\n➢ ʀᴇᴘᴏʀᴛᴇᴅ ꜰʀᴏᴍ ᴄʜᴀᴛ ([{context.bot.get_chat(chat_id).title}](https://telegram.me/c/{abs(chat_id)}) | `{chat_id}`)",
+                reply_markup=InlineKeyboardMarkup([
+                    [
+                        InlineKeyboardButton(
+                            text="► ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴇᴠꜱʟᴀʙ ◄",
+                            url="https://telegram.me/devslab"),
+                    ]
+                ])
+            )
+            message.reply_text(
+                f"*➢ ᴄʜᴀᴛʙᴏᴛ ᴇʀʀᴏʀ:* `{data['msg']}`\n\n➢ ʀᴇᴘᴏʀᴛᴇᴅ ᴛᴏ ᴛʜᴇ @{SUPPORT_CHAT}.",
+                parse_maode=ParseMode.MARKDOWN,
+                timeout=60,
+                reply_markup=InlineKeyboardMarkup([
+                    [
+                        InlineKeyboardButton(
+                            text="► ꜱᴜᴘᴘᴏʀᴛ ◄",
+                            url=f"https://telegram.me/{SUPPORT_CHAT}"),
+                        InlineKeyboardButton(
+                            text="► ᴜᴘᴅᴀᴛᴇꜱ ◄",
+                            url=f"https://telegram.me/{UPDATES_LOGS}")
+                    ],
+                    [
+                        InlineKeyboardButton("► ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅᴇᴠꜱʟᴀʙ ◄", url="https://telegram.me/devslab"),
+                    ]
+                ])
+            )
+
+
+
+def ai_chats(update: Update, context: CallbackContext):
+    chats = sql.get_all_aichatbot_chats()
+    text = "<b>ᴀɪ ᴄʜᴀᴛʙᴏᴛ ɪꜱ ᴇɴᴀʙʟᴇᴅ ɪɴ ᴛʜᴇꜱᴇ ᴄʜᴀᴛꜱ</b>\n"
+    for chat in chats:
+        try:
+            x = context.bot.get_chat(int(*chat))
+            name = x.title or x.first_name
+            text += f"➢ <code>{name}</code>\n"
+        except (BadRequest, TelegramError):
+            sql.rem_aichatbot(*chat)
+        except RetryAfter as e:
+            sleep(e.retry_after)
+    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML)
+
+
+__help__ = f"""
+AI Chat Module utilizes the BLUE API which allows {RAJNI_PTB.bot.first_name} to talk and provide a more interactive group chat experience.
+
+*​🇦​​🇩​​🇲​​🇮​​🇳​​🇸​ ​🇴​​🇳​​🇱​​🇾​ ​🇨​​🇴​​🇲​​🇲​​🇦​​🇳​​🇩​​🇸​*:
+➢ `/aichat`*:* Will ask you to on/off AI Chatbot.
+
+*ᴅᴇᴠ ᴏɴʟʏ ᴄᴏᴍᴍᴀɴᴅꜱ*
+➢ `/aichats`*:* Will list all the chats where AI Chatbot Module is Enabled including inbox..
+
+*ᴘᴏᴡᴇʀᴇᴅ ʙʏ [DevsLab](https://telegram.me/devslab)*
+"""
+
+__mod_name__ = "AI Chat"
+
+RAJNI_PTB.add_handler(CallbackQueryHandler(add_ai, pattern=r"add_chat"))
+RAJNI_PTB.add_handler(MessageHandler(filters.TEXT & (~filters.Regex(r"^#[^\s]+") & ~filters.Regex(r"^!") & filters.Regex(r"^\/")), ai_reply))
+RAJNI_PTB.add_handler(CallbackQueryHandler(rm_ai, pattern=r"rm_chat"))
+RAJNI_PTB.add_handler(CommandHandler("aichat", aichat_toggle))
+RAJNI_PTB.add_handler(CommandHandler("aichats", ai_chats, filters=CustomFilters.dev_filter))

@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "🚀 Starting RajniiRobot Deployment..."
+/home/izzu/Documents/telegram/rajniixrobot/venv/bin/python3.10 -m RajniiRobot
