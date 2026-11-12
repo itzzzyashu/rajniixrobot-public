@@ -1,7 +1,6 @@
 from telethon import events
 from RajniiRobot import telethn
 
-
 def register(**args):
     """ Registers a new message. """
     pattern = args.get("pattern")

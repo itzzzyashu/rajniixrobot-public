@@ -1,44 +1,10 @@
-"""
-BSD 2-Clause License
-
-Copyright (C) 2017-2019, Paul Larsen
-Copyright (C) 2021-2022, Awesome-RJ, [ https://github.com/Awesome-RJ ]
-Copyright (c) 2021-2022, Yūki • Black Knights Union, [ https://github.com/Awesome-RJ/CutiepiiRobot ]
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
-
 from io import BytesIO
 from traceback import format_exc
 
-from pyrogram import filters
-from pyrogram.types import Message
+from telethon import events
 
 from RajniiRobot.utils.errors import capture_err
-from RajniiRobot import arq, pgram, LOGGER
-
-Cutiepii_PYRO_Q = filters.command(["quote", "q"])
+from RajniiRobot import arq, telethn, LOGGER
 
 
 async def quotify(messages: list):
@@ -51,70 +17,79 @@ async def quotify(messages: list):
     return [True, sticker]
 
 
-def getArg(message: Message) -> str:
-    arg = message.text.strip().split(None, 1)[1].strip()
-    return arg
+def getArg(event) -> str:
+    args = event.text.strip().split(None, 1)
+    if len(args) > 1:
+        return args[1].strip()
+    return ""
 
 
-def isArgInt(message: Message) -> list:
-    count = getArg(message)
+def isArgInt(event) -> list:
+    arg = getArg(event)
     try:
-        count = int(count)
+        count = int(arg)
         return [True, count]
     except ValueError:
         return [False, 0]
 
 
-@pgram.on_message(Cutiepii_PYRO_Q & ~filters.forwarded & ~filters.bot)
-@pgram.on_edited_message(Cutiepii_PYRO_Q)
+@telethn.on(events.NewMessage(pattern=r"^[/.\?-](?:quote|q)(?:\s+(.*))?$", incoming=True))
+@telethn.on(events.MessageEdited(pattern=r"^[/.\?-](?:quote|q)(?:\s+(.*))?$"))
 @capture_err
-async def quote(client, message: Message):
-    await message.delete()
-    if not message.reply_to_message:
-        return await message.reply_text("Reply to a message to quote it.")
-    if not message.reply_to_message.text:
-        return await message.reply_text(
+async def quote(event):
+    if event.is_forwarded:
+        return
+    try:
+        await event.delete()
+    except Exception:
+        pass
+
+    reply_to = await event.get_reply_message()
+    if not reply_to:
+        return await event.respond("Reply to a message to quote it.")
+    if not reply_to.text:
+        return await event.respond(
             "Replied message has no text, can't quote it.")
-    m = await message.reply_text("Quoting Messages Please wait....")
-    if len(message.command) < 2:
-        messages = [message.reply_to_message]
-    elif len(message.command) == 2:
-        arg = isArgInt(message)
+            
+    m = await event.respond("Quoting Messages Please wait....")
+    args = event.text.split()
+    
+    if len(args) < 2:
+        messages = [reply_to]
+    elif len(args) == 2:
+        arg = isArgInt(event)
         if arg[0]:
             if arg[1] < 2 or arg[1] > 10:
                 return await m.edit("Argument must be between 2-10.")
             count = arg[1]
-            messages = [
-                i for i in await client.get_messages(
-                    message.chat.id,
-                    range(message.reply_to_message.id,
-                          message.reply_to_message.id + (count + 5)),
-                    replies=0) if not i.empty and not i.media
-            ]
+            # Fetch messages range in Telethon
+            messages = []
+            for msg_id in range(reply_to.id, reply_to.id + count):
+                msg = await telethn.get_messages(event.chat_id, ids=msg_id)
+                if msg and msg.text:
+                    messages.append(msg)
             messages = messages[:count]
         else:
-            if getArg(message) != "r":
+            if getArg(event) != "r":
                 return await m.edit(
                     "Incorrect Argument, Pass **'r'** or **'INT'**, **EX:** __/q 2__"
                 )
-            reply_message = await client.get_messages(
-                message.chat.id,
-                message.reply_to_message.id,
-                replies=1,
-            )
+            # If 'r', fetch message with its reply context if available
+            reply_message = reply_to
             messages = [reply_message]
     else:
         return await m.edit(
             "Incorrect argument, check quotly module in help section.")
+            
     try:
-        if not message:
+        if not event:
             return await m.edit("Something went wrong.")
         sticker = await quotify(messages)
         if not sticker[0]:
-            await message.reply_text(sticker[1])
+            await event.respond(sticker[1])
             return await m.delete()
         sticker = sticker[1]
-        await message.reply_sticker(sticker)
+        await telethn.send_file(event.chat_id, sticker, reply_to=reply_to.id)
         await m.delete()
         sticker.close()
     except Exception as e:
@@ -122,8 +97,8 @@ async def quote(client, message: Message):
                      " This error usually happens when there's a " +
                      " message containing something other than text," +
                      " or one of the messages in-between are deleted.")
-        e = format_exc()
-        LOGGER.debug(e)
+        err_trace = format_exc()
+        LOGGER.debug(err_trace)
 
 
 __mod_name__ = "Quotly"

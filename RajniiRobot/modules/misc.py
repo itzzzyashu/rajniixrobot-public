@@ -1,34 +1,3 @@
-"""
-BSD 2-Clause License
-
-Copyright (C) 2017-2019, Paul Larsen
-Copyright (C) 2021-2022, Awesome-RJ, [ https://github.com/Awesome-RJ ]
-Copyright (c) 2021-2022, Yūki • Black Knights Union, [ https://github.com/Awesome-RJ/CutiepiiRobot ]
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
-
 import contextlib
 import random
 import requests
@@ -43,7 +12,7 @@ from RajniiRobot.modules.helper_funcs.anonymous import user_admin
 from RajniiRobot.modules.helper_funcs.chat_status import sudo_plus
 from RajniiRobot.modules.helper_funcs.alternate import send_action
 from RajniiRobot.modules.disable import DisableAbleCommandHandler
-from RajniiRobot import RAJNI_PTB, pgram, StartTime
+from RajniiRobot import RAJNI_PTB, telethn, StartTime
 from RajniiRobot.__main__ import GDPR
 
 from bs4 import BeautifulSoup
@@ -51,11 +20,10 @@ from datetime import datetime
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, __version__ as ptbver
 from telegram.constants import ParseMode, ChatAction
 from telegram.error import BadRequest
-from telegram.ext import filters as PTB_Cutiepii_Filters, CommandHandler, CallbackQueryHandler, CallbackContext
+from telegram.ext import filters as PTB_RajniiRobot_Filters, CommandHandler, CallbackQueryHandler, CallbackContext
 from platform import python_version
 from telethon import version as tlthn
-from pyrogram import filters
-from pyrogram import __version__ as __pyro__
+from telethon import events
 from requests import get
 
 FORMATTING_HELP = """
@@ -122,15 +90,17 @@ This will randomly choose between sending the first message, "hello", or the sec
 -> <code>/setwelcome hello there""" + "{first}! %%% Ooooh, {first} is in the house! %%% Welcome to the group, {first}!</code>"
 
 
-@pgram.on_message(filters.command("slcheck"))
-async def slcheck(_, message):
-    message = Update.effective_message
-    user = message.text.split(" ")[1]
-    res = get(f"https://sylviorus.up.railway.app/user/{user}")
-    if res["blacklisted"]:
-        enf = res["enforcer"]
-        reason = res["reason"]
-        await message.reply_text(
+@telethn.on(events.NewMessage(pattern=r"^[/.\?-]slcheck$", incoming=True))
+async def slcheck(event):
+    args = event.text.split(" ")
+    if len(args) < 2:
+        return await event.reply("/slcheck [username]")
+    user = args[1]
+    res = get(f"https://sylviorus.up.railway.app/user/{user}").json()
+    if res.get("blacklisted"):
+        enf = res.get("enforcer")
+        reason = res.get("reason")
+        await event.reply(
             f"**Enforcer**: {enf}\n**User** : {user}\n**Reason**: {reason}")
 
 
@@ -354,25 +324,6 @@ async def rmemes(update: Update, context: CallbackContext) -> None:
         return await msg.reply_text(f"Error! {excp.message}")
 
 
-async def markdown_help(update: Update,
-                        context: CallbackContext) -> None:
-    if update.effective_chat.type != "private":
-        await update.effective_message.reply_text(
-            "Contact me in pm",
-            reply_markup=InlineKeyboardMarkup([
-                [
-                    InlineKeyboardButton(
-                        "Markdown help",
-                        url=
-                        f"https://telegram.dog/{context.bot.username}?start=markdownhelp",
-                    ),
-                ],
-            ], ),
-        )
-        return
-    markdown_help_sender(update)
-
-
 async def imdb(update: Update, context: CallbackContext) -> None:
     try:
         args = context.args
@@ -452,7 +403,7 @@ async def status(update: Update):
     msg += f"Python: `{python_version()}`\n"
     msg += f"Python Tg Bot: `{ptbver}`\n"
     msg += f"Telethon: `{tlthn.__version__}`\n"
-    msg += f"Pyrogram: `{__pyro__}`\n"
+    msg += f"Pyrogram: `None (Converted to Telethon)`\n"
     msg += f"SQLAlchemy: `{sqlalchemy.__version__}`\n"
     msg += f"GitHub API: `{str(git.vercheck())}`\n"
     uptime = get_readable_time((time.time() - StartTime))
@@ -577,21 +528,21 @@ Bass Boosting
 RAJNI_PTB.add_handler(
     DisableAbleCommandHandler("echo",
                               echo,
-                              filters=PTB_Cutiepii_Filters.ChatType.GROUPS,
+                              filters=PTB_RajniiRobot_Filters.ChatType.GROUPS,
                               ))
 RAJNI_PTB.add_handler(
     CommandHandler("markdownhelp", markdown_help))
 RAJNI_PTB.add_handler(
     CommandHandler("gdpr",
                    gdpr,
-                   filters=PTB_Cutiepii_Filters.ChatType.PRIVATE,
+                   filters=PTB_RajniiRobot_Filters.ChatType.PRIVATE,
                    ))
 RAJNI_PTB.add_handler(
     CallbackQueryHandler(mkdown_btn, pattern=r"mkhelp_"))
 RAJNI_PTB.add_handler(
     CommandHandler("source",
                    src,
-                   filters=PTB_Cutiepii_Filters.ChatType.PRIVATE,
+                   filters=PTB_RajniiRobot_Filters.ChatType.PRIVATE,
                    ))
 RAJNI_PTB.add_handler(
     DisableAbleCommandHandler("rmeme", rmemes))

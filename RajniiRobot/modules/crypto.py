@@ -1,16 +1,29 @@
 import requests
 
-from RajniiRobot import pgram
+from RajniiRobot import telethn
 from RajniiRobot.utils.errors import capture_err
-from pyrogram import filters
+from telethon import events, Button
 
 
 def ikb(data: dict, row_width: int = 2):
     """
-    Converts a dict to pyrogram buttons
+    Converts a dict to telethon buttons
     Ex: dict_to_keyboard({"click here": "this is callback data"})
     """
-    return keyboard(data.items(), row_width=row_width)
+    buttons = []
+    current_row = []
+    for text, url_or_data in data.items():
+        if url_or_data.startswith("http://") or url_or_data.startswith("https://"):
+            current_row.append(Button.url(text, url_or_data))
+        else:
+            current_row.append(Button.inline(text, url_or_data))
+        
+        if len(current_row) == row_width:
+            buttons.append(current_row)
+            current_row = []
+    if current_row:
+        buttons.append(current_row)
+    return buttons
 
 
 n = "\n"
@@ -37,34 +50,37 @@ def section(
     return text
 
 
-@pgram.on_message(filters.command("crypto"))
+@telethn.on(events.NewMessage(pattern=r"^[/.\?-]crypto$", incoming=True))
 @capture_err
-async def crypto(_, message):
-    if len(message.command) < 2:
-        return await message.reply("/crypto `[currency]`")
+async def crypto(event):
+    args = event.text.split(None, 1)
+    if len(args) < 2:
+        return await event.reply("/crypto `[currency]`")
 
-    currency = message.text.split(None, 1)[1].lower()
+    currency = args[1].lower()
 
     btn = ikb(
-        {"Available Currencies": "https://plotcryptoprice.herokuapp.com"}, )
+        {"Available Currencies": "https://plotcryptoprice.herokuapp.com"}, 
+    )
 
-    m = await message.reply("`Processing...`")
+    m = await event.reply("`Processing...`")
 
     try:
-        r = await requests.get(
+        response = requests.get(
             "https://x.wazirx.com/wazirx-falcon/api/v2.0/crypto_rates",
             timeout=5,
         )
+        r = response.json()
     except Exception:
         return await m.edit("[ERROR]: Something went wrong.")
 
-    if currency not in r:
+    if not isinstance(r, dict) or currency not in r:
         return await m.edit(
             "[ERROR]: INVALID CURRENCY",
-            reply_markup=btn,
+            buttons=btn,
         )
 
     body = {i.upper(): j for i, j in r.get(currency).items()}
 
     text = section(f"Current Crypto Rates For {currency.upper()}", body)
-    await m.edit(text, reply_markup=btn)
+    await m.edit(text, buttons=btn)

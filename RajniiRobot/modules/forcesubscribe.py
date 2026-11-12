@@ -1,236 +1,239 @@
-"""
-BSD 2-Clause License
-
-Copyright (C) 2017-2019, Paul Larsen
-Copyright (C) 2021-2022, Awesome-RJ, [ https://github.com/Awesome-RJ ]
-Copyright (c) 2021-2022, Yūki • Black Knights Union, [ https://github.com/Awesome-RJ/CutiepiiRobot ]
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
-
 import logging
 import time
 
-from pyrogram import filters, Client
-from pyrogram.types import Message
-from pyrogram.errors import RPCError
-from pyrogram.errors.exceptions.bad_request_400 import (
-    ChannelPrivate,
-    ChatAdminRequired,
-    PeerIdInvalid,
-    UsernameNotOccupied,
-    UserNotParticipant,
+from telethon import events, Button
+from telethon.tl.types import (
+    ChannelParticipantsAdmins,
+    ChatBannedRights,
+    ChannelParticipantCreator,
+    ChannelParticipantAdmin,
 )
-from pyrogram.types import ChatPermissions, InlineKeyboardButton, InlineKeyboardMarkup
+from telethon.errors import RPCError
+from telethon.errors.rpcerrorlist import (
+    ChatAdminRequiredError,
+    UserIdInvalidError,
+    UsernameNotOccupiedError,
+    UserNotParticipantError,
+    ChannelPrivateError,
+)
 
-from RajniiRobot import BOT_ID, OWNER_ID as SUDO_USERS, pgram, RAJNI_PTB
+from RajniiRobot import BOT_ID, OWNER_ID as SUDO_USERS, telethn
 from RajniiRobot.modules.sql import forceSubscribe_sql as sql
 
 logging.basicConfig(level=logging.INFO)
 
-static_data_filter = filters.create(
-    lambda _, __, query: query.data == "onUnMuteRequest")
 
-
-@pgram.on_callback_query(static_data_filter)
-def _onUnMuteRequest(client, cb):
+@telethn.on(events.CallbackQuery(pattern=r"^onUnMuteRequest$"))
+async def _onUnMuteRequest(event):
     try:
-        user_id = cb.from_user.id
-        chat_id = cb.message.chat.id
+        user_id = event.sender_id
+        chat_id = event.chat_id
     except:
         return
+    
     if chat_db := sql.fs_settings(chat_id):
         channel = chat_db.channel
         try:
-            chat_member = client.get_chat_member(chat_id, user_id)
-        except:
-            return
-        if chat_member.restricted_by:
-            if chat_member.restricted_by.id == BOT_ID:
-                try:
-                    client.get_chat_member(channel, user_id)
-                    client.unban_chat_member(chat_id, user_id)
-                    cb.message.delete()
-                    # if cb.message.reply_to_message.from_user.id == user_id:
-                    # cb.message.delete()
-                except UserNotParticipant:
-                    client.answer_callback_query(
-                        cb.id,
-                        text=
-                        f"❗ Join our @{channel} channel and press 'UnMute Me' button.",
-                        show_alert=True,
-                    )
-                except ChannelPrivate:
-                    client.unban_chat_member(chat_id, user_id)
-                    cb.message.delete()
-
-            else:
-                client.answer_callback_query(
-                    cb.id,
-                    text=
-                    "❗ You have been muted by admins due to some other reason.",
-                    show_alert=True,
+            # Check bot admin status in chat
+            bot_participant = await telethn.get_permissions(chat_id, BOT_ID)
+            if not bot_participant.is_admin:
+                return await telethn.send_message(
+                    chat_id,
+                    f"❗ **A user is trying to UnMute himself but i can't unmute him because i am not an admin in this chat add me as admin again.**\n__#Leaving this chat...__",
                 )
-        elif client.get_chat_member(chat_id, BOT_ID).status != "administrator":
-            client.send_message(
-                chat_id,
-                f"❗ **{cb.from_user.mention} is trying to UnMute himself but i can't unmute him because i am not an admin in this chat add me as admin again.**\n__#Leaving this chat...__",
-            )
+            
+            chat_member = await telethn.get_permissions(chat_id, user_id)
+        except Exception:
+            return
 
+        if chat_member.is_banned:
+            # Check if restricted/banned by bot
+            # Telethon doesn't easily expose who restricted via get_permissions, but we can verify status
+            try:
+                await telethn(
+                    telethon.tl.functions.channels.GetParticipantRequest(
+                        channel=channel, user_id=user_id
+                    )
+                )
+                # If no exception, user has joined the channel, so unban/unmute them
+                unmute_rights = ChatBannedRights(
+                    until_date=None,
+                    view_messages=False,
+                    send_messages=False,
+                    send_media=False,
+                    send_stickers=False,
+                    send_gifs=False,
+                    send_games=False,
+                    send_inline=False,
+                    embed_links=False,
+                )
+                await telethn.edit_permissions(chat_id, user_id, unmute_rights)
+                await event.delete()
+            except UserNotParticipantError:
+                await event.answer(
+                    text=f"❗ Join our @{channel} channel and press 'UnMute Me' button.",
+                    alert=True,
+                )
+            except ChannelPrivateError:
+                unmute_rights = ChatBannedRights(
+                    until_date=None,
+                    view_messages=False,
+                    send_messages=False,
+                    send_media=False,
+                    send_stickers=False,
+                    send_gifs=False,
+                    send_games=False,
+                    send_inline=False,
+                    embed_links=False,
+                )
+                await telethn.edit_permissions(chat_id, user_id, unmute_rights)
+                await event.delete()
         else:
-            client.answer_callback_query(
-                cb.id,
+            await event.answer(
                 text="❗ Warning! Don't press the button when you can talk.",
-                show_alert=True,
+                alert=True,
             )
 
 
-@pgram.on_edited_message(filters.text & ~filters.private, group=1)
-def _check_member(client: Client, message: Message):
-    chat_id = message.chat.id
+@telethn.on(events.MessageEdited(incoming=True))
+async def _check_member(event):
+    if event.is_private:
+        return
+    chat_id = event.chat_id
     if chat_db := sql.fs_settings(chat_id):
         try:
-            user_id = message.from_user.id
+            user_id = event.sender_id
+            if not user_id:
+                return
         except:
             return
+        
         try:
-            if client.get_chat_member(chat_id, user_id).status not in (
-                    "administrator",
-                    "creator",
-            ):
+            permissions = await telethn.get_permissions(chat_id, user_id)
+            if not permissions.is_admin and not permissions.is_creator:
                 channel = chat_db.channel
                 try:
-                    client.get_chat_member(channel, user_id)
-                except UserNotParticipant:
+                    await telethn(
+                        telethon.tl.functions.channels.GetParticipantRequest(
+                            channel=channel, user_id=user_id
+                        )
+                    )
+                except UserNotParticipantError:
                     try:
-                        sent_message = message.reply_text(
-                            f"Welcome {message.from_user.mention} 🙏 \n **You havent joined our @{channel} Channel yet** 😭 \n \nPlease Join [Our Channel](https://telegram.dog/{channel}) and hit the **UNMUTE ME** Button. \n \n ",
-                            disable_web_page_preview=True,
-                            reply_markup=InlineKeyboardMarkup([
-                                [
-                                    InlineKeyboardButton(
-                                        "Join Channel",
-                                        url=f"https://telegram.dog/{channel}",
-                                    )
-                                ],
-                                [
-                                    InlineKeyboardButton(
-                                        "UnMute Me",
-                                        callback_data="onUnMuteRequest",
-                                    )
-                                ],
-                            ]),
+                        sender = await event.get_sender()
+                        sender_mention = f"[{sender.first_name}](tg://user?id={user_id})" if sender else "User"
+                        
+                        buttons = [
+                            [Button.url("Join Channel", url=f"https://telegram.dog/{channel}")],
+                            [Button.inline("UnMute Me", data="onUnMuteRequest")]
+                        ]
+                        
+                        sent_message = await event.reply(
+                            f"Welcome {sender_mention} 🙏 \n **You havent joined our @{channel} Channel yet** 😭 \n \nPlease Join [Our Channel](https://telegram.dog/{channel}) and hit the **UNMUTE ME** Button. \n \n ",
+                            link_preview=False,
+                            buttons=buttons,
                         )
 
-                        client.restrict_chat_member(
-                            chat_id, user_id,
-                            ChatPermissions(can_send_messages=False))
-                    except ChatAdminRequired:
-                        sent_message.edit(
+                        restrict_rights = ChatBannedRights(
+                            until_date=None,
+                            view_messages=False,
+                            send_messages=True,
+                        )
+                        await telethn.edit_permissions(chat_id, user_id, restrict_rights)
+                    except ChatAdminRequiredError:
+                        await sent_message.edit(
                             "❗ **Cutiepii Robot 愛 is not an admin here..**\n__Give me ban permissions and retry.. \n#Ending FSub...__"
                         )
                     except RPCError:
                         return
 
-                except ChatAdminRequired:
-                    client.send_message(
-                        chat_id,
-                        text=
-                        f"❗ **I not an admin of @{channel} channel.**\n__Give me admin of that channel and retry.\n#Ending FSub...__",
+                except ChatAdminRequiredError:
+                    await event.respond(
+                        text=f"❗ **I am not an admin of @{channel} channel.**\n__Give me admin of that channel and retry.\n#Ending FSub...__",
                     )
-                except ChannelPrivate:
+                except ChannelPrivateError:
                     return
         except:
             return
 
 
-@pgram.on_message(
-    filters.command([
-        "forcesubscribe", "forcesub", "forcesub@RajniiRobot",
-        "forcesubscribe@RajniiRobot"
-    ]) & ~filters.private)
-def config(client: Client, message: Message):
-    user = client.get_chat_member(message.chat.id, message.from_user.id)
-    if user.status == "creator" or user.user.id in SUDO_USERS:
-        chat_id = message.chat.id
-        if len(message.command) > 1:
-            input_str = message.command[1]
-            input_str = input_str.replace("@", "")
+@telethn.on(
+    events.NewMessage(
+        pattern=r"^[/.\?-](?:forcesubscribe|forcesub)(?:@RajniiRobot)?$",
+        incoming=True,
+    )
+)
+async def config(event):
+    if event.is_private:
+        return
+    
+    try:
+        creator_check = await telethn.get_permissions(event.chat_id, event.sender_id)
+        is_creator = creator_check.is_creator
+    except:
+        is_creator = False
+
+    if is_creator or event.sender_id in SUDO_USERS:
+        chat_id = event.chat_id
+        args = event.text.split()
+        if len(args) > 1:
+            input_str = args[1].replace("@", "")
             if input_str.lower() in ("off", "no", "disable"):
                 sql.disapprove(chat_id)
-                message.reply_text(
-                    "❌ **Force Subscribe is Disabled Successfully.**")
+                await event.reply("❌ **Force Subscribe is Disabled Successfully.**")
             elif input_str.lower() in ("clear"):
-                sent_message = message.reply_text(
-                    "**Unmuting all members who are muted by me...**")
+                sent_message = await event.reply("**Unmuting all members who are muted by me...**")
                 try:
-                    for chat_member in client.get_chat_members(
-                            message.chat.id, filter="restricted"):
-                        if chat_member.restricted_by.id == BOT_ID:
-                            client.unban_chat_member(chat_id,
-                                                     chat_member.user.id)
-                            time.sleep(1)
-                    sent_message.edit(
-                        "✅ **UnMuted all members who are muted by me.**")
-                except ChatAdminRequired:
-                    sent_message.edit(
+                    async for user in telethn.iter_participants(chat_id, filter=telethon.tl.types.ChannelParticipantsBanned):
+                        unmute_rights = ChatBannedRights(
+                            until_date=None,
+                            view_messages=False,
+                            send_messages=False,
+                        )
+                        await telethn.edit_permissions(chat_id, user.id, unmute_rights)
+                        time.sleep(1)
+                    await sent_message.edit("✅ **UnMuted all members who are muted by me.**")
+                except ChatAdminRequiredError:
+                    await sent_message.edit(
                         "❗ **I am not an admin in this chat.**\n__I can't unmute members because i am not an admin in this chat make me admin with ban user permission.__"
                     )
             else:
                 try:
-                    client.get_chat_member(input_str, "me")
+                    await telethn(
+                        telethon.tl.functions.channels.GetParticipantRequest(
+                            channel=input_str, user_id="me"
+                        )
+                    )
                     sql.add_channel(chat_id, input_str)
-                    message.reply_text(
+                    await event.reply(
                         f"✅ **Force Subscribe is Enabled**\n__Force Subscribe is enabled, all the group members have to subscribe this [channel](https://telegram.dog/{input_str}) in order to send messages in this group.__",
-                        disable_web_page_preview=True,
+                        link_preview=False,
                     )
-                except UserNotParticipant:
-                    message.reply_text(
+                except UserNotParticipantError:
+                    await event.reply(
                         f"❗ **Not an Admin in the Channel**\n__I am not an admin in the [channel](https://telegram.dog/{input_str}). Add me as a admin in order to enable ForceSubscribe.__",
-                        disable_web_page_preview=True,
+                        link_preview=False,
                     )
-                except (UsernameNotOccupied, PeerIdInvalid):
-                    message.reply_text("❗ **Invalid Channel Username.**")
+                except (UsernameNotOccupiedError, UserIdInvalidError):
+                    await event.reply("❗ **Invalid Channel Username.**")
                 except Exception as err:
-                    message.reply_text(f"❗ **ERROR:** ```{err}```")
+                    await event.reply(f"❗ **ERROR:** ```{err}```")
         elif sql.fs_settings(chat_id):
-            message.reply_text(
+            await event.reply(
                 f"✅ **Force Subscribe is enabled in this chat.**\n__For this [Channel](https://telegram.dog/{sql.fs_settings(chat_id).channel})__",
-                disable_web_page_preview=True,
+                link_preview=False,
             )
         else:
-            message.reply_text(
-                "❌ **Force Subscribe is disabled in this chat.**")
+            await event.reply("❌ **Force Subscribe is disabled in this chat.**")
     else:
-        message.reply_text(
+        await event.reply(
             "❗ **Group Creator Required**\n__You have to be the group creator to do that.__"
         )
 
 
 __help__ = """
 *Force Subscribe*:
-- Cutiepii Robot 愛 can mute members who are not subscribed your channel until they subscribe
+- RajniiRobot can mute members who are not subscribed your channel until they subscribe
 - When enabled I will mute unsubscribed members and show them a unmute button. When they pressed the button I will unmute them
 
 *Setup*

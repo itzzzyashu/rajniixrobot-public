@@ -4,9 +4,9 @@ import time
 
 from bs4 import BeautifulSoup
 from RajniiRobot.utils.helper import cflag, make_it_rw, pos_no, return_json_senpai, day_, season_
-from RajniiRobot import RAJNI_PTB
+from RajniiRobot import RAJNI_PTB, telethn
 
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from telethon.tl.custom import Button
 from jikanpy import AioJikan
 from datetime import datetime
 
@@ -619,9 +619,8 @@ async def get_user_activity(id_, user):
                 if i['status'] == "dropped":
                     of = "at"
                 msg += f"⚬ {str(i['status']).capitalize()}{f'{progress} {of} ' if progress is not None else ' '}{name}\n"
-    btn = [[InlineKeyboardButton("Back", callback_data=f"getusrbc_{user}")]]
-    return f"https://img.anili.st/user/{id_}?a={time.time()}", msg, InlineKeyboardMarkup(
-        btn)
+    btn = [[Button.inline("Back", data=f"getusrbc_{user}")]]
+    return f"https://img.anili.st/user/{id_}?a={time.time()}", msg, btn
 
 
 async def get_top_animes(gnr: str, page, user):
@@ -650,23 +649,23 @@ async def get_top_animes(gnr: str, page, user):
     if int(page) == 1:
         if int(data['pageInfo']['lastPage']) != 1:
             btn.append([
-                InlineKeyboardButton(
+                Button.inline(
                     "Next",
-                    callback_data=f"topanimu_{gnr}_{int(page)+1}_{user}")
+                    data=f"topanimu_{gnr}_{int(page)+1}_{user}")
             ])
     elif int(page) == int(data['pageInfo']['lastPage']):
         btn.append([
-            InlineKeyboardButton(
-                "Prev", callback_data=f"topanimu_{gnr}_{int(page)-1}_{user}")
+            Button.inline(
+                "Prev", data=f"topanimu_{gnr}_{int(page)-1}_{user}")
         ])
     else:
         btn.append([
-            InlineKeyboardButton(
-                "Prev", callback_data=f"topanimu_{gnr}_{int(page)-1}_{user}"),
-            InlineKeyboardButton(
-                "Next", callback_data=f"topanimu_{gnr}_{int(page)+1}_{user}")
+            Button.inline(
+                "Prev", data=f"topanimu_{gnr}_{int(page)-1}_{user}"),
+            Button.inline(
+                "Next", data=f"topanimu_{gnr}_{int(page)+1}_{user}")
         ])
-    return [msg, nsfw], InlineKeyboardMarkup(btn) if len(btn) != 0 else ""
+    return [msg, nsfw], btn if len(btn) != 0 else None
 
 
 async def get_user_favourites(id_, user, req, page, sighs):
@@ -687,35 +686,30 @@ async def get_user_favourites(id_, user, req, page, sighs):
     if int(page) == 1:
         if int(data['pageInfo']['lastPage']) != 1:
             btn.append([
-                InlineKeyboardButton(
+                Button.inline(
                     "Next",
-                    callback_data=
-                    f"myfavqry_{req}_{id_}_{str(int(page)+1)}_{sighs}_{user}")
+                    data=f"myfavqry_{req}_{id_}_{str(int(page)+1)}_{sighs}_{user}")
             ])
     elif int(page) == int(data['pageInfo']['lastPage']):
         btn.append([
-            InlineKeyboardButton(
+            Button.inline(
                 "Prev",
-                callback_data=
-                f"myfavqry_{req}_{id_}_{str(int(page)-1)}_{sighs}_{user}")
+                data=f"myfavqry_{req}_{id_}_{str(int(page)-1)}_{sighs}_{user}")
         ])
     else:
         btn.append([
-            InlineKeyboardButton(
+            Button.inline(
                 "Prev",
-                callback_data=
-                f"myfavqry_{req}_{id_}_{str(int(page)-1)}_{sighs}_{user}"),
-            InlineKeyboardButton(
+                data=f"myfavqry_{req}_{id_}_{str(int(page)-1)}_{sighs}_{user}"),
+            Button.inline(
                 "Next",
-                callback_data=
-                f"myfavqry_{req}_{id_}_{str(int(page)+1)}_{sighs}_{user}")
+                data=f"myfavqry_{req}_{id_}_{str(int(page)+1)}_{sighs}_{user}")
         ])
     btn.append([
-        InlineKeyboardButton("Back",
-                             callback_data=f"myfavs_{id_}_{sighs}_{user}")
+        Button.inline("Back",
+                      data=f"myfavs_{id_}_{sighs}_{user}")
     ])
-    return f"https://img.anili.st/user/{id_}?a=({time.time()})", msg, InlineKeyboardMarkup(
-        btn)
+    return f"https://img.anili.st/user/{id_}?a=({time.time()})", msg, btn
 
 
 async def get_featured_in_lists(idm,
@@ -794,8 +788,6 @@ async def get_anime(vars_, auth: bool = False, user: int = None):
 
     data = result["data"]["Media"]
 
-    # Data of all fields in returned json
-    # pylint: disable=possibly-unused-variable
     idm = data.get("id")
     idmal = data.get("idMal")
     romaji = data["title"]["romaji"]
@@ -893,8 +885,6 @@ async def get_anilist(qdb, page, auth: bool = False, user: int = None):
         return ["No results Found"]
 
     data = result["data"]["Page"]["media"][0]
-    # Data of all fields in returned json
-    # pylint: disable=possibly-unused-variable
     idm = data.get("id")
     bot = "Cutiepii_Robot"
     idmal = data.get("idMal")
@@ -994,7 +984,6 @@ async def get_character(query, page, auth: bool = False, user: int = None):
     if len(result['data']['Page']['characters']) == 0:
         return ["No results Found"]
     data = result["data"]["Page"]["characters"][0]
-    # Character Data
     id_ = data["id"]
     name = data["name"]["full"]
     img = data["image"]["large"]
@@ -1032,8 +1021,6 @@ async def get_manga(qdb, page, auth: bool = False, user: int = None):
         return ["No results Found"]
     data = result["data"]["Page"]["media"][0]
 
-    # Data of all fields in returned json
-    # pylint: disable=possibly-unused-variable
     idm = data.get("id")
     romaji = data["title"]["romaji"]
     english = data["title"]["english"]
@@ -1092,7 +1079,6 @@ async def get_airing(vars_, auth: bool = False, user: int = None):
         error_sts = error[0].get("message")
         return [f"{error_sts}"]
     data = result["data"]["Media"]
-    # Airing Details
     mid = data.get("id")
     romaji = data["title"]["romaji"]
     english = data["title"]["english"]
@@ -1170,14 +1156,11 @@ Average Score: `{manga['meanScore']}`
     btn = []
     if not "user" in req:
         btn.append([
-            InlineKeyboardButton(
-                "Favourites", callback_data=f"myfavs_{data['id']}_yes_{user}"),
-            InlineKeyboardButton("Activity",
-                                 callback_data=f"myacc_{data['id']}_{user}")
+            Button.inline("Favourites", data=f"myfavs_{data['id']}_yes_{user}"),
+            Button.inline("Activity", data=f"myacc_{data['id']}_{user}")
         ])
-    btn.append([InlineKeyboardButton("Profile", url=str(data['siteUrl']))])
-    return f'https://img.anili.st/user/{data["id"]}?a={time.time()}', stats, InlineKeyboardMarkup(
-        btn)
+    btn.append([Button.url("Profile", str(data['siteUrl']))])
+    return f'https://img.anili.st/user/{data["id"]}?a={time.time()}', stats, btn
 
 
 async def update_anilist(id_, req, user, eid: int = None, status: str = None):

@@ -29,7 +29,6 @@ from telegram import (
     ChatPermissions,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
-    # ParseMode,
     Update,
     User,
 )

@@ -1,8 +1,8 @@
 import sys
 import traceback
 from functools import wraps
-from RajniiRobot import pgram, SUPPORT_CHAT
-from pyrogram.errors.exceptions.forbidden_403 import ChatWriteForbidden
+from RajniiRobot import telethn, SUPPORT_CHAT
+from telethon.errors import ChatWriteForbiddenError
 
 
 def split_limits(text):
@@ -27,11 +27,14 @@ def split_limits(text):
 def capture_err(func):
 
     @wraps(func)
-    async def capture(client, message, *args, **kwargs):
+    async def capture(event, *args, **kwargs):
         try:
-            return await func(client, message, *args, **kwargs)
-        except ChatWriteForbidden:
-            await pgram.leave_chat(chat_id)
+            return await func(event, *args, **kwargs)
+        except ChatWriteForbiddenError:
+            try:
+                await event.client.delete_dialog(event.chat_id)
+            except Exception:
+                pass
             return
         except Exception as err:
             exc_type, exc_obj, exc_tb = sys.exc_info()
@@ -40,15 +43,21 @@ def capture_err(func):
                 value=exc_obj,
                 tb=exc_tb,
             )
+            
+            sender = await event.get_sender()
+            user_id = sender.id if sender else 0
+            chat_id = event.chat_id if event.chat_id else 0
+            text_content = getattr(event, "raw_text", None) or getattr(event, "text", "")
+
             error_feedback = split_limits(
                 "**ERROR** | `{}` | `{}`\n\n```{}```\n\n```{}```\n".format(
-                    0 if not message.from_user else message.from_user.id,
-                    0 if not message.chat else message.chat.id,
-                    message.text or message.caption,
+                    user_id,
+                    chat_id,
+                    text_content,
                     "".join(errors),
                 ), )
             for x in error_feedback:
-                await pgram.send_message(SUPPORT_CHAT, x)
+                await telethn.send_message(SUPPORT_CHAT, x)
             raise err
 
     return capture

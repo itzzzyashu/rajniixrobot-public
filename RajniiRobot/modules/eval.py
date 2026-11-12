@@ -1,34 +1,3 @@
-"""
-BSD 2-Clause License
-
-Copyright (C) 2017-2019, Paul Larsen
-Copyright (C) 2021-2022, Awesome-RJ, [ https://github.com/Awesome-RJ ]
-Copyright (c) 2021-2022, Yūki • Black Knights Union, [ https://github.com/Awesome-RJ/CutiepiiRobot ]
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
-
 import ast
 import io
 import os
@@ -40,17 +9,15 @@ from inspect import getfullargspec
 from io import StringIO
 from time import time
 
-from pyrogram import filters, Client
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from telethon import events, Button
+from telethon.tl.types import Document
 from telegram import Update
 from telegram.constants import ParseMode
 from telegram.ext import CallbackContext, CommandHandler
 
-from RajniiRobot import DEV_USERS, LOGGER, RAJNI_PTB
-from RajniiRobot import pgram
+from RajniiRobot import DEV_USERS, LOGGER, RAJNI_PTB, telethn
 from RajniiRobot.modules.helper_funcs.chat_status import dev_plus
 
-Cutiepii_PYRO_Eval = filters.command(["eval", "e"])
 namespaces = {}
 
 
@@ -71,15 +38,17 @@ def log_input(update):
     user = update.effective_user.id
     chat = update.effective_chat.id
     LOGGER.info(
-        f"IN: {update.effective_message.text} (user={user}, chat={chat})")
+        f"IN: {update.effective_message.text} (user={user}, chat={chat})"
+    )
 
 
 async def send(msg, bot, update):
     if len(str(msg)) > 2000:
         with io.BytesIO(str.encode(msg)) as out_file:
             out_file.name = "output.txt"
-            await bot.send_document(chat_id=update.effective_chat.id,
-                                    document=out_file)
+            await bot.send_document(
+                chat_id=update.effective_chat.id, document=out_file
+            )
     else:
         LOGGER.info(f"OUT: '{msg}'")
         await bot.send_message(
@@ -89,16 +58,18 @@ async def send(msg, bot, update):
         )
 
 
-async def aexec(code, client, message):
-    exec("async def __aexec(client: Client, message: Message): " +
-         "".join(f"\n {a}" for a in code.split("\n")))
-    return await locals()["__aexec"](client, message)
+async def aexec(code, client, event):
+    exec(
+        "async def __aexec(client, event): "
+        + "".join(f"\n {a}" for a in code.split("\n"))
+    )
+    return await locals()["__aexec"](client, event)
 
 
-async def edit_or_reply(msg: Message, **kwargs):
-    func = msg.edit_text if msg.from_user.is_self else msg.reply
-    spec = getfullargspec(func.__wrapped__).args
-    await func(**{k: v for k, v in kwargs.items() if k in spec})
+async def edit_or_reply(event, text, **kwargs):
+    if event.out:
+        return await event.edit(text, **kwargs)
+    return await event.reply(text, **kwargs)
 
 
 @dev_plus
@@ -115,14 +86,15 @@ def cleanup_code(code):
 
 async def do(func, bot, update):
     log_input(update)
-    content = await update.message.text.split(" ", 1)[-1]
+    content = update.message.text.split(" ", 1)[-1]
     body = cleanup_code(content)
     env = namespace_of(update.message.chat_id, update, bot)
     os.chdir(os.getcwd())
     with open(
-            os.path.join(os.getcwd(),
-                         "RajniiRobot/modules/helper_funcs/temp.txt"),
-            "w",
+        os.path.join(
+            os.getcwd(), "RajniiRobot/modules/helper_funcs/temp.txt"
+        ),
+        "w",
     ) as temp:
         temp.write(body)
     stdout = io.StringIO()
@@ -155,13 +127,22 @@ async def do(func, bot, update):
             return result
 
 
-@pgram.on_message(Cutiepii_PYRO_Eval & filters.user(DEV_USERS) & (~filters.forwarded) & (~filters.via_bot))
-@pgram.on_edited_message(Cutiepii_PYRO_Eval)
-async def executor(client: Client, message: Message):
+@telethn.on(
+    events.NewMessage(
+        pattern=r"^[/.\?-](?:eval|e)$",
+        from_users=DEV_USERS,
+        incoming=True,
+    )
+)
+@telethn.on(events.MessageEdited(pattern=r"^[/.\?-](?:eval|e)$", from_users=DEV_USERS))
+async def executor(event):
+    if event.is_forwarded:
+        return
     try:
-        cmd = message.text.split(" ", maxsplit=1)[1]
+        cmd = event.text.split(" ", maxsplit=1)[1]
     except IndexError:
-        return await message.delete()
+        return await event.delete()
+    
     t1 = time()
     old_stderr = sys.stderr
     old_stdout = sys.stdout
@@ -169,13 +150,14 @@ async def executor(client: Client, message: Message):
     redirected_error = sys.stderr = StringIO()
     stdout, stderr, exc = None, None, None
     try:
-        await aexec(cmd, client, message)
+        await aexec(cmd, telethn, event)
     except Exception:
         exc = traceback.format_exc()
     stdout = redirected_output.getvalue()
     stderr = redirected_error.getvalue()
     sys.stdout = old_stdout
     sys.stderr = old_stderr
+    
     evaluation = ""
     if exc:
         evaluation = exc
@@ -185,43 +167,33 @@ async def executor(client: Client, message: Message):
         evaluation = stdout
     else:
         evaluation = "Success"
+        
     final_output = f"**OUTPUT**:\n```{evaluation.strip()}```"
     if len(final_output) > 4096:
         filename = "output.txt"
         with open(filename, "w+", encoding="utf8") as out_file:
             out_file.write(str(evaluation.strip()))
         t2 = time()
-        keyboard = InlineKeyboardMarkup([[
-            InlineKeyboardButton(
-                text="⏳",
-                callback_data=f"runtime {t2-t1} Seconds",
-            )
-        ]])
-        await message.reply_document(
-            document=filename,
-            caption=
-            f"**INPUT:**\n`{cmd[:980]}`\n\n**OUTPUT:**\n`Attached Document`",
-            quote=False,
-            reply_markup=keyboard,
+        buttons = [[Button.inline("⏳", data=f"runtime {t2-t1}".encode("utf-8"))]]
+        await telethn.send_file(
+            event.chat_id,
+            file=filename,
+            caption=f"**INPUT:**\n`{cmd[:980]}`\n\n**OUTPUT:**\n`Attached Document`",
+            buttons=buttons,
+            reply_to=event.reply_to_msg_id,
         )
-
-        await message.delete()
+        await event.delete()
         os.remove(filename)
     else:
         t2 = time()
-        keyboard = InlineKeyboardMarkup([[
-            InlineKeyboardButton(
-                text="⏳",
-                callback_data=f"runtime {round(t2-t1, 3)} Seconds",
-            )
-        ]])
-        await edit_or_reply(message, text=final_output, reply_markup=keyboard)
+        buttons = [[Button.inline("⏳", data=f"runtime {round(t2-t1, 3)}".encode("utf-8"))]]
+        await edit_or_reply(event, final_output, buttons=buttons)
 
 
-@pgram.on_callback_query(filters.regex(r"runtime"))
-async def runtime_func_cq(_, cq):
-    runtime = cq.data.split(None, 1)[1]
-    await cq.answer(runtime, show_alert=True)
+@telethn.on(events.CallbackQuery(pattern=r"runtime"))
+async def runtime_func_cq(event):
+    runtime = event.data.decode("utf-8").split(None, 1)[1] + " Seconds"
+    await event.answer(runtime, alert=True)
 
 
 @dev_plus

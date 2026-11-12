@@ -6,7 +6,7 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton, Update
 from telegram.error import BadRequest
 from telegram.constants import MessageLimit, ParseMode
 from telegram.ext import (
-    filters as PTB_Cutiepii_Filters,
+    filters as PTB_RajniiRobot_Filters,
     CallbackContext,
     CallbackQueryHandler,
     MessageHandler,
@@ -590,12 +590,12 @@ Check `/markdownhelp` to know more!
 RAJNI_PTB.add_handler(DisableAbleCommandHandler("filter", filters))
 RAJNI_PTB.add_handler(DisableAbleCommandHandler("stop", stop_filter))
 RAJNI_PTB.add_handler(DisableAbleCommandHandler(
-    ["removeallfilters", "stopall"], rmall_filters, filters=PTB_Cutiepii_Filters.ChatType.GROUPS))
+    ["removeallfilters", "stopall"], rmall_filters, filters=PTB_RajniiRobot_Filters.ChatType.GROUPS))
 RAJNI_PTB.add_handler(CallbackQueryHandler(
     rmall_callback, pattern=r"filters_.*"))
 RAJNI_PTB.add_handler(DisableAbleCommandHandler(
     "filters", list_handlers, admin_ok=True))
-RAJNI_PTB.add_handler(MessageHandler(PTB_Cutiepii_Filters.TEXT & ~PTB_Cutiepii_Filters.UpdateType.EDITED_MESSAGE, reply_filter))
+RAJNI_PTB.add_handler(MessageHandler(PTB_RajniiRobot_Filters.TEXT & ~PTB_RajniiRobot_Filters.UpdateType.EDITED_MESSAGE, reply_filter))
 
 __mod_name__ = "Filters"
 

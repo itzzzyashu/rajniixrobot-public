@@ -1,34 +1,3 @@
-"""
-BSD 2-Clause License
-
-Copyright (C) 2017-2019, Paul Larsen
-Copyright (C) 2021-2022, Awesome-RJ, [ https://github.com/Awesome-RJ ]
-Copyright (c) 2021-2022, Yūki • Black Knights Union, [ https://github.com/Awesome-RJ/CutiepiiRobot ]
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
-
 import requests
 import asyncio
 import io
@@ -48,12 +17,10 @@ from telethon.tl.types import DocumentAttributeFilename, InputMessagesFilterDocu
 from telethon import events
 from zalgo_text import zalgo
 
-from pyrogram import filters
-
 from RajniiRobot.utils.errors import capture_err
 from RajniiRobot.utils.carbon import make_carbon
 from RajniiRobot.events import register
-from RajniiRobot import telethn, ubot, pgram, TEMP_DOWNLOAD_DIRECTORY, SUPPORT_CHAT, LOGGER
+from RajniiRobot import telethn, ubot, TEMP_DOWNLOAD_DIRECTORY, SUPPORT_CHAT, LOGGER
 
 nltk.download("punkt")
 nltk.download("averaged_perceptron_tagger")
@@ -83,7 +50,7 @@ async def _(event):
         titles = item["title"]
         sed1 = img
         sedm = f"**Title : {titles}** \n{sedlyf} \nDate : {dateis} \nAuthor : {writter} \nReadMore : {readthis}"
-        await pgram.send_photo(event.chat_id, sed1, caption=sedm)
+        await telethn.send_file(event.chat_id, sed1, caption=sedm)
 
 
 @register(pattern="^/ball(?: |$)(.*)")
@@ -210,10 +177,10 @@ async def _(dr):
 async def msg(event):
 
     reply_tex = await event.get_reply_message()
-    reply_text = reply_tex.text
-    if reply_text is None:
+    if not reply_tex or not reply_tex.text:
         await event.reply("Reply to a message to make meme.")
         return
+    reply_text = reply_tex.text
     faces = [
         "(・`ω´・)",
         ";;w;;",
@@ -252,10 +219,10 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
-    if rtext is None:
-        await event.reply("Reply to a message tto make meme.")
+    if not rtex or not rtex.text:
+        await event.reply("Reply to a message to make meme.")
         return
+    rtext = rtex.text
     emojis = [
         "😂",
         "😂",
@@ -307,10 +274,10 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
-    if rtext is None:
+    if not rtex or not rtex.text:
         await event.reply("Reply to a message to make meme.")
         return
+    rtext = rtex.text
     b_char = random.choice(rtext).lower()
     reply_text = rtext.replace(b_char, "🅱️").replace(b_char.upper(), "🅱️")
     await event.reply(reply_text)
@@ -320,10 +287,10 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
-    if rtext is None:
+    if not rtex or not rtex.text:
         await event.reply("Reply to a message to make meme.")
         return
+    rtext = rtex.text
     reply_text = "👏 "
     reply_text += rtext.replace(" ", " 👏 ")
     reply_text += " 👏"
@@ -334,10 +301,10 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
-    if rtext is None:
+    if not rtex or not rtex.text:
         await event.reply("Reply to a message to make meme.")
         return
+    rtext = rtex.text
     count = random.randint(3, 10)
     reply_text = re.sub(r"([aeiouAEIOUａｅｉｏｕＡＥＩＯＵ])", (r"\1" * count), rtext)
     await event.reply(reply_text)
@@ -347,7 +314,7 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
+    rtext = rtex.text if rtex else None
     data = rtext or event.pattern_match.group(1)
     if data is None:
         await event.reply("Either provide some input or reply to a message.")
@@ -361,10 +328,10 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
-    if rtext is None:
+    if not rtex or not rtex.text:
         await event.reply("Reply to a message to make meme.")
         return
+    rtext = rtex.text
     reply_text = zalgo.zalgo().zalgofy(rtext)
     await event.reply(reply_text)
 
@@ -373,11 +340,10 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
-    if rtext is None:
+    if not rtex or not rtex.text:
         await event.reply("Reply to a message to make meme.")
         return
-    data = rtext
+    data = rtex.text
 
     data = data.lower()
     accidentals = ["VB", "VBD", "VBG", "VBN"]
@@ -400,10 +366,10 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
-    if rtext is None:
+    if not rtex or not rtex.text:
         await event.reply("Reply to a message to make meme.")
         return
+    rtext = rtex.text
     reply_text = "😡 "
     for i in rtext:
         reply_text += " 😡 " if i == " " else i
@@ -415,10 +381,10 @@ async def msg(event):
 async def msg(event):
 
     rtex = await event.get_reply_message()
-    rtext = rtex.text
-    if rtext is None:
+    if not rtex or not rtex.text:
         await event.reply("Reply to a message to make meme.")
         return
+    rtext = rtex.text
     reply_text = "😭 "
     for i in rtext:
         reply_text += " 😭 " if i == " " else i
@@ -426,19 +392,16 @@ async def msg(event):
     await event.reply(reply_text)
 
 
-@pgram.on_message(filters.command("carbon"))
+@telethn.on(events.NewMessage(pattern=r"^[/.\?-]carbon$", incoming=True))
 @capture_err
-async def carbon_func(_, message):
-    if not message.reply_to_message:
-        return await message.reply_text(
-            "Reply to a text message to make carbon.")
-    if not message.reply_to_message.text:
-        return await message.reply_text(
-            "Reply to a text message to make carbon.")
-    m = await message.reply_text("Preparing Carbon.")
-    carbon = await make_carbon(message.reply_to_message.text)
+async def carbon_func(event):
+    reply = await event.get_reply_message()
+    if not reply or not reply.text:
+        return await event.reply("Reply to a text message to make carbon.")
+    m = await event.reply("Preparing Carbon.")
+    carbon = await make_carbon(reply.text)
     await m.edit("Uploading...")
-    await pgram.send_document(message.chat.id, carbon)
+    await telethn.send_file(event.chat_id, carbon, file_name="carbon.png")
     await m.delete()
     carbon.close()
 
@@ -481,7 +444,6 @@ async def deepfry(img: Image) -> Image:
         (randint(190, 255), randint(170, 240), randint(180, 250)),
     )
     img = img.copy().convert("RGB")
-    img = img.convert("RGB")
     width, height = img.width, img.height
     img = img.resize(
         (int(width**uniform(0.8, 0.9)), int(height**uniform(0.8, 0.9))),
@@ -553,17 +515,9 @@ async def sticklet(event):
     G = random.randint(0, 256)
     B = random.randint(0, 256)
 
-    # get the input text
-    # the text on which we would like to do the magic on
     sticktext = event.pattern_match.group(1)
 
-    # delete the userbot command,
-    # i don't know why this is required
-    # await event.delete()
-
-    # https://docs.python.org/3/library/textwrap.html#textwrap.wrap
     sticktext = textwrap.wrap(sticktext, width=10)
-    # converts back the list to a string
     sticktext = "\n".join(sticktext)
 
     image = Image.new("RGBA", (512, 512), (255, 255, 255, 0))
@@ -589,29 +543,20 @@ async def sticklet(event):
     image.save(image_stream, "WebP")
     image_stream.seek(0)
 
-    # finally, reply the sticker
     await event.reply(file=image_stream,
                       reply_to=event.message.reply_to_msg_id)
-    # replacing upper line with this to get reply tags
 
-    # cleanup
     with contextlib.suppress(BaseException):
         os.remove(FONT_FILE)
 
 
 async def get_font_file(client, channel_id):
-    # first get the font messages
     font_file_message_s = await client.get_messages(
         entity=channel_id,
         filter=InputMessagesFilterDocument,
-        # this might cause FLOOD WAIT,
-        # if used too many times
         limit=None,
     )
-    # get a random font from the list of fonts
-    # https://docs.python.org/3/library/random.html#random.choice
     font_file_message = random.choice(font_file_message_s)
-    # download and return the file path
     return await client.download_media(font_file_message)
 
 
@@ -675,9 +620,6 @@ async def _(event):
                 r = await event.reply(file=InputMediaDice("🎯"))
 
 
-# Oringinal Source from Nicegrill: https://github.com/erenmetesar/NiceGrill/
-# Ported to Lynda by: @pokurt
-
 COLORS = [
     "#F07975",
     "#F49F69",
@@ -708,9 +650,6 @@ EMOJI_PATTERN = re.compile(
 def deEmojify(inputString: str) -> str:
     """Remove emojis and other non-safe characters from string"""
     return re.sub(EMOJI_PATTERN, "", inputString)
-
-
-# Made By @MissJulia_Robot
 
 
 @register(pattern="^/animate (.*)")
@@ -1109,11 +1048,11 @@ reactions = [
     "♬♫♪◖(● o ●)◗♪♫♬",
     "(っ˘ڡ˘ς)",
     "( ˘▽˘)っ♨",
-    "(　・ω・)⊃-[二二]",
+    "( ・ω・)⊃-[二二]",
     "(*´ー`)旦 旦(￣ω￣*)",
     "( ￣▽￣)[] [](≧▽≦ )",
     "(*￣▽￣)旦 且(´∀`*)",
-    "(ノ ˘_˘)ノ　ζ|||ζ　ζ|||ζ　ζ|||ζ",
+    "(ノ ˘_˘)ノ ζ|||ζ ζ|||ζ ζ|||ζ",
     "(ノ°∀°)ノ⌒･*:.｡. .｡.:*･゜ﾟ･*☆",
     "(⊃｡•́‿•̀｡)⊃━✿✿✿✿✿✿",
     "(∩` ﾛ ´)⊃━炎炎炎炎炎",

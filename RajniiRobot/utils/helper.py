@@ -10,9 +10,9 @@ from os.path import basename
 from typing import Tuple, Optional
 from uuid import uuid4
 
-from pyrogram.errors import FloodWait, MessageNotModified
-from pyrogram.types import InlineKeyboardButton, CallbackQuery, Message, InlineKeyboardMarkup
-from RajniiRobot import DEV_USERS, pgram, GLOBAL_LOGS, TEMP_DOWNLOAD_DIRECTORY, LOGGER
+from telethon.errors import FloodWaitError
+from telethon.tl.custom import Button
+from RajniiRobot import DEV_USERS, telethn, GLOBAL_LOGS, TEMP_DOWNLOAD_DIRECTORY, LOGGER
 from RajniiRobot.utils.db import get_collection
 
 AUTH_USERS = get_collection("AUTH_USERS")
@@ -31,99 +31,112 @@ def rand_key():
 
 def control_user(func):
 
-    async def wrapper(_, message: Message):
-        msg = json.loads(str(message))
+    async def wrapper(event, *args, **kwargs):
+        msg = json.loads(str(event))
         if func.__name__ not in [
                 "pong_", "quote", "feed_", "help_", "list_disabled", "start_",
                 "auth_link_cmd", "logout_cmd", "list_tags_genres_cmd"
         ]:
             with contextlib.suppress(KeyError):
                 key = rand_key()
-                ANON_JSON[key] = [func, message, msg]
-                await message.reply_text(
+                ANON_JSON[key] = [func, event, msg]
+                buttons = [
+                    [Button.inline("Click Here", data=f"confirm_{key}")]
+                ]
+                await event.reply(
                     'Click the below button to get results',
-                    reply_markup=InlineKeyboardMarkup([
-                        [
-                            InlineKeyboardButton('Click Here', callback_data=f"confirm_{key}")
-                        ]
-                    ])
+                    buttons=buttons
                 )
                 return
         try:
-            await func(_, message, msg)
-        except FloodWait as e:
-            await asyncio.sleep(e.value + 5)
-        except MessageNotModified:
-            pass
+            await func(event, msg, *args, **kwargs)
+        except FloodWaitError as e:
+            await asyncio.sleep(e.seconds + 5)
+        except Exception as e:
+            if "MessageNotModified" in str(e):
+                pass
+            else:
+                raise e
 
     return wrapper
 
 
 def check_user(func):
-    async def wrapper(_, c_q: CallbackQuery):
-        cq = json.loads(str(c_q))
-        user = cq['from_user']['id']
-        if user in DEV_USERS or user == int(cq['data'].split("_").pop()):
+    async def wrapper(event, *args, **kwargs):
+        # event is a CallbackQuery in Telethon
+        cq = json.loads(str(event.original_update)) if hasattr(event, 'original_update') else {}
+        user = event.sender_id
+        
+        # Extract target user id from callback data (e.g. data ends with user_id)
+        data_parts = event.data.decode("utf-8").split("_") if isinstance(event.data, bytes) else event.data.split("_")
+        target_user = int(data_parts.pop()) if data_parts and data_parts[-1].isdigit() else None
+
+        if user in DEV_USERS or (target_user and user == target_user):
             try:
-                await func(_, c_q, cq)
-            except FloodWait as e:
-                await asyncio.sleep(e.value + 5)
-            except MessageNotModified:
-                pass
+                await func(event, cq, *args, **kwargs)
+            except FloodWaitError as e:
+                await asyncio.sleep(e.seconds + 5)
+            except Exception as e:
+                if "MessageNotModified" in str(e):
+                    pass
+                else:
+                    raise e
         else:
-            await c_q.answer(
+            await event.answer(
                 "Not your query!!!",
-                show_alert=True,
+                alert=True,
             )
     return wrapper
 
 
-async def media_to_image(client: pgram, x: Message, replied: Message):
-    if not (replied.photo or replied.sticker or replied.animation
-            or replied.video):
-        await x.edit_text("Media Type Is Invalid !")
+async def media_to_image(client: telethn, event, replied):
+    if not (replied.photo or replied.sticker or replied.document):
+        await event.edit("Media Type Is Invalid !")
         await asyncio.sleep(5)
-        await x.delete()
+        await event.delete()
         return
-    media = replied.photo or replied.sticker or replied.animation or replied.video
+    
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    dls = await client.download_media(
-        media,
-        file_name=TEMP_DOWNLOAD_DIRECTORY + rand_key(),
+        
+    dls = await replied.download_media(
+        file=TEMP_DOWNLOAD_DIRECTORY + rand_key(),
     )
     dls_loc = os.path.join(TEMP_DOWNLOAD_DIRECTORY, os.path.basename(dls))
-    if replied.sticker and replied.sticker.file_name.endswith(".tgs"):
+    
+    file_name = getattr(replied.file, "name", "") or getattr(replied.file, "ext", "")
+    
+    if replied.sticker and file_name.endswith(".tgs"):
         png_file = os.path.join(TEMP_DOWNLOAD_DIRECTORY, f"{rand_key()}.png")
         cmd = f"lottie_convert.py --frame 0 -if lottie -of png {dls_loc} {png_file}"
         stdout, stderr = (await runcmd(cmd))[:2]
         os.remove(dls_loc)
         if not os.path.lexists(png_file):
-            await x.edit_text(
+            await event.edit(
                 "This sticker is Gey, Task Failed Successfully ≧ω≦")
             await asyncio.sleep(5)
-            await x.delete()
+            await event.delete()
             raise Exception(stdout + stderr)
         dls_loc = png_file
-    elif replied.sticker and replied.sticker.file_name.endswith(".webp"):
+    elif replied.sticker and file_name.endswith(".webp"):
         stkr_file = os.path.join(TEMP_DOWNLOAD_DIRECTORY, f"{rand_key()}.png")
         os.rename(dls_loc, stkr_file)
         if not os.path.lexists(stkr_file):
-            await x.edit_text("```Sticker not found...```")
+            await event.edit("```Sticker not found...```")
             await asyncio.sleep(5)
-            await x.delete()
+            await event.delete()
             return
         dls_loc = stkr_file
-    elif replied.animation or replied.video:
-        await x.edit_text("`Converting Media To Image ...`")
+    elif replied.video or replied.document:
+        await event.edit("`Converting Media To Image ...`")
         jpg_file = os.path.join(TEMP_DOWNLOAD_DIRECTORY, f"{rand_key()}.jpg")
         await take_screen_shot(dls_loc, 0, jpg_file)
         os.remove(dls_loc)
         if not os.path.lexists(jpg_file):
-            await x.edit_text(
+            await event.edit(
                 "This Gif is Gey (｡ì _ í｡), Task Failed Successfully !")
             await asyncio.sleep(5)
-            await x.delete()
+            await event.delete()
             return
         dls_loc = jpg_file
     return dls_loc
@@ -229,7 +242,7 @@ def make_it_rw(time_stamp):
 
 async def clog(name: str, text: str, tag: str):
     log = f"#{name.upper()}  #{tag.upper()}\n\n{text}"
-    await pgram.send_message(chat_id=GLOBAL_LOGS, text=log)
+    await telethn.send_message(entity=GLOBAL_LOGS, message=log)
 
 
 def get_btns(media,
@@ -244,58 +257,54 @@ def get_btns(media,
     pg = f"_{lspage}" if lspage is not None else ""
     if media == "ANIME" and sfw == "False":
         buttons.append([
-            InlineKeyboardButton(
+            Button.inline(
                 text="Characters",
-                callback_data=
-                f"char_{result[2][0]}_ANI{qry}{pg}_{str(auth)}_1_{user}"),
-            InlineKeyboardButton(
+                data=f"char_{result[2][0]}_ANI{qry}{pg}_{str(auth)}_1_{user}"),
+            Button.inline(
                 text="Description",
-                callback_data=
-                f"desc_{result[2][0]}_ANI{qry}{pg}_{str(auth)}_{user}"),
-            InlineKeyboardButton(
+                data=f"desc_{result[2][0]}_ANI{qry}{pg}_{str(auth)}_{user}"),
+            Button.inline(
                 text="List Series",
-                callback_data=
-                f"ls_{result[2][0]}_ANI{qry}{pg}_{str(auth)}_{user}"),
+                data=f"ls_{result[2][0]}_ANI{qry}{pg}_{str(auth)}_{user}"),
         ])
     if media == "CHARACTER":
         buttons.append([
-            InlineKeyboardButton(
+            Button.inline(
                 "Description",
-                callback_data=
-                f"desc_{result[2][0]}_CHAR{qry}{pg}_{str(auth)}_{user}")
+                data=f"desc_{result[2][0]}_CHAR{qry}{pg}_{str(auth)}_{user}")
         ])
         buttons.append([
-            InlineKeyboardButton(
+            Button.inline(
                 "List Series",
-                callback_data=f"lsc_{result[2][0]}{qry}{pg}_{str(auth)}_{user}"
+                data=f"lsc_{result[2][0]}{qry}{pg}_{str(auth)}_{user}"
             )
         ])
     if media == "SCHEDULED":
         if result[0] not in (0, 6):
             buttons.append([
-                InlineKeyboardButton(
+                Button.inline(
                     str(day_(result[0] - 1)),
-                    callback_data=f"sched_{result[0]-1}_{user}"),
-                InlineKeyboardButton(
+                    data=f"sched_{result[0]-1}_{user}"),
+                Button.inline(
                     str(day_(result[0] + 1)),
-                    callback_data=f"sched_{result[0]+1}_{user}")
+                    data=f"sched_{result[0]+1}_{user}")
             ])
         if result[0] == 0:
             buttons.append([
-                InlineKeyboardButton(
+                Button.inline(
                     str(day_(result[0] + 1)),
-                    callback_data=f"sched_{result[0]+1}_{user}")
+                    data=f"sched_{result[0]+1}_{user}")
             ])
         if result[0] == 6:
             buttons.append([
-                InlineKeyboardButton(
+                Button.inline(
                     str(day_(result[0] - 1)),
-                    callback_data=f"sched_{result[0]-1}_{user}")
+                    data=f"sched_{result[0]-1}_{user}")
             ])
     if media == "MANGA" and sfw == "False":
-        buttons.append([InlineKeyboardButton("More Info", url=result[1][2])])
+        buttons.append([Button.url("More Info", result[1][2])])
     if media == "AIRING" and sfw == "False":
-        buttons.append([InlineKeyboardButton("More Info", url=result[1])])
+        buttons.append([Button.url("More Info", result[1])])
     if auth is True and media != "SCHEDULED" and sfw == "False":
         auth_btns = get_auth_btns(media,
                                   user,
@@ -307,53 +316,49 @@ def get_btns(media,
         if result[3] == "None":
             if result[4] != "None":
                 buttons.append([
-                    InlineKeyboardButton(
+                    Button.inline(
                         text="Sequel",
-                        callback_data=f"btn_{result[4]}_{str(auth)}_{user}")
+                        data=f"btn_{result[4]}_{str(auth)}_{user}")
                 ])
         else:
             if result[4] != "None":
                 buttons.append([
-                    InlineKeyboardButton(
+                    Button.inline(
                         text="Prequel",
-                        callback_data=f"btn_{result[3]}_{str(auth)}_{user}"),
-                    InlineKeyboardButton(
+                        data=f"btn_{result[3]}_{str(auth)}_{user}"),
+                    Button.inline(
                         text="Sequel",
-                        callback_data=f"btn_{result[4]}_{str(auth)}_{user}"),
+                        data=f"btn_{result[4]}_{str(auth)}_{user}"),
                 ])
             else:
                 buttons.append([
-                    InlineKeyboardButton(
+                    Button.inline(
                         text="Prequel",
-                        callback_data=f"btn_{result[3]}_{str(auth)}_{user}")
+                        data=f"btn_{result[3]}_{str(auth)}_{user}")
                 ])
     if lsqry is not None and len(result) != 1 and result[1][1] != 1:
         if lspage == 1:
             buttons.append([
-                InlineKeyboardButton(
+                Button.inline(
                     text="Next",
-                    callback_data=
-                    f"page_{media}{qry}_{int(lspage)+1}_{str(auth)}_{user}")
+                    data=f"page_{media}{qry}_{int(lspage)+1}_{str(auth)}_{user}")
             ])
         elif lspage == result[1][1]:
             buttons.append([
-                InlineKeyboardButton(
+                Button.inline(
                     text="Prev",
-                    callback_data=
-                    f"page_{media}{qry}_{int(lspage)-1}_{str(auth)}_{user}")
+                    data=f"page_{media}{qry}_{int(lspage)-1}_{str(auth)}_{user}")
             ])
         else:
             buttons.append([
-                InlineKeyboardButton(
+                Button.inline(
                     text="Prev",
-                    callback_data=
-                    f"page_{media}{qry}_{int(lspage)-1}_{str(auth)}_{user}"),
-                InlineKeyboardButton(
+                    data=f"page_{media}{qry}_{int(lspage)-1}_{str(auth)}_{user}"),
+                Button.inline(
                     text="Next",
-                    callback_data=
-                    f"page_{media}{qry}_{int(lspage)+1}_{str(auth)}_{user}"),
+                    data=f"page_{media}{qry}_{int(lspage)+1}_{str(auth)}_{user}"),
             ])
-    return InlineKeyboardMarkup(buttons)
+    return buttons
 
 
 def get_auth_btns(media, user, data, lsqry: str = None, lspage: int = None):
@@ -362,20 +367,20 @@ def get_auth_btns(media, user, data, lsqry: str = None, lspage: int = None):
     pg = f"_{lspage}" if lspage is not None else ""
     if media == "CHARACTER":
         btn.append(
-            InlineKeyboardButton(
+            Button.inline(
                 text="Add to Favs"
                 if data[1] is not True else "Remove from Favs",
-                callback_data=f"fav_{media}_{data[0]}{qry}{pg}_{user}"))
+                data=f"fav_{media}_{data[0]}{qry}{pg}_{user}"))
     else:
         btn.append(
-            InlineKeyboardButton(
+            Button.inline(
                 text="Add to Favs"
                 if data[3] is not True else "Remove from Favs",
-                callback_data=f"fav_{media}_{data[0]}{qry}{pg}_{user}"))
+                data=f"fav_{media}_{data[0]}{qry}{pg}_{user}"))
         btn.append(
-            InlineKeyboardButton(
+            Button.inline(
                 text="Add to List" if data[1] is False else "Update in List",
-                callback_data=f"lsadd_{media}_{data[0]}{qry}{pg}_{user}"
+                data=f"lsadd_{media}_{data[0]}{qry}{pg}_{user}"
                 if data[1] is False else
                 f"lsupdt_{media}_{data[0]}_{data[2]}{qry}{pg}_{user}"))
     return btn
@@ -422,9 +427,9 @@ async def update_pics_cache(link):
     if (await PIC_DB.find_one({'_id': link})) is None:
         await PIC_DB.insert_one({'_id': link})
         try:
-            await pgram.send_message("webpagebot", link)
+            await telethn.send_message("webpagebot", link)
         except ConnectionError:
             await asyncio.sleep(5)
-            await pgram.send_message("webpagebot", link)
+            await telethn.send_message("webpagebot", link)
     else:
         return

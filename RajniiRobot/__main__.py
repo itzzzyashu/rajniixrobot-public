@@ -8,22 +8,16 @@ import signal
 import traceback
 import asyncio
 import sys
-import traceback
 from sys import argv
 from typing import Optional
-from pyrogram import idle as pyrogram_idle
 from telethon.errors import FloodWaitError
 
-
 # needed to dynamically load modules
-# NOTE: Module order is not guaranteed, specify that in the config file!
-
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (ContextTypes, filters, CallbackQueryHandler, MessageHandler)
 from telegram.error import (BadRequest, ChatMigrated, NetworkError, TelegramError, TimedOut, Forbidden)
 from telegram.helpers import escape_markdown
 from telegram.constants import ParseMode
-# ✅ Trick Python into pointing the old name to the new v21 Type
 CallbackContext = ContextTypes.DEFAULT_TYPE
 
 from RajniiRobot.modules import ALL_MODULES
@@ -31,7 +25,7 @@ import RajniiRobot.modules.sql.users_sql as sql
 from RajniiRobot.modules.disable import DisableAbleCommandHandler
 from RajniiRobot.modules.helper_funcs.misc import paginate_modules
 from RajniiRobot.modules.helper_funcs.chat_status import is_user_admin
-from RajniiRobot import (DONATION_LINK, LOGGER, OWNER_ID, OWNER_USERNAME, PORT, TOKEN, URL, WEBHOOK, SUPPORT_CHAT, UPDATES_LOGS, BOT_NAME, BOT_USERNAME, BOT_START_GIF, BOT_START_PIC, ERROR_LOGS, RAJNI_PTB, SOURCE_CODE, StartTime, telethn, pgram, ubot, init_aiohttp_session, init_arq_client, close_aiohttp_session)
+from RajniiRobot import (DONATION_LINK, LOGGER, OWNER_ID, OWNER_USERNAME, PORT, TOKEN, URL, WEBHOOK, SUPPORT_CHAT, UPDATES_LOGS, BOT_NAME, BOT_USERNAME, BOT_START_GIF, BOT_START_PIC, ERROR_LOGS, RAJNI_PTB, SOURCE_CODE, StartTime, telethn, ubot, init_aiohttp_session, init_arq_client, close_aiohttp_session)
 from RajniiRobot.strings import (START_GROUP_STRING, HELP_GROUP_STRING, START_SECTION_STRING, ABOUT_SECTION_STRING, DONATE_SECTION_STRING, HELP_SECTION_STRING, MANUAL_SECTION_STRING, ADMIN_SETUP_STRING, ANTISPAM_SETUP_STRING, SUPPORT_SECTION_STRING, CREDITS_SECTION_STRING, TANDC_SECTION_STRING)
 
 
@@ -793,15 +787,13 @@ async def migrate_chats(update: Update):
     LOGGER.info("Successfully migrated!")
 
 
-
 async def safe_telethon_start():
     while True:
         try:
-            # ✅ FIX: Pass the bot token explicitly so Telethon logs in automatically as a bot
             await telethn.start(bot_token=TOKEN) 
             LOGGER.info("Telethon bot started successfully.")
             return True
-        except telethon_errors.FloodWaitError as e:
+        except FloodWaitError as e:
             wait = int(e.seconds) + 10
             LOGGER.warning(f"Telethon FloodWait: sleeping {wait}s")
             await asyncio.sleep(wait)
@@ -810,43 +802,29 @@ async def safe_telethon_start():
             LOGGER.error(traceback.format_exc())
             return False
 
-
-
 async def userbot_safe_start(client, name):
     while True:
         try:
             await client.start()
             LOGGER.info(f"{name} started successfully.")
             return True
-        except telethon_errors.FloodWaitError as e:
+        except FloodWaitError as e:
             wait = int(e.seconds) + 10
             LOGGER.warning(f"{name} FloodWait: sleeping {wait}s")
             await asyncio.sleep(wait)
         except Exception as e:
-            # Catching Pyrogram FloodWait explicitly if raised dynamically
-            if "FloodWait" in str(type(e)) or hasattr(e, "value"):
-                wait = getattr(e, "value", 15) + 5
-                LOGGER.warning(f"{name} FloodWait caught: sleeping {wait}s")
-                await asyncio.sleep(wait)
-                continue
             LOGGER.error(f"{name} failed: {e}")
             LOGGER.error(traceback.format_exc())
             return False
 
-
-
 async def start_clients():
     LOGGER.info("Starting all Telegram clients concurrently...")
-    # Use asyncio.gather to prevent one failing framework from blocking the others
     results = await asyncio.gather(
         safe_telethon_start(),
-        userbot_safe_start(pgram, "Pyrogram"),
         userbot_safe_start(ubot, "Userbot"),
         return_exceptions=True
     )
     LOGGER.info(f"[{BOT_NAME}] | Telegram clients startup attempt complete. Statuses: {results}")
-
-
 
 # --- 3. HANDLER CONFIGURATION ---
 def setup_handlers():
@@ -870,15 +848,12 @@ def setup_handlers():
     RAJNI_PTB.add_error_handler(error_callback)
 
 
-
-# --- 4. SHUTDOWN LOGIC ---
-# Global flag to completely prevent back-to-back concurrent triggers
 SHUTTING_DOWN = False
 
 async def shutdown():
     global SHUTTING_DOWN
     if SHUTTING_DOWN:
-        return  # Exit immediately if shutdown is already running
+        return  
     SHUTTING_DOWN = True
 
     LOGGER.info(f"[{BOT_NAME}] | Shutting down frameworks safely...")
@@ -888,7 +863,6 @@ async def shutdown():
         if RAJNI_PTB.updater and RAJNI_PTB.updater.running:
             await RAJNI_PTB.updater.stop()
         
-        # Guard checking framework run states safely for PTB v21
         if getattr(RAJNI_PTB, "running", False):
             await RAJNI_PTB.stop()
             await RAJNI_PTB.shutdown()
@@ -905,22 +879,8 @@ async def shutdown():
         except Exception as e:
             LOGGER.error(f"Error disconnecting {name}: {e}")
 
-    # 3. Shutdown Pyrogram Client cleanly
+    # 3. Final session cleanup
     try:
-        if pgram:
-            is_connected = pgram.is_connected
-            if callable(is_connected):
-                is_connected = await is_connected() if asyncio.iscoroutinefunction(is_connected) else is_connected()
-            
-            if is_connected:
-                await pgram.stop(block=False)
-            LOGGER.info("Pyrogram closed cleanly.")
-    except Exception as e:
-        LOGGER.error(f"Error stopping Pyrogram: {e}")
-
-    # 4. Final session cleanup
-    try:
-        # Added your global HTTPX AsyncClient closure here to fix the unclosed warning
         await close_http_client()
         await close_aiohttp_session()
         LOGGER.info(f"[{BOT_NAME}] | All network sessions closed cleanly.")
@@ -928,7 +888,6 @@ async def shutdown():
         LOGGER.error(f"Error closing HTTP sessions: {e}")
 
     LOGGER.info(f"[{BOT_NAME}] | Shutdown complete.")
-
 
 
 # --- 5. MAIN BOOTSTRAP SYSTEM ---
@@ -943,10 +902,7 @@ async def main():
 
     await asyncio.sleep(2)
 
-    # --- PROPER PTB MANUAL INTERFACE LIFECYCLE ---
     await RAJNI_PTB.initialize()
-
-     # ✅ FIX: Register handlers FIRST while the update pipeline is still clear
     setup_handlers() 
 
     await RAJNI_PTB.updater.start_polling()
@@ -966,7 +922,6 @@ async def main():
     LOGGER.info(f"[{BOT_NAME}] | TUU • {BOT_NAME} deployed, check @{SUPPORT_CHAT}")
     LOGGER.info(f"[{BOT_NAME}] | TUU • entering main loop block.")
 
-    # Shared continuous runtime keep-alive engine
     try:
         while True:
             await asyncio.sleep(3600)
@@ -980,7 +935,6 @@ async def main():
 if __name__ == '__main__':
     LOGGER.info("=" * 50)
     
-    # Setup standard process signal hooks cleanly across platforms
     loop = asyncio.get_event_loop()
     main_task = None
     
@@ -993,7 +947,6 @@ if __name__ == '__main__':
         try:
             loop.add_signal_handler(sig, signal_handler)
         except NotImplementedError:
-            # Fallback handling structure for development on Windows OS
             pass
 
     try:

@@ -1,41 +1,4 @@
-"""
-BSD 2-Clause License
-
-Copyright (C) 2017-2019, Paul Larsen
-Copyright (C) 2021-2022, Awesome-RJ, [ https://github.com/Awesome-RJ ]
-Copyright (c) 2021-2022, Yūki • Black Knights Union, [ https://github.com/Awesome-RJ/CutiepiiRobot ]
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
-"""
-from pyrogram import filters
-from pyrogram.types import (
-    CallbackQuery,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    Message,
-)
+from telethon import events, Button
 from RajniiRobot import RAJNI_PTB, LOGGER
 
 # By @TroJanzHEX
@@ -58,376 +21,337 @@ from RajniiRobot.utils.resources.ImageEditor.edit_5 import (
     normalglitch_5, scanlineglitch_1, scanlineglitch_2, scanlineglitch_3,
     scanlineglitch_4, scanlineglitch_5,
 )
-from RajniiRobot import pgram
+from RajniiRobot import telethn
 
 lel = 00000000
 
 
-# pylint:disable=import-error
-@pgram.on_message(filters.command(["edit", "editor"]))
-async def photo(client: pgram, message: Message):
+@telethn.on(events.NewMessage(pattern=r"^[/.\?-](?:edit|editor)$", incoming=True))
+async def photo(event):
     try:
-        if not message.reply_to_message.photo:
-            await client.send_message(message.chat.id,
-                                      "Reply to an image man!ㅤㅤ")
+        reply = await event.get_reply_message()
+        if not reply or not reply.photo:
+            await event.reply("Reply to an image man!ㅤㅤ")
             return
     except:
         return
     global lel
     try:
-        lel = message.from_user.id
+        lel = event.sender_id
     except:
         return
     try:
-        await client.send_message(
-            chat_id=message.chat.id,
+        buttons = [
+            [
+                Button.inline("💡 BRIGHT", data="bright"),
+                Button.inline("🖼 MIXED", data="mix"),
+                Button.inline("🔳 B&W", data="b|w"),
+            ],
+            [
+                Button.inline("🟡 CIRCLE", data="circle"),
+                Button.inline("🩸 BLUR", data="blur"),
+                Button.inline("🌌 BORDER", data="border"),
+            ],
+            [
+                Button.inline("🎉 STICKER", data="stick"),
+                Button.inline("↩️ ROTATE", data="rotate"),
+                Button.inline("🔦 CONTRAST", data="contrast"),
+            ],
+            [
+                Button.inline("🌇 SEPIA", data="sepia"),
+                Button.inline("✏️ PENCIL", data="pencil"),
+                Button.inline("🐶 CARTOON", data="cartoon"),
+            ],
+            [
+                Button.inline("🔄 INVERT", data="inverted"),
+                Button.inline("🔮 GLITCH", data="glitch"),
+                Button.inline("✂️ REMOVE BG", data="removebg"),
+            ],
+            [
+                Button.inline("❌ CLOSE", data="close_e"),
+            ],
+        ]
+        await telethn.send_message(
+            event.chat_id,
             text="Select your required mode from below!ㅤㅤ",
-            reply_markup=InlineKeyboardMarkup([
-                [
-                    InlineKeyboardButton(text="💡 BRIGHT",
-                                         callback_data="bright"),
-                    InlineKeyboardButton(text="🖼 MIXED", callback_data="mix"),
-                    InlineKeyboardButton(text="🔳 B&W", callback_data="b|w"),
-                ],
-                [
-                    InlineKeyboardButton(text="🟡 CIRCLE",
-                                         callback_data="circle"),
-                    InlineKeyboardButton(text="🩸 BLUR", callback_data="blur"),
-                    InlineKeyboardButton(text="🌌 BORDER",
-                                         callback_data="border"),
-                ],
-                [
-                    InlineKeyboardButton(text="🎉 STICKER",
-                                         callback_data="stick"),
-                    InlineKeyboardButton(text="↩️ ROTATE",
-                                         callback_data="rotate"),
-                    InlineKeyboardButton(text="🔦 CONTRAST",
-                                         callback_data="contrast"),
-                ],
-                [
-                    InlineKeyboardButton(text="🌇 SEPIA",
-                                         callback_data="sepia"),
-                    InlineKeyboardButton(text="✏️ PENCIL",
-                                         callback_data="pencil"),
-                    InlineKeyboardButton(text="🐶 CARTOON",
-                                         callback_data="cartoon"),
-                ],
-                [
-                    InlineKeyboardButton(text="🔄 INVERT",
-                                         callback_data="inverted"),
-                    InlineKeyboardButton(text="🔮 GLITCH",
-                                         callback_data="glitch"),
-                    InlineKeyboardButton(text="✂️ REMOVE BG",
-                                         callback_data="removebg"),
-                ],
-                [
-                    InlineKeyboardButton(text="❌ CLOSE",
-                                         callback_data="close_e"),
-                ],
-            ]),
-            reply_to_message_id=message.reply_to_message.id,
+            buttons=buttons,
+            reply_to=reply.id,
         )
     except Exception as e:
         LOGGER.debug(f"photomarkup error - {str(e)}")
         if "USER_IS_BLOCKED" in str(e):
             return
         try:
-            await message.reply_text("Something went wrong!", quote=True)
+            await event.reply("Something went wrong!", quote=True)
         except Exception:
             return
 
 
-@pgram.on_callback_query()
-async def cb_handler(client: pgram, query: CallbackQuery):
-    user_id = query.from_user.id
+@telethn.on(events.CallbackQuery())
+async def cb_handler(event):
+    user_id = event.sender_id
+    data = event.data.decode("utf-8")
     if lel == user_id:
-        if query.data == "removebg":
-            await query.message.edit_text(
+        if data == "removebg":
+            await event.edit(
                 "**Select required mode**ㅤㅤㅤㅤ",
-                reply_markup=InlineKeyboardMarkup([
+                buttons=[
                     [
-                        InlineKeyboardButton(text="WITH WHITE BG",
-                                             callback_data="rmbgwhite"),
-                        InlineKeyboardButton(text="WITHOUT BG",
-                                             callback_data="rmbgplain"),
+                        Button.inline("WITH WHITE BG", data="rmbgwhite"),
+                        Button.inline("WITHOUT BG", data="rmbgplain"),
                     ],
                     [
-                        InlineKeyboardButton(text="STICKER",
-                                             callback_data="rmbgsticker")
+                        Button.inline("STICKER", data="rmbgsticker")
                     ],
-                ]),
+                ],
             )
-        elif query.data == "stick":
-            await query.message.edit(
+        elif data == "stick":
+            await event.edit(
                 "**Select a Type**",
-                reply_markup=InlineKeyboardMarkup([
+                buttons=[
                     [
-                        InlineKeyboardButton(text="Normal",
-                                             callback_data="stkr"),
-                        InlineKeyboardButton(text="Edge Curved",
-                                             callback_data="cur_ved"),
+                        Button.inline("Normal", data="stkr"),
+                        Button.inline("Edge Curved", data="cur_ved"),
                     ],
                     [
-                        InlineKeyboardButton(text="Circle",
-                                             callback_data="circle_sticker")
+                        Button.inline("Circle", data="circle_sticker")
                     ],
-                ]),
+                ],
             )
-        elif query.data == "rotate":
-            await query.message.edit_text(
+        elif data == "rotate":
+            await event.edit(
                 "**Select the Degree**",
-                reply_markup=InlineKeyboardMarkup([
+                buttons=[
                     [
-                        InlineKeyboardButton(text="180", callback_data="180"),
-                        InlineKeyboardButton(text="90", callback_data="90"),
+                        Button.inline("180", data="180"),
+                        Button.inline("90", data="90"),
                     ],
-                    [InlineKeyboardButton(text="270", callback_data="270")],
-                ]),
+                    [Button.inline("270", data="270")],
+                ],
             )
 
-        elif query.data == "glitch":
-            await query.message.edit_text(
+        elif data == "glitch":
+            await event.edit(
                 "**Select required mode**ㅤㅤㅤㅤ",
-                reply_markup=InlineKeyboardMarkup([[
-                    InlineKeyboardButton(text="NORMAL",
-                                         callback_data="normalglitch"),
-                    InlineKeyboardButton(text="SCAN LINES",
-                                         callback_data="scanlineglitch"),
-                ]]),
+                buttons=[[
+                    Button.inline("NORMAL", data="normalglitch"),
+                    Button.inline("SCAN LINES", data="scanlineglitch"),
+                ]],
             )
-        elif query.data == "normalglitch":
-            await query.message.edit_text(
+        elif data == "normalglitch":
+            await event.edit(
                 "**Select Glitch power level**",
-                reply_markup=InlineKeyboardMarkup([
+                buttons=[
                     [
-                        InlineKeyboardButton(text="1",
-                                             callback_data="normalglitch1"),
-                        InlineKeyboardButton(text="2",
-                                             callback_data="normalglitch2"),
-                        InlineKeyboardButton(text="3",
-                                             callback_data="normalglitch3"),
+                        Button.inline("1", data="normalglitch1"),
+                        Button.inline("2", data="normalglitch2"),
+                        Button.inline("3", data="normalglitch3"),
                     ],
                     [
-                        InlineKeyboardButton(text="4",
-                                             callback_data="normalglitch4"),
-                        InlineKeyboardButton(text="5",
-                                             callback_data="normalglitch5"),
+                        Button.inline("4", data="normalglitch4"),
+                        Button.inline("5", data="normalglitch5"),
                     ],
-                ]),
+                ],
             )
-        elif query.data == "scanlineglitch":
-            await query.message.edit_text(
+        elif data == "scanlineglitch":
+            await event.edit(
                 "**Select Glitch power level**",
-                reply_markup=InlineKeyboardMarkup([
+                buttons=[
                     [
-                        InlineKeyboardButton(text="1",
-                                             callback_data="scanlineglitch1"),
-                        InlineKeyboardButton(text="2",
-                                             callback_data="scanlineglitch2"),
-                        InlineKeyboardButton(text="3",
-                                             callback_data="scanlineglitch3"),
+                        Button.inline("1", data="scanlineglitch1"),
+                        Button.inline("2", data="scanlineglitch2"),
+                        Button.inline("3", data="scanlineglitch3"),
                     ],
                     [
-                        InlineKeyboardButton(text="4",
-                                             callback_data="scanlineglitch4"),
-                        InlineKeyboardButton(text="5",
-                                             callback_data="scanlineglitch5"),
+                        Button.inline("4", data="scanlineglitch4"),
+                        Button.inline("5", data="scanlineglitch5"),
                     ],
-                ]),
+                ],
             )
-        elif query.data == "blur":
-            await query.message.edit(
+        elif data == "blur":
+            await event.edit(
                 "**Select a Type**",
-                reply_markup=InlineKeyboardMarkup([
+                buttons=[
                     [
-                        InlineKeyboardButton(text="box", callback_data="box"),
-                        InlineKeyboardButton(text="normal",
-                                             callback_data="normal"),
+                        Button.inline("box", data="box"),
+                        Button.inline("normal", data="normal"),
                     ],
                     [
-                        InlineKeyboardButton(text="Gaussian",
-                                             callback_data="gas")
+                        Button.inline("Gaussian", data="gas")
                     ],
-                ]),
+                ],
             )
-        elif query.data == "circle":
-            await query.message.edit_text(
+        elif data == "circle":
+            await event.edit(
                 "**Select required mode**",
-                reply_markup=InlineKeyboardMarkup([[
-                    InlineKeyboardButton(text="WITH BG",
-                                         callback_data="circlewithbg"),
-                    InlineKeyboardButton(text="WITHOUT BG",
-                                         callback_data="circlewithoutbg"),
-                ]]),
+                buttons=[[
+                    Button.inline("WITH BG", data="circlewithbg"),
+                    Button.inline("WITHOUT BG", data="circlewithoutbg"),
+                ]],
             )
-        elif query.data == "border":
-            await query.message.edit(
+        elif data == "border":
+            await event.edit(
                 "**Select Border**",
-                reply_markup=InlineKeyboardMarkup([
+                buttons=[
                     [
-                        InlineKeyboardButton(text="🔴 RED 🔴",
-                                             callback_data="red"),
-                        InlineKeyboardButton(text="🟢 Green 🟢",
-                                             callback_data="green"),
+                        Button.inline("🔴 RED 🔴", data="red"),
+                        Button.inline("🟢 Green 🟢", data="green"),
                     ],
                     [
-                        InlineKeyboardButton(text="⚫ Black ⚫",
-                                             callback_data="black"),
-                        InlineKeyboardButton(text="🔵 Blue 🔵",
-                                             callback_data="blue"),
+                        Button.inline("⚫ Black ⚫", data="black"),
+                        Button.inline("🔵 Blue 🔵", data="blue"),
                     ],
-                ]),
+                ],
             )
 
-        elif query.data == "bright":
-            await query.message.delete()
-            await bright(client, query.message)
+        elif data == "bright":
+            await event.delete()
+            await bright(telethn, event.message)
 
-        elif query.data == "close_e":
-            await query.message.delete()
+        elif data == "close_e":
+            await event.delete()
 
-        elif query.data == "mix":
-            await query.message.delete()
-            await mix(client, query.message)
+        elif data == "mix":
+            await event.delete()
+            await mix(telethn, event.message)
 
-        elif query.data == "b|w":
-            await query.message.delete()
-            await black_white(client, query.message)
+        elif data == "b|w":
+            await event.delete()
+            await black_white(telethn, event.message)
 
-        elif query.data == "circlewithbg":
-            await query.message.delete()
-            await circle_with_bg(client, query.message)
+        elif data == "circlewithbg":
+            await event.delete()
+            await circle_with_bg(telethn, event.message)
 
-        elif query.data == "circlewithoutbg":
-            await query.message.delete()
-            await circle_without_bg(client, query.message)
+        elif data == "circlewithoutbg":
+            await event.delete()
+            await circle_without_bg(telethn, event.message)
 
-        elif query.data == "green":
-            await query.message.delete()
-            await green_border(client, query.message)
+        elif data == "green":
+            await event.delete()
+            await green_border(telethn, event.message)
 
-        elif query.data == "blue":
-            await query.message.delete()
-            await blue_border(client, query.message)
+        elif data == "blue":
+            await event.delete()
+            await blue_border(telethn, event.message)
 
-        elif query.data == "red":
-            await query.message.delete()
-            await red_border(client, query.message)
+        elif data == "red":
+            await event.delete()
+            await red_border(telethn, event.message)
 
-        elif query.data == "black":
-            await query.message.delete()
-            await black_border(client, query.message)
+        elif data == "black":
+            await event.delete()
+            await black_border(telethn, event.message)
 
-        elif query.data == "circle_sticker":
-            await query.message.delete()
-            await round_sticker(client, query.message)
+        elif data == "circle_sticker":
+            await event.delete()
+            await round_sticker(telethn, event.message)
 
-        elif query.data == "inverted":
-            await query.message.delete()
-            await inverted(client, query.message)
+        elif data == "inverted":
+            await event.delete()
+            await inverted(telethn, event.message)
 
-        elif query.data == "stkr":
-            await query.message.delete()
-            await sticker(client, query.message)
+        elif data == "stkr":
+            await event.delete()
+            await sticker(telethn, event.message)
 
-        elif query.data == "cur_ved":
-            await query.message.delete()
-            await edge_curved(client, query.message)
+        elif data == "cur_ved":
+            await event.delete()
+            await edge_curved(telethn, event.message)
 
-        elif query.data == "90":
-            await query.message.delete()
-            await rotate_90(client, query.message)
+        elif data == "90":
+            await event.delete()
+            await rotate_90(telethn, event.message)
 
-        elif query.data == "180":
-            await query.message.delete()
-            await rotate_180(client, query.message)
+        elif data == "180":
+            await event.delete()
+            await rotate_180(telethn, event.message)
 
-        elif query.data == "270":
-            await query.message.delete()
-            await rotate_270(client, query.message)
+        elif data == "270":
+            await event.delete()
+            await rotate_270(telethn, event.message)
 
-        elif query.data == "contrast":
-            await query.message.delete()
-            await contrast(client, query.message)
+        elif data == "contrast":
+            await event.delete()
+            await contrast(telethn, event.message)
 
-        elif query.data == "box":
-            await query.message.delete()
-            await box_blur(client, query.message)
+        elif data == "box":
+            await event.delete()
+            await box_blur(telethn, event.message)
 
-        elif query.data == "gas":
-            await query.message.delete()
-            await g_blur(client, query.message)
+        elif data == "gas":
+            await event.delete()
+            await g_blur(telethn, event.message)
 
-        elif query.data == "normal":
-            await query.message.delete()
-            await normal_blur(client, query.message)
+        elif data == "normal":
+            await event.delete()
+            await normal_blur(telethn, event.message)
 
-        elif query.data == "sepia":
-            await query.message.delete()
-            await sepia_mode(client, query.message)
+        elif data == "sepia":
+            await event.delete()
+            await sepia_mode(telethn, event.message)
 
-        elif query.data == "pencil":
-            await query.message.delete()
-            await pencil(client, query.message)
+        elif data == "pencil":
+            await event.delete()
+            await pencil(telethn, event.message)
 
-        elif query.data == "cartoon":
-            await query.message.delete()
-            await cartoon(client, query.message)
+        elif data == "cartoon":
+            await event.delete()
+            await cartoon(telethn, event.message)
 
-        elif query.data == "normalglitch1":
-            await query.message.delete()
-            await normalglitch_1(client, query.message)
+        elif data == "normalglitch1":
+            await event.delete()
+            await normalglitch_1(telethn, event.message)
 
-        elif query.data == "normalglitch2":
-            await query.message.delete()
-            await normalglitch_2(client, query.message)
+        elif data == "normalglitch2":
+            await event.delete()
+            await normalglitch_2(telethn, event.message)
 
-        elif query.data == "normalglitch3":
-            await normalglitch_3(client, query.message)
+        elif data == "normalglitch3":
+            await normalglitch_3(telethn, event.message)
 
-        elif query.data == "normalglitch4":
-            await query.message.delete()
-            await normalglitch_4(client, query.message)
+        elif data == "normalglitch4":
+            await event.delete()
+            await normalglitch_4(telethn, event.message)
 
-        elif query.data == "normalglitch5":
-            await query.message.delete()
-            await normalglitch_5(client, query.message)
+        elif data == "normalglitch5":
+            await event.delete()
+            await normalglitch_5(telethn, event.message)
 
-        elif query.data == "scanlineglitch1":
-            await query.message.delete()
-            await scanlineglitch_1(client, query.message)
+        elif data == "scanlineglitch1":
+            await event.delete()
+            await scanlineglitch_1(telethn, event.message)
 
-        elif query.data == "scanlineglitch2":
-            await query.message.delete()
-            await scanlineglitch_2(client, query.message)
+        elif data == "scanlineglitch2":
+            await event.delete()
+            await scanlineglitch_2(telethn, event.message)
 
-        elif query.data == "scanlineglitch3":
-            await query.message.delete()
-            await scanlineglitch_3(client, query.message)
+        elif data == "scanlineglitch3":
+            await event.delete()
+            await scanlineglitch_3(telethn, event.message)
 
-        elif query.data == "scanlineglitch4":
-            await query.message.delete()
-            await scanlineglitch_4(client, query.message)
+        elif data == "scanlineglitch4":
+            await event.delete()
+            await scanlineglitch_4(telethn, event.message)
 
-        elif query.data == "scanlineglitch5":
-            await query.message.delete()
-            await scanlineglitch_5(client, query.message)
+        elif data == "scanlineglitch5":
+            await event.delete()
+            await scanlineglitch_5(telethn, event.message)
 
-        elif query.data == "rmbgwhite":
-            await query.message.delete()
-            await removebg_white(client, query.message)
+        elif data == "rmbgwhite":
+            await event.delete()
+            await removebg_white(telethn, event.message)
 
-        elif query.data == "rmbgplain":
-            await query.message.delete()
-            await removebg_plain(client, query.message)
+        elif data == "rmbgplain":
+            await event.delete()
+            await removebg_plain(telethn, event.message)
 
-        elif query.data == "rmbgsticker":
-            await removebg_sticker(client, query.message)
-"""
-"""
+        elif data == "rmbgsticker":
+            await removebg_sticker(telethn, event.message)
+
 __mod_name__ = "Image Editor"
-__help__ = f
-Cutiepii Robot 愛 have some advanced image editing tools inbuilt
+__help__ = f"""
+RajniiRobot have some advanced image editing tools inbuilt
 Bright, Circle, RemBG, Blur, Border, Flip, Glitch, Sticker maker and more
 ➛ /edit [reply to image]*:* Open the image editor
 ➛ /rmbg [REPLY]*:* Revove BG of replied image/sticker.

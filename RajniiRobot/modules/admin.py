@@ -12,14 +12,12 @@ from telegram.constants import ParseMode, ChatType
 from telegram.ext import (CallbackContext, CallbackQueryHandler, CommandHandler, filters as PTB_Filters)
 from telegram.helpers import mention_html
 from telethon import events
-from telethon.tl import functions, types
 from telethon.errors import *
 from telethon.tl import *
+from telethon.tl.types import ChannelParticipantsAdmins
 from telethon import *
-from pyrogram import Client, filters
-from pyrogram.types import Message
 
-from RajniiRobot import (SUDO_USERS, TOKEN, RAJNI_PTB, LOGGER, pgram, telethn)
+from RajniiRobot import (SUDO_USERS, TOKEN, RAJNI_PTB, LOGGER, telethn)
 from RajniiRobot.modules.helper_funcs.msg_types import get_message_type
 from RajniiRobot.modules.helper_funcs.anonymous import user_admin
 from RajniiRobot.modules.disable import DisableAbleCommandHandler
@@ -1380,59 +1378,66 @@ async def invite(update: Update, context: CallbackContext) -> None:
             "I can only give you invite links for supergroups and channels, sorry!",
         )
 
-
-@pgram.on_message(
-    filters.command(["staff", "admins", "adminlist"]) & filters.group)
-def staff(client: Client, message: Message):
+@RAJNII(pattern=r"^/(staff|admins|adminlist)(?:@\w+)?$")
+async def staff(event):
+    if not event.is_group:
+        return
+    
+    chat = await event.get_chat()
+    chat_title = chat.title or "Chat"
+    
     creator = []
     co_founder = []
     admin = []
-    admin_check = pgram.get_chat_members(message.chat.id,
-                                         filter="administrators")
-    for x in admin_check:
-        # Ini buat nyari co-founder
-        if x.status == "administrator" and x.can_promote_members and x.title:
-            title = escape(x.title)
-            co_founder.append(
-                f" <b>├</b> <a href='tg://user?id={x.user.id}'>{x.user.first_name}</a> »<i> {title}</i>"
-            )
-        elif x.status == "administrator" and x.can_promote_members:
-            co_founder.append(
-                f" <b>├</b> <a href='tg://user?id={x.user.id}'>{x.user.first_name}</a>"
-            )
-        elif x.status == "administrator" and x.title:
-            title = escape(x.title)
-            admin.append(
-                f" <b>├</b> <a href='tg://user?id={x.user.id}'>{x.user.first_name}</a> »<i> {title}</i>"
-            )
-        elif x.status == "administrator":
-            admin.append(
-                f" <b>├</b> <a href='tg://user?id={x.user.id}'>{x.user.first_name}</a>"
-            )
-        elif x.status == "creator" and x.title:
-            title = escape(x.title)
-            creator.append(
-                f" <b>└</b> <a href='tg://user?id={x.user.id}'>{x.user.first_name}</a> »<i> {title}</i>"
-            )
-        elif x.status == "creator":
-            creator.append(
-                f" <b>└</b> <a href='tg://user?id={x.user.id}'>{x.user.first_name}</a>"
-            )
+    
+    # Fetching participants using Telethon's ChannelParticipantsAdmins filter
+    async for x in telethn.iter_participants(chat, filter=ChannelParticipantsAdmins):
+        status = getattr(x.participant, 'status', None)
+        is_creator = type(status).__name__ == 'ChannelParticipantCreator'
+        is_admin = type(status).__name__ in ('ChannelParticipantAdmin', 'ChannelParticipantCreator')
+        
+        # Custom rank/title in telethon
+        custom_title = getattr(x.participant, 'rank', None)
+        
+        # Check promotion rights (can_promote_members equivalent)
+        admin_rights = getattr(x.participant, 'admin_rights', None)
+        can_promote = getattr(admin_rights, 'add_admins', False) if admin_rights else False
+        
+        first_name = escape(x.first_name or "User")
+        
+        if is_admin and can_promote and not is_creator:
+            if custom_title:
+                title = escape(custom_title)
+                co_founder.append(f" <b>├</b> <a href='tg://user?id={x.id}'>{first_name}</a> »<i> {title}</i>")
+            else:
+                co_founder.append(f" <b>├</b> <a href='tg://user?id={x.id}'>{first_name}</a>")
+        elif is_admin and not is_creator:
+            if custom_title:
+                title = escape(custom_title)
+                admin.append(f" <b>├</b> <a href='tg://user?id={x.id}'>{first_name}</a> »<i> {title}</i>")
+            else:
+                admin.append(f" <b>├</b> <a href='tg://user?id={x.id}'>{first_name}</a>")
+        elif is_creator:
+            if custom_title:
+                title = escape(custom_title)
+                creator.append(f" <b>└</b> <a href='tg://user?id={x.id}'>{first_name}</a> »<i> {title}</i>")
+            else:
+                creator.append(f" <b>└</b> <a href='tg://user?id={x.id}'>{first_name}</a>")
 
     if not co_founder and not admin:
-        result = f"<b>Staff {message.chat.title}</b>\n\n👑 <b>Founder</b>\n" + "\n".join(
+        result = f"<b>Staff {chat_title}</b>\n\n👑 <b>Founder</b>\n" + "\n".join(
             creator)
     elif not co_founder and len(admin) > 0:
         res_admin = admin[-1].replace("├", "└")
         admin.pop(-1)
         admin.append(res_admin)
-        result = f"<b>Staff {message.chat.title}</b>\n\n👑 <b>Founder</b>\n" + "\n".join(
+        result = f"<b>Staff {chat_title}</b>\n\n👑 <b>Founder</b>\n" + "\n".join(
             creator) + "\n\n" "👮‍♂ <b>Admin</b>\n" + "\n".join(admin)
     elif len(co_founder) > 0 and not admin:
         resco_founder = co_founder[-1].replace("├", "└")
         co_founder.pop(-1)
         co_founder.append(resco_founder)
-        result = f"<b>Staff {message.chat.title}</b>\n\n👑 <b>Founder</b>\n" + "\n".join(
+        result = f"<b>Staff {chat_title}</b>\n\n👑 <b>Founder</b>\n" + "\n".join(
             creator) + "\n\n" "🔱 <b>Co-Founder</b>\n" + "\n".join(co_founder)
     else:
         resco_founder = co_founder[-1].replace("├", "└")
@@ -1441,12 +1446,12 @@ def staff(client: Client, message: Message):
         admin.pop(-1)
         co_founder.append(resco_founder)
         admin.append(res_admin)
-        result = (f"<b>Staff {message.chat.title}</b>\n\n👑 <b>Founder</b>\n" +
+        result = (f"<b>Staff {chat_title}</b>\n\n👑 <b>Founder</b>\n" +
                   "\n".join(creator) + "\n\n"
                   "🔱 <b>Co-Founder</b>\n" + "\n".join(co_founder) + "\n\n"
                   "👮‍♂ <b>Admin</b>\n" + "\n".join(admin))
-    pgram.send_message(message.chat.id, result)
-
+                  
+    await event.reply(result, parse_mode='html')
 
 @connection_status
 @bot_admin_check(AdminPerms.CAN_PIN_MESSAGES)

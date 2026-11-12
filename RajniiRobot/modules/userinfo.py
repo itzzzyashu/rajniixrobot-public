@@ -1,34 +1,3 @@
-"""
-BSD 2-Clause License
-
-Copyright (C) 2017-2019, Paul Larsen
-Copyright (C) 2021-2022, Awesome-RJ, [ https://github.com/Awesome-RJ ]
-Copyright (c) 2021-2022, Yūki • Black Knights Union, [ https://github.com/Awesome-RJ/CutiepiiRobot ]
-
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
-1. Redistributions of source code must retain the above copyright notice, this
-   list of conditions and the following disclaimer.
-
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-"""
-
 import html
 import os
 import requests
@@ -36,13 +5,9 @@ import datetime
 import asyncio
 import contextlib
 
-from pyrogram import filters, Client
-from pyrogram.errors import PeerIdInvalid
-from pyrogram.types import Message, User
-
+from telethon import events
 from telethon.tl.functions.channels import GetFullChannelRequest
 from telethon.tl.types import ChannelParticipantsAdmins, InputMessagesFilterContacts, InputMessagesFilterDocument, InputMessagesFilterGeo, InputMessagesFilterGif, InputMessagesFilterMusic, InputMessagesFilterPhotos, InputMessagesFilterRoundVideo, InputMessagesFilterUrl, InputMessagesFilterVideo
-from telethon import events
 
 from telegram import Update, MessageEntity, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.constants import ParseMode, MessageLimit, ChatType
@@ -62,7 +27,6 @@ from RajniiRobot import (
     RAJNI_PTB,
     ubot,
     telethn,
-    pgram,
 )
 from RajniiRobot.__main__ import TOKEN, USER_INFO
 import RajniiRobot.modules.sql.userinfo_sql as sql
@@ -74,16 +38,14 @@ from RajniiRobot.modules.sql.users_sql import get_user_num_chats
 from RajniiRobot.modules.sql.clear_cmd_sql import get_clearcmd
 from RajniiRobot.modules.helper_funcs.extraction import extract_user
 
-Cutiepii_PYRO_Whois = filters.command("whois")
-
 
 # whois
-def ReplyCheck(message: Message):
+def ReplyCheck(update):
     reply_id = None
-    if message.reply_to_message:
-        reply_id = message.reply_to_message.id
-    elif not message.from_user.is_self:
-        reply_id = message.id
+    if update.is_reply:
+        reply_id = update.reply_to_msg_id
+    elif not update.sender.bot:
+        reply_id = update.id
     return reply_id
 
 
@@ -96,60 +58,66 @@ infotext = ("**[{full_name}](tg://user?id={user_id})**\n"
             " * Bio: {bio}")
 
 
-def LastOnline(user: User):
-    if user.is_bot:
+def LastOnline(user):
+    if user.bot:
         return ""
-    if user.status == "recently":
+    if isinstance(user.status, events.status.UserStatusRecently):
         return "Recently"
-    if user.status == "within_week":
+    if isinstance(user.status, events.status.UserStatusWeek):
         return "Within the last week"
-    if user.status == "within_month":
+    if isinstance(user.status, events.status.UserStatusMonth):
         return "Within the last month"
-    if user.status == "long_time_ago":
+    if isinstance(user.status, events.status.UserStatusEmpty):
         return "A long time ago :("
-    if user.status == "online":
+    if isinstance(user.status, events.status.UserStatusOnline):
         return "Currently Online"
-    if user.status == "offline":
-        return datetime.fromtimestamp(
-            user.status.date).strftime("%a, %d %b %Y, %H:%M:%S")
+    if isinstance(user.status, events.status.UserStatusOffline):
+        return datetime.datetime.fromtimestamp(
+            user.status.was_online).strftime("%a, %d %b %Y, %H:%M:%S")
+    return "Unknown"
 
 
-def FullName(user: User):
+def FullName(user):
     return (f"{user.first_name} {user.last_name}"
             if user.last_name else user.first_name)
 
 
-@pgram.on_message(Cutiepii_PYRO_Whois)
-@pgram.on_edited_message(Cutiepii_PYRO_Whois)
-async def whois(client: Client, message: Message):
-    cmd = message.command
-    if not message.reply_to_message and len(cmd) == 1:
-        get_user = message.from_user.id
-    elif len(cmd) == 1:
-        get_user = message.reply_to_message.from_user.id
-    elif len(cmd) > 1:
-        get_user = cmd[1]
+@telethn.on(events.NewMessage(pattern=r"^[/.\?-]whois(?:\s+(.*))?$", incoming=True))
+async def whois(event):
+    args = event.text.split(None, 1)
+    get_user = None
+    
+    if not event.is_reply and len(args) == 1:
+        get_user = event.sender_id
+    elif len(args) == 1:
+        reply = await event.get_reply_message()
+        if reply:
+            get_user = reply.sender_id
+    elif len(args) > 1:
+        get_user = args[1]
         with contextlib.suppress(ValueError):
-            get_user = int(cmd[1])
+            get_user = int(args[1])
+            
     try:
-        user = await client.get_users(get_user)
-    except PeerIdInvalid:
-        await message.reply("I don't know that User.")
+        user = await telethn.get_entity(get_user)
+    except Exception:
+        await event.reply("I don't know that User.")
         return
-    desc = await client.get_users(get_user)
-    desc = desc.description
-    await message.reply_text(
+        
+    full_user = await telethn(telethon.tl.functions.users.GetFullUserRequest(id=user))
+    bio = full_user.about if hasattr(full_user, 'about') else None
+    
+    await event.reply(
         infotext.format(
             full_name=FullName(user),
             user_id=user.id,
-            user_dc=user.dc_id,
             first_name=user.first_name,
             last_name=user.last_name or "",
             username=user.username or "",
             last_online=LastOnline(user),
-            bio=desc or "`No bio set up.`",
+            bio=bio or "`No bio set up.`",
         ),
-        disable_web_page_preview=True,
+        link_preview=False,
     )
 
 
@@ -215,36 +183,23 @@ def hpmanager(user):
     total_hp = (get_user_num_chats(user.id) + 10) * 10
 
     if not is_user_gbanned(user.id):
-
-        # Assign new var `new_hp` since we need `total_hp` in
-        # end to calculate percentage.
         new_hp = total_hp
 
-        # if no username decrease 25% of hp.
         if not user.username:
             new_hp -= no_by_per(total_hp, 25)
         try:
             RAJNI_PTB.bot.get_user_profile_photos(user.id).photos[0][-1]
         except IndexError:
-            # no profile photo ==> -25% of hp
             new_hp -= no_by_per(total_hp, 25)
-        # if no /setme exist ==> -20% of hp
         if not sql.get_user_me_info(user.id):
             new_hp -= no_by_per(total_hp, 20)
-        # if no bio exsit ==> -10% of hp
         if not sql.get_user_bio(user.id):
             new_hp -= no_by_per(total_hp, 10)
 
         if is_user_afk(user.id):
             afkst = afk_reason(user.id)
-            # if user is afk and no reason then decrease 7%
-            # else if reason exist decrease 5%
             new_hp -= no_by_per(total_hp, 5) if afkst else no_by_per(
                 total_hp, 7)
-            # fbanned users will have (2*number of fbans) less from max HP
-            # Example: if HP is 100 but user has 5 diff fbans
-            # Available HP is (2*5) = 10% less than Max HP
-            # So.. 10% of 100HP = 90HP
 
     else:
         new_hp = no_by_per(total_hp, 5)
@@ -350,220 +305,6 @@ async def gifid(update: Update, context: CallbackContext) -> None:
             "Please reply to a gif to get its ID.")
 
 
-"""
-def info(update: Update, context: CallbackContext) -> None:
-    bot, args = context.bot, context.args
-    message = update.effective_message
-    chat = update.effective_chat
-    user_id = extract_user(update.effective_message, args)
-
-    if user_id and (user_id) != 777000 and (user_id) != 1087968824:
-        user = await bot.get_chat(user_id)
-         elif user_id and (user_id) == 777000:
-            await message.reply_text(
-                "This is Telegram. Unless you manually entered this reserved account's ID, it is likely a old broadcast from a linked channel."
-                )
-                return
-         elif user_id and (user_id) == 1087968824:
-                        await message.reply_text(
-                            "This is Group Anonymous Bot. Unless you manually entered this reserved account's ID, it is likely a broadcast from a linked channel or anonymously sent message."
-                            )
-        return
-        elif not message.reply_to_message and not args:
-    user = (
-            message.sender_chat
-            if message.sender_chat is not None
-            else message.from_user
-        )
-
-    elif not message.reply_to_message and (
-        not args
-        or (
-            len(args) >= 1
-            and not args[0].startswith("@")
-            and not args[0].isdigit()
-            and notawait message.parse_entities([MessageEntity.TEXT_MENTION])
-        )
-    ):
-        delmsg = await message.reply_text("I can't extract a user from this.")
-
-        cleartime = get_clearcmd(chat.id, "info")
-
-        if cleartime:
-            context.bot.run_async(delete, delmsg, cleartime.time)
-return
-else:return
-
-    rep = await message.reply_text("<code>Checking Info...</code>", parse_mode=ParseMode.HTML)
-
-    if hasattr(user, 'type') and user.type != "private":
-        text = (
-            f"<b>Chat Info: </b>"
-            f"\nID: <code>{user.id}</code>"
-            f"\nTitle: {user.title}"
-        )
-    if user.username:
-      text += f"\nUsername: @{html.escape(user.username)}"
-      text += f"\nChat Type: {user.type.capitalize()}"
-
-    if INFOPIC:
-            try:
-                profile = bot.getChat(user.id).photo
-                _file = await bot.get_file(profile["big_file_id"])
-                _file.download(f"{user.id}.png")
-
-                delmsg = message.reply_document(
-                    document=open(f"{user.id}.png", "rb"),
-                    caption=(text),
-                    parse_mode=ParseMode.HTML,
-                )
-
-                os.remove(f"{user.id}.png")
-            # Incase chat don't have profile pic, send normal text
-            except:
-                delmsg = await message.reply_text(
-                    text, parse_mode=ParseMode.HTML, disable_web_page_preview=True
-                )
-
-        else:
-            delmsg = await message.reply_text(
-                text, parse_mode=ParseMode.HTML, disable_web_page_preview=True
-            )
-            else:
-               text = (
-                  f"╔═━「<b> Appraisal results:</b> 」\n"
-                  f"ID: <code>{user.id}</code>\n"
-                  f"First Name: {html.escape(user.first_name)}"
-               )
-               if user.username:
-                  text += f"\nUsername: @{html.escape(user.username)}"
-                  text += f"\nPermanent user link: {mention_html(user.id, 'link')}"
-                  text += "\nNumber of profile pics: {}".format(
-                     context.bot.get_user_profile_photos(user.id).total_count
-                  )
-                  if ChatType.PRIVATE and user_id != bot.id:
-                     _stext = "\nStatus: <code>{}</code>"
-                     afk_st = is_user_afk(user.id)
-                     if afk_st:
-                        text += _stext.format("AFK")
-                        else:
-                           status = bot.get_chat_member(chat.id, user.id).status
-                           if status:
-                              if status in {"left", "kicked"}:
-                                 text += _stext.format("Not here")
-                                 elif status == "member":
-                                    text += _stext.format("Detected")
-                                    elif status in {"administrator", "creator"}:
-                                       text += _stext.format("Admin")
-                                       if user_id not in [bot.id, 777000, 1087968824]:
-                                          userhp = hpmanager(user)
-                                          text += f"\n\n<b>Health:</b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[<i>{make_bar(int(userhp['percentage']))} </i>{userhp['percentage']}%]"
-                                                # don't crash if api is down somehow...
-
-    disaster_level_present = False
-
-    if user.id == OWNER_ID:
-        text += "\n\nUser level: <b>god</b>"
-
-    elif user.id in DEV_USERS:
-        text += "\n\nUser level: <b>developer</b>"
-
-    elif user.id in SUDO_USERS:
-        text += "\n\nUser level: <b>sudo</b>"
-
-    elif user.id in SUPPORT_USERS:
-        text += "\n\nUser level: <b>support</b>"
-
-    elif user.id in WHITELIST_USERS:
-        text += "\n\nUser level: <b>whitelist</b>"
-
-    elif user.id == 1482952149:
-         text += "\n\nCo-Owner Of A Bot. Queen Of @Awesome_RJ. Bot Name Inspired From 'Rabeeka'."
-
-
-    if disaster_level_present:
-        text += ' [<a href="https://telegram.dog/Black_Knights_Union/35">?</a>]'.format(
-            await bot.username,
-        )
-
-    with contextlib.suppress(BadRequest):
-        user_member = chat.get_member(user.id)
-        if user_member.status == "administrator":
-            result = requests.post(
-                f"https://api.telegram.org/bot{TOKEN}/getChatMember?chat_id={chat.id}&user_id={user.id}",
-            )
-            result = result.json()["result"]
-            if "custom_title" in result.keys():
-                custom_title = result["custom_title"]
-                text += f"\n\nTitle:\n<b>{custom_title}</b>"
-
-    for mod in USER_INFO:
-        try:
-            mod_info = mod.__user_info__(user.id).strip()
-        except TypeError:
-            mod_info = mod.__user_info__(user.id, chat.id).strip()
-        if mod_info:
-            text += "\n\n" + mod_info
-
-    if INFOPIC:
-        try:
-
-            profile = context.bot.get_user_profile_photos(user.id).photos[0][-1]
-            await context.bot.sendChatAction(chat.id, "upload_photo")
-            context.bot.reply_document(
-                chat.id,
-                photo=profile,
-                caption=(text),
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "Health", url="https://t.me/Black_Knights_Union/33"
-                            ),
-                            InlineKeyboardButton(
-                                "Disaster", url="https://t.me/Black_Knights_Union/35"
-                            ),
-                        ],
-                        [
-                            InlineKeyboardButton(" [❌] ", callback_data="close"),
-                        ],
-                    ]
-                ),
-                parse_mode=ParseMode.HTML,
-            )
-        # Incase user don't have profile pic, send normal text
-        except IndexError:
-            await message.reply_text(
-                text,
-                reply_markup=InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "Health", url="https://t.me/Black_Knights_Union/33"
-                            ),
-                            InlineKeyboardButton(
-                                "Disaster", url="https://t.me/Black_Knights_Union/35"
-                            ),
-                        ],
-                        [
-                            InlineKeyboardButton(" [❌] ", callback_data="close"),
-                        ],
-                    ]
-                ),
-                parse_mode=ParseMode.HTML,
-                disable_web_page_preview=True,
-            )
-
-    else:
-        await message.reply_text(
-            text, parse_mode=ParseMode.HTML, disable_web_page_preview=True
-        )
-
-    rep.delete()
-
-"""
-
-
 async def info(update: Update, context: CallbackContext) -> None:
     bot, args = context.bot, context.args
     message = update.effective_message
@@ -627,7 +368,6 @@ async def info(update: Update, context: CallbackContext) -> None:
                 )
 
                 os.remove(f"{user.id}.png")
-            # Incase chat don't have profile pic, send normal text
             except:
                 delmsg = await message.reply_text(
                     text,
@@ -684,10 +424,6 @@ async def info(update: Update, context: CallbackContext) -> None:
         elif user.id in WHITELIST_USERS:
             text += "\n\n➛ User level: <b>whitelist</b>"
 
-        # if disaster_level_present:
-        #     text += ' [<a href="https://t.me/OnePunchUpdates/155">?</a>]'.format(
-        #         await bot.username)
-
         with contextlib.suppress(BadRequest):
             user_member = chat.get_member(user.id)
             if user_member.status == "administrator":
@@ -737,7 +473,6 @@ async def info(update: Update, context: CallbackContext) -> None:
                 )
 
                 os.remove(f"{user.id}.png")
-            # Incase user don't have profile pic, send normal text
             except IndexError:
                 delmsg = await message.reply_text(
                     text,
@@ -767,33 +502,6 @@ async def info(update: Update, context: CallbackContext) -> None:
     rep.delete()
 
 
-"""
-    if cleartime := get_clearcmd(chat.id, "info"):
-        context.bot.run_async(delete, delmsg, cleartime.time)
-"""
-
-
-async def about_me(update: Update, context: CallbackContext) -> None:
-    bot, args = context.bot, context.args
-    message = update.effective_message
-    user_id = extract_user(message, args)
-
-    user = await bot.get_chat(user_id) if user_id else message.from_user
-    if info := sql.get_user_me_info(user.id):
-        await update.effective_message.reply_text(
-            f"*{user.first_name}*:\n{escape_markdown(info)}",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-        )
-    elif message.reply_to_message:
-        username = message.reply_to_message.from_user.first_name
-        await update.effective_message.reply_text(
-            f"{username} hasn't set an info message about themselves yet!", )
-    else:
-        await update.effective_message.reply_text(
-            "There isnt one, use /setme to set one.")
-
-
 async def about_me(update: Update, context: CallbackContext) -> None:
     bot, args = context.bot, context.args
     message = update.effective_message
@@ -807,11 +515,11 @@ async def about_me(update: Update, context: CallbackContext) -> None:
             disable_web_page_preview=True,
         )
     elif update.effective_message.reply_to_message:
-        username = message.reply_to_message.from_user.first_name
+        username = update.effective_message.reply_to_message.from_user.first_name
         await message.reply_text(
             f"{username} hasn't set an info message about themselves yet!", )
     else:
-        await update.effective_message.reply_text(
+        await message.reply_text(
             "There isnt one, use /setme to set one.")
 
 
@@ -902,7 +610,7 @@ async def set_about_bio(update: Update,
         bio = text.split(
             None,
             1,
-        )  # use python's maxsplit to only remove the cmd, hence keeping newlines.
+        )
 
         if len(bio) == 2:
             if len(bio[1]) < MessageLimit.TEXT_LENGTH // 4:
@@ -921,18 +629,18 @@ async def set_about_bio(update: Update,
 
 async def get_chat_info(chat, already=False):
     if not already:
-        chat = await pgram.get_chat(chat)
+        chat = await telethn.get_entity(chat)
     chat_id = chat.id
     username = chat.username
     title = chat.title
-    type_ = chat.type
-    is_scam = chat.is_scam
-    description = chat.description
-    members = chat.members_count
-    is_restricted = chat.is_restricted
+    type_ = type(chat).__name__
+    is_scam = getattr(chat, 'scam', False)
+    description = getattr(chat, 'about', None)
+    members = getattr(chat, 'participants_count', None)
+    is_restricted = getattr(chat, 'restricted', False)
     link = f"[Link](t.me/{username})" if username else None
-    dc_id = chat.dc_id
-    photo_id = chat.photo.big_file_id if chat.photo else None
+    dc_id = chat.photo.dc_id if chat.photo else None
+    photo_id = chat.photo.photo_id if chat.photo else None
     body = {
         "ID": chat_id,
         "DC": dc_id,
@@ -950,31 +658,30 @@ async def get_chat_info(chat, already=False):
     return [caption, photo_id]
 
 
-@pgram.on_message(filters.command("cinfo"))
-async def chat_info_func(_, message: Message):
+@telethn.on(events.NewMessage(pattern=r"^[/.\?-]cinfo(?:\s+(.*))?$", incoming=True))
+async def chat_info_func(event):
     try:
-        if len(message.command) > 2:
-            return await message.reply_text(
-                "**Usage:**cinfo <chat id/username>")
+        args = event.text.split(None, 1)
+        if len(args) > 2:
+            return await event.reply(
+                "**Usage:** /cinfo <chat id/username>")
 
-        if len(message.command) == 1:
-            chat = message.chat.id
-        elif len(message.command) == 2:
-            chat = message.text.split(None, 1)[1]
+        chat = event.chat_id if len(args) == 1 else args[1]
 
-        m = await message.reply_text("Processing...")
+        m = await event.reply("Processing...")
 
         info_caption, photo_id = await get_chat_info(chat)
         if not photo_id:
-            return await m.edit(info_caption, disable_web_page_preview=True)
+            return await m.edit(info_caption, link_preview=False)
 
-        photo = await pgram.download_media(photo_id)
-        await message.reply_photo(photo, caption=info_caption, quote=False)
+        photo = await telethn.download_media(photo_id)
+        await telethn.send_file(event.chat_id, file=photo, caption=info_caption, reply_to=event.reply_to_msg_id)
 
         await m.delete()
-        os.remove(photo)
+        if photo and os.path.exists(photo):
+            os.remove(photo)
     except Exception as e:
-        await m.edit(e)
+        await m.edit(str(e))
 
 
 @telethn.on(events.NewMessage(pattern="^/gstat$"))

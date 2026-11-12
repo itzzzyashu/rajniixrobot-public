@@ -1,18 +1,16 @@
-from pyrogram.types import Message
-from typing import Tuple
+from typing import Optional, Tuple
 
 # Setting Message
 
-
-def get_text(message: Message) -> [None, str]:
+def get_text(event) -> Optional[str]:
     """Extract Text From Commands"""
-    text_to_return = message.text
-    if message.text is None:
+    text_to_return = getattr(event, "raw_text", None)
+    if text_to_return is None:
         return None
     if " " not in text_to_return:
         return None
 
     try:
-        return message.text.split(None, 1)[1]
+        return text_to_return.split(None, 1)[1]
     except IndexError:
         return None

@@ -1,8 +1,8 @@
 import random
 
 from datetime import datetime
-from pyrogram import filters
-from RajniiRobot import pgram as app, BOT_USERNAME
+from telethon import events
+from RajniiRobot import telethn as app, BOT_USERNAME
 from RajniiRobot.utils.errors import capture_err
 from RajniiRobot.modules.mongo.couples_mongo import get_couple, save_couple
 
@@ -27,46 +27,50 @@ today = str(dt()[0])
 tomorrow = str(dt_tom())
 
 
-@app.on_message(filters.command("couples", f"couples@{BOT_USERNAME}"))
+@app.on(events.NewMessage(pattern=f"^/couples(?:@{BOT_USERNAME})?$", incoming=True))
 @capture_err
-async def couple(_, message):
-    if message.chat.type == "private":
-        return await message.reply_text("This command only works in groups.")
+async def couple(event):
+    if event.is_private:
+        return await event.reply("This command only works in groups[cite: 3].")
     try:
-        chat_id = message.chat.id
+        chat_id = event.chat_id
         is_selected = await get_couple(chat_id, today)
         if not is_selected:
             list_of_users = []
-            async for i in app.iter_chat_members(message.chat.id):
-                if not i.user.is_bot:
-                    list_of_users.append(i.user.id)
+            async for user in app.iter_participants(chat_id):
+                if not user.bot:
+                    list_of_users.append(user.id)
             if len(list_of_users) < 2:
-                return await message.reply_text("Not enough users")
+                return await event.reply("Not enough users[cite: 3]")
             c1_id = random.choice(list_of_users)
             c2_id = random.choice(list_of_users)
             while c1_id == c2_id:
                 c1_id = random.choice(list_of_users)
-            c1_mention = (await app.get_users(c1_id)).mention
-            c2_mention = (await app.get_users(c2_id)).mention
+            
+            c1_user = await app.get_entity(c1_id)
+            c2_user = await app.get_entity(c2_id)
+            
+            c1_mention = f"[{c1_user.first_name}](tg://user?id={c1_id})"
+            c2_mention = f"[{c2_user.first_name}](tg://user?id={c2_id})"
 
-            couple_selection_message = f"""**Couple of the day:**
-{c1_mention} + {c2_mention} = ❤️
-__New couple of the day may be chosen at 12AM {tomorrow}__"""
-            await app.send_message(message.chat.id,
-                                   text=couple_selection_message)
+            couple_selection_message = f"""**Couple of the day:**[cite: 3]
+{c1_mention} + {c2_mention} = ❤️[cite: 3]
+__New couple of the day may be chosen at 12AM {tomorrow}__[cite: 3]"""
+            await event.respond(couple_selection_message)
             couple = {"c1_id": c1_id, "c2_id": c2_id}
             await save_couple(chat_id, today, couple)
 
         elif is_selected:
             c1_id = int(is_selected["c1_id"])
             c2_id = int(is_selected["c2_id"])
-            c1_name = (await app.get_users(c1_id)).first_name
-            c2_name = (await app.get_users(c2_id)).first_name
-            couple_selection_message = f"""Couple of the day:
-[{c1_name}](tg://openmessage?user_id={c1_id}) + [{c2_name}](tg://openmessage?user_id={c2_id}) = ❤️
-__New couple of the day may be chosen at 12AM {tomorrow}__"""
-            await app.send_message(message.chat.id,
-                                   text=couple_selection_message)
+            c1_user = await app.get_entity(c1_id)
+            c2_user = await app.get_entity(c2_id)
+            c1_name = c1_user.first_name
+            c2_name = c2_user.first_name
+            couple_selection_message = f"""Couple of the day:[cite: 3]
+[{c1_name}](tg://openmessage?user_id={c1_id}) + [{c2_name}](tg://openmessage?user_id={c2_id}) = ❤️[cite: 3]
+__New couple of the day may be chosen at 12AM {tomorrow}__[cite: 3]"""
+            await event.respond(couple_selection_message)
     except Exception as e:
         print(e)
-        await message.reply_text(e)
+        await event.reply(str(e))

@@ -1,18 +1,3 @@
-"""
-This __init__.py file takes input from config.py file and changes variables.
-It also creates other different instances which are needed by bot to run all modules correctly.
-
-=========================================================\n
-
-© [TeamUltraUnion/rajniixrobot](https://www.github.com/TeamUltraUnion) \n
-© [itzzzyashu/rajniixrobot](https://www.github.com/itzzzyashu/rajniixrobot) \n
-© [AnimeKaizoku/SaitamaRobot](https://www.github.com/AnimeKaizoku/SaitamaRobot) \n
-© [PaulSonOfLars/tgbot](https://www.github.com/PaulSonOfLars/tgbot) \n
-All rights reserved.
-
-=========================================================\n
-"""
-
 import json
 import logging
 import traceback
@@ -20,15 +5,22 @@ import os
 import sys
 import time
 
+import asyncio
+
+# Ensure an event loop exists on the main thread for Python 3.14 compatibility 
+# before any libraries (like Pyrogram via Python_ARQ) attempt to import-time bind.
+try:
+    asyncio.get_running_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
+
 import telegram.ext as tg
-from pyrogram import Client
-from pyrogram.enums import ParseMode
-from pyrogram.errors.exceptions.bad_request_400 import PeerIdInvalid, ChannelInvalid
 from telegram import Chat
 from telegram.request import HTTPXRequest
-from telethon import TelegramClient
-from telethon.sessions import MemorySession
-from telethon.sessions import StringSession
+from telethon import TelegramClient, errors
+from telethon.sessions import MemorySession, StringSession
+from telethon.errors import PeerIdInvalidError, ChannelInvalidError
+from telethon.tl.types import User, Chat as TeleChat, Channel
 from motor.motor_asyncio import AsyncIOMotorClient
 from odmantic import AIOEngine
 from pymongo import MongoClient
@@ -276,23 +268,6 @@ try:
 except Exception as e:
     LOGGER.error(f"[{BOT_NAME}] | Initializing Telethon Client Failed\nError: {e}\n{traceback.format_exc()}")
 
-# Initializing Pyrogram Client 
-try:
-    PyroGram = TOKEN.split(":")[0]
-    pgram = Client(
-        name=PyroGram,
-        api_id=API_ID,
-        api_hash=API_HASH,
-        bot_token=TOKEN,
-        workers=min(32, os.cpu_count() + 4),
-        parse_mode=ParseMode.DEFAULT, 
-        sleep_threshold=180,  
-        in_memory=True
-    )
-    LOGGER.info(f"[{BOT_NAME}] | Initialized Pyrogram Client.")
-except Exception as e:
-    LOGGER.error(f"[{BOT_NAME}] | Initializing Pyrogram Client Failed\nError: {e}\n{traceback.format_exc()}")
-
 # Initializing RAJNII_PTB
 try:
     defaults = Defaults(block=False)
@@ -374,20 +349,48 @@ async def close_http_client():
         except Exception as e:
             LOGGER.error(f"[{BOT_NAME}] | Error closing HTTPX Client: {e}")
 
+arq = None
+
 # Initialize ARQ client
-async def init_arq_client(session):
-    global arq  
+async def init_arq_client(session: aiohttp.ClientSession):
+    global arq
     if session is not None:
         try:
             arq = ARQ(ARQ_API_URL, ARQ_API_KEY, session)
             LOGGER.info(f"[{BOT_NAME}] | ARQ Client initialized successfully.")
         except Exception as e:
-            LOGGER.error(f"[{BOT_NAME}] | Failed to initialize ARQ Client\nError: {e}\n{traceback.format_exc()}")
-            sys.exit(1)  
+            LOGGER.error(
+                f"[{BOT_NAME}] | Failed to initialize ARQ Client\n"
+                f"Error: {e}\n{traceback.format_exc()}"
+            )
+            sys.exit(1)
     else:
         raise RuntimeError("aiohttp session must be initialized first.")
 
 # Initializing Telethon Userbot Client
+try:
+    ubot = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
+    LOGGER.info(f"[{BOT_NAME}] | Connected to {BOT_NAME}\'s Userbot. (telegram.me/iKeshavVirmani)")
+except Exception as e:
+    LOGGER.error(f"[{BOT_NAME}] | Connection to {BOT_NAME}\'s Userbot Failed. (telegram.me/iKeshavVirmani)\nError: {e}\n{traceback.format_exc()}")
+
+# Connecting to MongoDB Database 
+try:
+    mongodb = MongoClient(MONGO_DB_URL, 27017)[MONGO_DB]
+    motor = AsyncIOMotorClient(MONGO_DB_URL)
+    db = motor[MONGO_DB]
+    engine = AIOEngine(motor, MONGO_DB)
+    LOGGER.info(f"[{BOT_NAME}] | Connected to Database • Asia/Mumbai • MongoDB Database (NOSQL)")
+except Exception as e:
+    LOGGER.error(f"[{BOT_NAME}] | Connection to Database • Asia/Mumbai • MongoDB Database (NOSQL)\nError: {e}\n{traceback.format_exc()}")
+
+REDIS_URL = f"redis://:{REDIS_PASSWORD}@{REDIS_ENDPOINT}"
+REDIS = StrictRedis.from_url(REDIS_URL, decode_responses=True)
+try:
+    REDIS.ping()
+    LOGGER.info(f"[{BOT_NAME}] | Connected to Database • Data Center • Asia/Mumbai • Redis Database")
+except Exception as e:# Initializing Telethon Userbot Client
+    LOGGER.error(f"[{BOT_NAME}] | Connection to Database Asia/Mumbai Redis Database\nError: {e}")
 try:
     ubot = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
     LOGGER.info(f"[{BOT_NAME}] | Connected to {BOT_NAME}\'s Userbot. (telegram.me/iKeshavVirmani)")
@@ -421,33 +424,39 @@ LOGGER.info(f"""\n
 [{BOT_NAME}] | TUU | Visit @{UPDATES_LOGS} for Updates!!
 =======================================================\n\n\n""")
 
+
 async def get_entity(client, entity):
+    from telethon.tl.types import User, Chat, Channel
+    from telethon.errors import PeerIdInvalidError, ChannelInvalidError
+    
     entity_client = client
-    if not isinstance(entity, Chat):
+    if not isinstance(entity, (User, Chat, Channel)):
         try:
             entity = int(entity)
-        except ValueError:
-            pass
-        except TypeError:
-            entity = entity.id
+        except (ValueError, TypeError):
+            try:
+                entity = entity.id
+            except AttributeError:
+                pass
+                
         try:
-            entity = await client.get_users(entity)
-        except (PeerIdInvalid, ChannelInvalid):
-            for pgram in apps:
-                if pgram != client:
+            entity = await client.get_entity(entity)
+        except (PeerIdInvalidError, ChannelInvalidError, ValueError):
+            for app_client in apps:
+                if app_client != client:
                     try:
-                        entity = await pgram.get_chat(entity)
-                    except (PeerIdInvalid, ChannelInvalid):
+                        entity = await app_client.get_entity(entity)
+                    except (PeerIdInvalidError, ChannelInvalidError, ValueError):
                         pass
                     else:
-                        entity_client = pgram
+                        entity_client = app_client
                         break
             else:
-                entity = await pgram.get_chat(entity)
-                entity_client = pgram
+                entity = await client.get_entity(entity)
+                entity_client = client
     return entity, entity_client
 
-apps = [pgram]
+apps = [telethn, ubot]
 SUDO_USERS = list(SUDO_USERS) + list(DEV_USERS)
 DEV_USERS = list(DEV_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)

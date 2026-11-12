@@ -8,24 +8,21 @@ from functools import wraps
 from typing import Callable, Coroutine, Dict, List, Tuple, Union
 
 from PIL import Image
-from pyrogram import Client
-from pyrogram.enums import ChatType, ChatMemberStatus
-from pyrogram.errors import FloodWait, MessageNotModified
-from pyrogram.types import Chat, Message, User
+from telethon import TelegramClient
+from telethon.errors import FloodWaitError
+from telethon.tl.types import ChannelParticipantsAdmins
 
-from RajniiRobot import OWNER_ID, SUPPORT_CHAT
-from RajniiRobot import pgram
+from RajniiRobot import OWNER_ID, SUPPORT_CHAT, telethn
 from RajniiRobot.utils.errors import split_limits
 
 
-def get_user(message: Message, text: str) -> [int, str, None]:
+def get_user(event, text: str) -> Tuple[Union[int, str, None], Union[str, None]]:
     asplit = None if text is None else text.split(" ", 1)
     user_s = None
     reason_ = None
-    if message.reply_to_message:
-        user_s = message.reply_to_message.from_user.id
-        reason_ = text or None
-    elif asplit is None:
+    if event.is_reply:
+        pass
+    if asplit is None:
         return None, None
     elif len(asplit[0]) > 0:
         user_s = int(asplit[0]) if asplit[0].isdigit() else asplit[0]
@@ -34,7 +31,7 @@ def get_user(message: Message, text: str) -> [int, str, None]:
     return user_s, reason_
 
 
-def get_readable_time(seconds: int) -> int:
+def get_readable_time(seconds: int) -> str:
     count = 0
     ping_time = ""
     time_list = []
@@ -73,13 +70,14 @@ def time_formatter(milliseconds: int) -> str:
     return tmp[:-2]
 
 
-async def delete_or_pass(message):
-    if message.from_user.id == 1141839926:
-        return message
-    return await message.delete()
+async def delete_or_pass(event):
+    sender = await event.get_sender()
+    if sender and sender.id == 1141839926:
+        return event
+    return await event.delete()
 
 
-def humanbytes(size):
+def humanbytes(size) -> str:
     if not size:
         return ""
     power = 2**10
@@ -91,7 +89,7 @@ def humanbytes(size):
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
 
-async def progress(current, total, message, start, type_of_ps, file_name=None):
+async def progress(current, total, event, start, type_of_ps, file_name=None):
     now = time.time()
     diff = now - start
     if round(diff % 10.00) == 0 or current == total:
@@ -113,30 +111,28 @@ async def progress(current, total, message, start, type_of_ps, file_name=None):
             time_formatter(estimated_total_time))
         if file_name:
             try:
-                await message.edit("{}\n**File Name:** `{}`\n{}".format(
+                await event.edit("{}\n**File Name:** `{}`\n{}".format(
                     type_of_ps, file_name, tmp))
-            except FloodWait as e:
-                await asyncio.sleep(e.value)
-            except MessageNotModified:
+            except FloodWaitError as e:
+                await asyncio.sleep(e.seconds)
+            except Exception:
                 pass
         else:
             try:
-                await message.edit("{}\n{}".format(type_of_ps, tmp))
-            except FloodWait as e:
-                await asyncio.sleep(e.value)
-            except MessageNotModified:
+                await event.edit("{}\n{}".format(type_of_ps, tmp))
+            except FloodWaitError as e:
+                await asyncio.sleep(e.seconds)
+            except Exception:
                 pass
 
 
-def get_text(message: Message) -> [None, str]:
-    text_to_return = message.text
-    if message.text is None:
-        return None
-    if " " not in text_to_return:
+def get_text(event) -> Union[str, None]:
+    text_to_return = event.raw_text
+    if not text_to_return or " " not in text_to_return:
         return None
 
     try:
-        return message.text.split(None, 1)[1]
+        return text_to_return.split(None, 1)[1]
     except IndexError:
         return None
 
@@ -144,41 +140,38 @@ def get_text(message: Message) -> [None, str]:
 async def iter_chats(client):
     chats = []
     async for dialog in client.iter_dialogs():
-        if dialog.chat.type in [ChatType.SUPERGROUP, ChatType.CHANNEL]:
-            chats.append(dialog.chat.id)
+        if dialog.is_group or dialog.is_channel:
+            chats.append(dialog.id)
     return chats
 
 
-async def fetch_audio(message):
-    time.time()
-    if not message.reply_to_message:
-        await message.reply("`Reply To A Video / Audio.`")
+async def fetch_audio(event):
+    if not event.is_reply:
+        await event.reply("`Reply To A Video / Audio.`")
         return
-    warner_stark = message.reply_to_message
-    if warner_stark.audio is None and warner_stark.video is None:
-        await message.reply("`Format Not Supported`")
+    reply_msg = await event.get_reply_message()
+    if not reply_msg.audio and not reply_msg.video:
+        await event.reply("`Format Not Supported`")
         return
-    if warner_stark.video:
-        lel = await message.reply("`Video Detected, Converting To Audio !`")
-        warner_bros = await message.reply_to_message.download()
+    if reply_msg.video:
+        lel = await event.reply("`Video Detected, Converting To Audio !`")
+        warner_bros = await reply_msg.download_media()
         stark_cmd = f"ffmpeg -i {warner_bros} -map 0:a friday.mp3"
         await runcmd(stark_cmd)
         final_warner = "friday.mp3"
-    elif warner_stark.audio:
-        lel = await edit_or_reply(message, "`Download Started !`")
-        final_warner = await message.reply_to_message.download()
+    elif reply_msg.audio:
+        lel = await edit_or_reply(event, "`Download Started !`")
+        final_warner = await reply_msg.download_media()
     await lel.edit("`Almost Done!`")
     await lel.delete()
     return final_warner
 
 
-async def edit_or_reply(message, text, parse_mode="md"):
-    if message.from_user.id:
-        if message.reply_to_message:
-            kk = message.reply_to_message.id
-            return await message.reply_text(text, reply_to_message_id=kk, parse_mode=parse_mode)
-        return await message.reply_text(text, parse_mode=parse_mode)
-    return await message.edit(text, parse_mode=parse_mode)
+async def edit_or_reply(event, text, parse_mode="md"):
+    if event.is_reply:
+        return await event.reply(text, parse_mode=parse_mode)
+    return await event.respond(text, parse_mode=parse_mode)
+
 
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     """ run command in terminal """
@@ -194,110 +187,94 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
     )
 
 
-async def convert_to_image(message, client) -> [None, str]:
+async def convert_to_image(event, client) -> Union[str, None]:
     """Convert Most Media Formats To Raw Image"""
-    final_path = None
-    if not (message.reply_to_message.photo or message.reply_to_message.sticker
-            or message.reply_to_message.media
-            or message.reply_to_message.animation
-            or message.reply_to_message.audio):
+    if not event.is_reply:
         return None
-    if message.reply_to_message.photo:
-        final_path = await message.reply_to_message.download()
-    elif message.reply_to_message.sticker:
-        if message.reply_to_message.sticker.mime_type == "image/webp":
+    reply_msg = await event.get_reply_message()
+    final_path = None
+    if not (reply_msg.photo or reply_msg.sticker or reply_msg.media or reply_msg.document):
+        return None
+    if reply_msg.photo:
+        final_path = await reply_msg.download_media()
+    elif reply_msg.sticker:
+        if reply_msg.file.mime_type == "image/webp":
             final_path = "webp_to_png_s_proton.png"
-            path_s = await message.reply_to_message.download()
+            path_s = await reply_msg.download_media()
             im = Image.open(path_s)
             im.save(final_path, "PNG")
         else:
-            path_s = await client.download_media(message.reply_to_message)
+            path_s = await client.download_media(reply_msg)
             final_path = "lottie_proton.png"
             cmd = (
                 f"lottie_convert.py --frame 0 -if lottie -of png {path_s} {final_path}"
             )
             await runcmd(cmd)
-    elif message.reply_to_message.audio:
-        thumb = message.reply_to_message.audio.thumbs[0].file_id
-        final_path = await client.download_media(thumb)
-    elif message.reply_to_message.video or message.reply_to_message.animation:
+    elif reply_msg.audio:
+        try:
+            thumb = reply_msg.audio.thumbs[0]
+            final_path = await client.download_media(thumb)
+        except Exception:
+            pass
+    elif reply_msg.video or reply_msg.document:
         final_path = "fetched_thumb.png"
-        vid_path = await client.download_media(message.reply_to_message)
+        vid_path = await reply_msg.download_media()
         await runcmd(
             f"ffmpeg -i {vid_path} -filter:v scale=500:500 -an {final_path}")
     return final_path
 
 
-def get_text(message: Message) -> [None, str]:
-    """Extract Text From Commands"""
-    text_to_return = message.text
-    if message.text is None:
-        return None
-    if " " not in text_to_return:
-        return None
-
-    try:
-        return message.text.split(None, 1)[1]
-    except IndexError:
-        return None
+# Admin check cache dictionary
+admins: Dict[str, List] = {}
 
 
-# Admin check
-
-admins: Dict[str, List[User]] = {}
-
-
-def set(chat_id: Union[str, int], admins_: List[User]):
+def set(chat_id: Union[str, int], admins_: List):
     if isinstance(chat_id, int):
         chat_id = str(chat_id)
-
     admins[chat_id] = admins_
 
 
-def get(chat_id: Union[str, int]) -> Union[List[User], bool]:
+def get(chat_id: Union[str, int]) -> Union[List, bool]:
     if isinstance(chat_id, int):
         chat_id = str(chat_id)
-
     if chat_id in admins:
         return admins[chat_id]
-
     return False
 
 
-async def get_administrators(chat: Chat) -> List[User]:
-    _get = get(chat.id)
-
+async def get_administrators(chat_id) -> List:
+    _get = get(chat_id)
     if _get:
         return _get
-    set(
-        chat.id,
-        (member.user
-         for member in await chat.get_member(filter="administrators")),
-    )
-
-    return await get_administrators(chat)
+    
+    admin_list = []
+    async for user in telethn.iter_participants(chat_id, filter=ChannelParticipantsAdmins):
+        admin_list.append(user)
+        
+    set(chat_id, admin_list)
+    return admin_list
 
 
 def admins_only(func: Callable) -> Coroutine:
-
-    async def wrapper(client: Client, message: Message):
-        if message.from_user.id == OWNER_ID:
-            return await func(client, message)
-        admins = await get_administrators(message.chat)
-        for admin in admins:
-            if admin.id == message.from_user.id:
-                return await func(client, message)
-
+    async def wrapper(event, *args, **kwargs):
+        sender = await event.get_sender()
+        if not sender:
+            return
+        if sender.id == OWNER_ID:
+            return await func(event, *args, **kwargs)
+        
+        admin_list = await get_administrators(event.chat_id)
+        for admin in admin_list:
+            if admin.id == sender.id:
+                return await func(event, *args, **kwargs)
     return wrapper
 
 
-# @Mr_Dark_Prince
 def capture_err(func):
-
     @wraps(func)
-    async def capture(client, message, *args, **kwargs):
+    async def capture(event, *args, **kwargs):
         try:
-            return await func(client, message, *args, **kwargs)
+            return await func(event, *args, **kwargs)
         except Exception as err:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             errors = traceback.format_exception(
@@ -305,45 +282,39 @@ def capture_err(func):
                 value=exc_obj,
                 tb=exc_tb,
             )
+            sender = await event.get_sender()
             error_feedback = split_limits(
                 "**ERROR** | `{}` | `{}`\n\n```{}```\n\n```{}```\n".format(
-                    0 if not message.from_user else message.from_user.id,
-                    0 if not message.chat else message.chat.id,
-                    message.text or message.caption,
+                    0 if not sender else sender.id,
+                    0 if not event.chat_id else event.chat_id,
+                    event.raw_text,
                     "".join(errors),
                 ), )
             for x in error_feedback:
-                await pgram.send_message(SUPPORT_CHAT, x)
+                await telethn.send_message(SUPPORT_CHAT, x)
             raise err
-
     return capture
 
 
 # Special credits to TheHamkerCat
-
-
-async def member_permissions(chat_id: int, user_id: int):
+async def member_permissions(chat_id: int, user_id: int) -> List[str]:
     perms = []
     try:
-        member = (await pgram.get_chat_member(chat_id, user_id)).privileges
+        permissions = await telethn.get_permissions(chat_id, user_id)
+        if not permissions or not permissions.is_admin:
+            return []
+        
+        p = permissions.participant.admin_rights
+        if p:
+            if getattr(p, "post_messages", False): perms.append("can_post_messages")
+            if getattr(p, "edit_messages", False): perms.append("can_edit_messages")
+            if getattr(p, "delete_messages", False): perms.append("can_delete_messages")
+            if getattr(p, "ban_users", False): perms.append("can_restrict_members")
+            if getattr(p, "add_admins", False): perms.append("can_promote_members")
+            if getattr(p, "change_info", False): perms.append("can_change_info")
+            if getattr(p, "invite_users", False): perms.append("can_invite_users")
+            if getattr(p, "pin_messages", False): perms.append("can_pin_messages")
+            if getattr(p, "manage_call", False): perms.append("can_manage_video_chats")
     except Exception:
         return []
-    if member.can_post_messages:
-        perms.append("can_post_messages")
-    if member.can_edit_messages:
-        perms.append("can_edit_messages")
-    if member.can_delete_messages:
-        perms.append("can_delete_messages")
-    if member.can_restrict_members:
-        perms.append("can_restrict_members")
-    if member.can_promote_members:
-        perms.append("can_promote_members")
-    if member.can_change_info:
-        perms.append("can_change_info")
-    if member.can_invite_users:
-        perms.append("can_invite_users")
-    if member.can_pin_messages:
-        perms.append("can_pin_messages")
-    if member.can_manage_video_chats:
-        perms.append("can_manage_video_chats")
     return perms
