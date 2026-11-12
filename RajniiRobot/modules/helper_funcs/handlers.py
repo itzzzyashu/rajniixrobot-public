@@ -1,7 +1,7 @@
 import asyncio
 import telegram.ext as tg
 from telegram import Update
-from pyrate_limiter import (Duration, RequestRate, Limiter, MemoryListBucket)
+from pyrate_limiter import (Duration, Rate, Limiter, InMemoryBucket)
 
 import RajniiRobot.modules.sql.blacklistusers_sql as sql
 from RajniiRobot import (ALLOW_EXCL, DEV_USERS, SUDO_USERS, SUPPORT_USERS, TIGER_USERS, WHITELIST_USERS, RAJNI_PTB)
@@ -19,17 +19,19 @@ class AntiSpam:
         )
         
         Duration.CUSTOM = 15  # Custom duration, 15 seconds
-        self.sec_limit = RequestRate(6, Duration.CUSTOM)  # 6 / Per 15 Seconds
-        self.min_limit = RequestRate(20, Duration.MINUTE)  # 20 / Per minute
-        self.hour_limit = RequestRate(100, Duration.HOUR)  # 100 / Per hour
-        self.daily_limit = RequestRate(1000, Duration.DAY)  # 1000 / Per day
-        self.limiter = Limiter(
+        self.sec_limit = Rate(6, Duration.CUSTOM)  # 6 / Per 15 Seconds
+        self.min_limit = Rate(20, Duration.MINUTE)  # 20 / Per minute
+        self.hour_limit = Rate(100, Duration.HOUR)  # 100 / Per hour
+        self.daily_limit = Rate(1000, Duration.DAY)  # 1000 / Per day
+        
+        # Initialize InMemoryBucket with the rates and pass it to Limiter (compatible with pyrate-limiter v3/v4)
+        bucket = InMemoryBucket([
             self.sec_limit,
             self.min_limit,
             self.hour_limit,
-            self.daily_limit,
-            bucket_class=MemoryListBucket
-        )
+            self.daily_limit
+        ])
+        self.limiter = Limiter(bucket)
 
     @staticmethod
     def check_user(user):
@@ -48,8 +50,6 @@ class CustomCommandHandler(tg.CommandHandler):
             del kwargs["admin_ok"]
         super().__init__(command, callback, **kwargs)
 
-    # ✅ FIX: Made check_update synchronous to match the parent base handler signature 
-    # and use an explicit future worker task to fetch bot attributes without leaking coroutines.
     def check_update(self, update: object):
         if not isinstance(update, Update) or not update.effective_message:
             return None
@@ -66,15 +66,12 @@ class CustomCommandHandler(tg.CommandHandler):
                 args = message.text.split()[1:]
                 command = fst_word[1:].split("@")
                 
-                # ✅ FIX: Safely retrieve the username from PTB's cached application context 
-                # instead of awaiting raw network endpoints inside the routing check phase
                 bot_username = RAJNI_PTB.bot.username
                 if not bot_username:
                     try:
                         loop = asyncio.get_running_loop()
                         bot_username = loop.run_until_complete(RAJNI_PTB.bot.get_me()).username
                     except RuntimeError:
-                        # Fallback if loop state hasn't stabilized completely yet
                         return None
                 
                 command.append(bot_username)  
@@ -86,7 +83,6 @@ class CustomCommandHandler(tg.CommandHandler):
                     return None
                 
                 if self.filters:
-                    # Sync filters execution
                     filter_result = self.filters.check_update(update)
                 else:
                     filter_result = True

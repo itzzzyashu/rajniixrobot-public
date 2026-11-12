@@ -40,12 +40,22 @@ def get_user_list(__init__, key):
         return json.load(json_file)[key]
 
 
-# enable logging
+# Force UTF-8 encoding for Windows consoles to prevent UnicodeEncodeError with fancy log symbols
+if sys.platform == "win32":
+    import codecs
+    try:
+        sys.stdout = codecs.getwriter("utf-8")(sys.stdout.buffer, 'strict')
+        sys.stderr = codecs.getwriter("utf-8")(sys.stderr.buffer, 'strict')
+    except Exception:
+        pass
+
+
+# Enable logging with UTF-8 encoding
 logging.basicConfig(
     format='%(asctime)s • %(name)s | %(levelname)s : %(message)s',
     handlers=[
-        logging.FileHandler('log.txt'),
-        logging.StreamHandler()
+        logging.FileHandler('log.txt', encoding='utf-8'),
+        logging.StreamHandler(sys.stdout)
     ],
     level=logging.INFO)
 
@@ -54,8 +64,7 @@ LOGGER = logging.getLogger(__name__)
 # logging.getLogger('ptbcontrib.postgres_persistence.postgrespersistence').setLevel(logging.WARNING)
 
 
-
-# if version < 3.6, stop bot.
+# If version < 3.9, stop bot.
 if sys.version_info[0] < 3 or sys.version_info[1] < 9:
     LOGGER.error("You MUST have a python version of at least 3.9! Multiple features depend on this. Quitting Deployment.",)
     sys.exit(1)
@@ -104,40 +113,40 @@ if ENV:
     except ValueError:
         raise Exception("Your scout users list does not contain valid integers.")
 
-    INFOPIC = bool(os.environ.get("INFOPIC", False))  # Info Pic (use True[Value] If You Want To Show In /info.)
-    GLOBAL_LOGS = os.environ.get("GLOBAL_LOGS")  # G-Ban Logs (Channel) (-100)
-    ERROR_LOGS = os.environ.get("ERROR_LOGS")  # Error Logs (Channel Ya Group Choice Is Yours) (-100)
+    INFOPIC = bool(os.environ.get("INFOPIC", False))  
+    GLOBAL_LOGS = os.environ.get("GLOBAL_LOGS")  
+    ERROR_LOGS = os.environ.get("ERROR_LOGS")  
     WEBHOOK = bool(os.environ.get("WEBHOOK", False))
-    URL = os.environ.get("URL", "")  # If You Deploy On Heraku. [URL PERTEN:- https://{App Name}.herokuapp.com/ || EXP:- https://yuki-cutiepii-robot.herokuapp.com/]
+    URL = os.environ.get("URL", "")  
     PORT = int(os.environ.get("PORT", 8443))
     CUSTOM_CMD = os.environ.get("CUSTOM_CMD", False)
-    API_ID = os.environ.get("API_ID")  # Bot Owner's API_ID (From:- https://my.telegram.org/auth)
-    API_HASH = os.environ.get("API_HASH")  # Bot Owner's API_HASH (From:- https://my.telegram.org/auth)
-    DATABASE_URL = os.environ.get("DATABASE_URL")  # Any SQL Database Link (RECOMMENDED:- PostgreSQL & https://www.elephantsql.com)
-    DONATION_LINK = os.environ.get("DONATION_LINK")  # Donation Link (ANY)
-    LOAD = os.environ.get("LOAD", "").split()  # Don't Change
-    NO_LOAD = os.environ.get("NO_LOAD", "translation").split()  # Don't Change
-    DEL_CMDS = bool(os.environ.get("DEL_CMDS", False))  # Don't Change
-    STRICT_GBAN = bool(os.environ.get("STRICT_GBAN",False))  # Use `True` Value
-    BAN_STICKER = os.environ.get("BAN_STICKER", "CAADAgADOwADPPEcAXkko5EB3YGYAg")  # Don't Change
-    ALLOW_EXCL = os.environ.get("ALLOW_EXCL", False)  # Don't Change
-    TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TEMP_DOWNLOAD_DIRECTORY", "./")  # Don't Change
-    CASH_API_KEY = os.environ.get("CASH_API_KEY")  # From:- https://www.alphavantage.co/support/#api-key
-    TIME_API_KEY = os.environ.get("TIME_API_KEY")  # From:- https://timezonedb.com/api
-    WALL_API = os.environ.get("WALL_API")  # From:- https://wall.alphacoders.com/api.php
-    REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY")  # From:- https://www.remove.bg/
-    OPENWEATHERMAP_ID = os.environ.get("OPENWEATHERMAP_ID", "")  # From:- https://openweathermap.org/api
-    GENIUS_API_TOKEN = os.environ.get("GENIUS_API_TOKEN")  # From:- http://genius.com/api-clients
-    MONGO_DB_URL = os.environ.get("MONGO_DB_URL")  # MongoDB URL (From:- https://www.mongodb.com/)
-    REDIS_URL = os.environ.get("REDIS_URL")  # REDIS URL (Take it from redislabs.com and the format should be redis://username:password@publicendpoint:port/)
-    UPDATES_LOGS = os.environ.get("UPDATES_LOGS") #Updates Channel Username
-    SUPPORT_CHAT = os.environ.get("SUPPORT_CHAT")  # Support Chat Username (don't add @)
-    STRING_SESSION = os.environ.get("STRING_SESSION")  # Telethon Based String Session (2nd ID) [ From https://repl.it/@SpEcHiDe/GenerateStringSession ]
-    APP_ID = os.environ.get("APP_ID")  # 2nd ID
-    APP_HASH = os.environ.get("APP_HASH")  # 2nd 
-    ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)  # Don't Change
-    DATABASE_NAME = os.environ.get("DATABASE_NAME", True)  # needed for cron_jobs module, use same databasename from SQLALCHEMY_DATABASE_URI
-    BACKUP_PASS = os.environ.get("BACKUP_PASS", True)  # The password used for the cron backups zip
+    API_ID = os.environ.get("API_ID")  
+    API_HASH = os.environ.get("API_HASH")  
+    DATABASE_URL = os.environ.get("DATABASE_URL")  
+    DONATION_LINK = os.environ.get("DONATION_LINK")  
+    LOAD = os.environ.get("LOAD", "").split()  
+    NO_LOAD = os.environ.get("NO_LOAD", "translation").split()  
+    DEL_CMDS = bool(os.environ.get("DEL_CMDS", False))  
+    STRICT_GBAN = bool(os.environ.get("STRICT_GBAN",False))  
+    BAN_STICKER = os.environ.get("BAN_STICKER", "CAADAgADOwADPPEcAXkko5EB3YGYAg")  
+    ALLOW_EXCL = os.environ.get("ALLOW_EXCL", False)  
+    TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TEMP_DOWNLOAD_DIRECTORY", "./")  
+    CASH_API_KEY = os.environ.get("CASH_API_KEY")  
+    TIME_API_KEY = os.environ.get("TIME_API_KEY")  
+    WALL_API = os.environ.get("WALL_API")  
+    REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY")  
+    OPENWEATHERMAP_ID = os.environ.get("OPENWEATHERMAP_ID", "")  
+    GENIUS_API_TOKEN = os.environ.get("GENIUS_API_TOKEN")  
+    MONGO_DB_URL = os.environ.get("MONGO_DB_URL")  
+    REDIS_URL = os.environ.get("REDIS_URL")  
+    UPDATES_LOGS = os.environ.get("UPDATES_LOGS") 
+    SUPPORT_CHAT = os.environ.get("SUPPORT_CHAT")  
+    STRING_SESSION = os.environ.get("STRING_SESSION")  
+    APP_ID = os.environ.get("APP_ID")  
+    APP_HASH = os.environ.get("APP_HASH")  
+    ALLOW_CHATS = os.environ.get("ALLOW_CHATS", True)  
+    DATABASE_NAME = os.environ.get("DATABASE_NAME", True)  
+    BACKUP_PASS = os.environ.get("BACKUP_PASS", True)  
     MONGO_DB = "Cutiepii"
     BOT_API_FILE_URL = "https://api.telegram.org/file/bot"
     BOT_API_URL = "https://api.telegram.org/bot"
@@ -229,7 +238,6 @@ else:
     MONGO_DB = Config.MONGO_DB
     MONGO_DB_URL = Config.MONGO_DB_URL
 
-
     try:
         BL_CHATS = {int(x) for x in Config.BL_CHATS or []}
     except ValueError:
@@ -246,15 +254,15 @@ LOGGER.info(f"""[{BOT_NAME}] | Project Maintained By:
 • (telegram.me/TeamUnixSystem)
 \n""")
 
-telegraph = Telegraph()
 ACCESS_TOKEN = os.getenv("TELEGRAPH_ACCESS_TOKEN")
+# Initialize Telegraph directly with the access token if present
+telegraph = Telegraph(access_token=ACCESS_TOKEN)
 
-if ACCESS_TOKEN:
-    telegraph.token = ACCESS_TOKEN
-else:
+if not ACCESS_TOKEN:
     try:
         account = telegraph.create_account(short_name="rajniixrobot")
-        ACCESS_TOKEN = account["access_token"]
+        ACCESS_TOKEN = account.get("access_token")
+        telegraph.access_token = ACCESS_TOKEN  # Ensure the instance has the token
         LOGGER.info(f"[{BOT_NAME}] | Telegraph account created.")
     except Exception as e:
         LOGGER.error(
@@ -296,7 +304,7 @@ except Exception as e:
 # Global Network Session Variables Placeholders
 aiohttpsession = None  
 arq = None 
-http = None # ✅ Placeholder for the global HTTPX client
+http = None 
 
 # Initialize aiohttp session (must be async)
 async def init_aiohttp_session():
@@ -327,11 +335,11 @@ async def close_aiohttp_session():
         status = {"status": True}  
     return status
 
-# ✅ FIX: Initialize HTTPX Client Cleanly inside the loop setup phase
+# Initialize HTTPX Client Cleanly inside the loop setup phase
 async def init_http_client():
     global http
     try:
-        timeout = Timeout(20) # Safely keeps timeouts under PTB's 30s connection limits
+        timeout = Timeout(20) 
         http = AsyncClient(http2=True, timeout=timeout)
         LOGGER.info(f"[{BOT_NAME}] | Initialized global HTTPX AsyncClient cleanly inside active loop context.")
         return True
@@ -339,7 +347,7 @@ async def init_http_client():
         LOGGER.error(f"[{BOT_NAME}] | Initializing HTTPX Client Failed\nError: {e}\n{traceback.format_exc()}")
         return False
 
-# ✅ FIX: Clear HTTPX closure function mapped for the termination handler
+# Clear HTTPX closure function mapped for the termination handler
 async def close_http_client():
     global http
     if http:
@@ -348,8 +356,6 @@ async def close_http_client():
             LOGGER.info(f"[{BOT_NAME}] | Global HTTPX AsyncClient closed cleanly.")
         except Exception as e:
             LOGGER.error(f"[{BOT_NAME}] | Error closing HTTPX Client: {e}")
-
-arq = None
 
 # Initialize ARQ client
 async def init_arq_client(session: aiohttp.ClientSession):
@@ -384,29 +390,7 @@ try:
 except Exception as e:
     LOGGER.error(f"[{BOT_NAME}] | Connection to Database • Asia/Mumbai • MongoDB Database (NOSQL)\nError: {e}\n{traceback.format_exc()}")
 
-REDIS_URL = f"redis://:{REDIS_PASSWORD}@{REDIS_ENDPOINT}"
-REDIS = StrictRedis.from_url(REDIS_URL, decode_responses=True)
-try:
-    REDIS.ping()
-    LOGGER.info(f"[{BOT_NAME}] | Connected to Database • Data Center • Asia/Mumbai • Redis Database")
-except Exception as e:# Initializing Telethon Userbot Client
-    LOGGER.error(f"[{BOT_NAME}] | Connection to Database Asia/Mumbai Redis Database\nError: {e}")
-try:
-    ubot = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
-    LOGGER.info(f"[{BOT_NAME}] | Connected to {BOT_NAME}\'s Userbot. (telegram.me/iKeshavVirmani)")
-except Exception as e:
-    LOGGER.error(f"[{BOT_NAME}] | Connection to {BOT_NAME}\'s Userbot Failed. (telegram.me/iKeshavVirmani)\nError: {e}\n{traceback.format_exc()}")
-
-# Connecting to MongoDB Database 
-try:
-    mongodb = MongoClient(MONGO_DB_URL, 27017)[MONGO_DB]
-    motor = AsyncIOMotorClient(MONGO_DB_URL)
-    db = motor[MONGO_DB]
-    engine = AIOEngine(motor, MONGO_DB)
-    LOGGER.info(f"[{BOT_NAME}] | Connected to Database • Asia/Mumbai • MongoDB Database (NOSQL)")
-except Exception as e:
-    LOGGER.error(f"[{BOT_NAME}] | Connection to Database • Asia/Mumbai • MongoDB Database (NOSQL)\nError: {e}\n{traceback.format_exc()}")
-
+# Connecting to Redis Database
 REDIS_URL = f"redis://:{REDIS_PASSWORD}@{REDIS_ENDPOINT}"
 REDIS = StrictRedis.from_url(REDIS_URL, decode_responses=True)
 try:
@@ -414,9 +398,6 @@ try:
     LOGGER.info(f"[{BOT_NAME}] | Connected to Database • Data Center • Asia/Mumbai • Redis Database")
 except Exception as e:
     LOGGER.error(f"[{BOT_NAME}] | Connection to Database Failed • Data Center • Asia/Mumbai • Redis Database\nError: {e}\n{traceback.format_exc()}")
-finally:
-    REDIS.ping()
-    LOGGER.info(f"[{BOT_NAME}] | Connected To Database • Data Center • Asia/Mumbai • Redis Database")
 
 LOGGER.info(f"""\n
 =======================================================
@@ -468,5 +449,4 @@ ELEVATED_USERS_FILE = os.path.join(os.getcwd(), "RajniiRobot/elevated_users.json
 from RajniiRobot.modules.helper_funcs.handlers import CustomCommandHandler
 
 CustomCommandHandler.has_args = True
-# make sure the regex handler can take extra kwargs safely via the new async engine
 tg.CommandHandler = CustomCommandHandler

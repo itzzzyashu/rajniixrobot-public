@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 # Load variables from the .env file if present
-load_dotenv()
+load_dotenv(".env.local")
 
 def get_user_list(config_key, default=""):
     """Helper to parse comma-separated environment variables into a list of integers."""
