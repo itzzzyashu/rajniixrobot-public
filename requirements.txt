@@ -73,7 +73,7 @@ SQLAlchemy>=2.0.31
 # Telegram, Git & Web Services
 python-telegram-bot>=21.3
 Telethon>=1.36.0
-PyGithub>=2.3.0
+PyGithub>=2.10.0
 telegraph>=2.2.0
 lyricsgenius>=3.0.1
 
